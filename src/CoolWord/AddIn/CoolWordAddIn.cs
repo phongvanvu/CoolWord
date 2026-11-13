@@ -12,6 +12,7 @@ using CoolWord.Modules.NumberToText;
 using CoolWord.Modules.Pdf;
 using CoolWord.Modules.QuickInput;
 using CoolWord.Modules.TextUtilities;
+using CoolWord.Modules.WordToWord;
 using Office = Microsoft.Office.Core;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -825,6 +826,83 @@ namespace CoolWord.AddIn
             if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
             {
                 _taskPaneHost.WpfControl.SelectModule("name-split");
+            }
+            if (_ribbon != null)
+            {
+                try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+            }
+        }
+
+        #endregion
+
+        #region Callbacks Nhóm Word ➔ Word
+
+        public void OnConvertTcvnToUnicodeClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ConvertEncodingToUnicode(false, "TCVN3", out status);
+            NotifyStatus(status);
+        }
+
+        public void OnConvertVniToUnicodeClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ConvertEncodingToUnicode(false, "VNI", out status);
+            NotifyStatus(status);
+        }
+
+        public void OnSaveAsDocxClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.SaveAsDocx(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnSaveAsDoc97Click(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.SaveAsDoc97(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnMergeWordDocsClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.MergeWordDocuments(null, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnSplitWordBySectionsClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.SplitDocumentBySections(null, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnSplitWordByPagesClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.SplitDocumentByPages(null, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnOpenWordToWordPaneClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null)
+            {
+                _customTaskPane.Visible = true;
+            }
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("word-to-word");
             }
             if (_ribbon != null)
             {

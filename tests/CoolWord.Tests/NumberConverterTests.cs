@@ -7,6 +7,7 @@ using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
 using CoolWord.Modules.QuickInput;
 using CoolWord.Modules.TextUtilities;
+using CoolWord.Modules.WordToWord;
 
 namespace CoolWord.Tests
 {
@@ -225,6 +226,46 @@ namespace CoolWord.Tests
             string splitTableStatus;
             bool splitTableRes = NameSplitService.SplitTableColumn2(null, out splitTableStatus);
             AssertEqual("SplitTableColumn2 Null Check", "false", splitTableRes.ToString().ToLowerInvariant());
+
+            // 7. Kiểm thử Mô-đun Word ➔ Word (TCVN3, VNI, Registry, An toàn null)
+            string tcvnText = "\u00A7\u00B6ng c\u00EAng s\u00B6n"; // "Đảng cộng sản"
+            string uFromTcvn = VietnameseEncodingConverter.ConvertTcvn3ToUnicode(tcvnText);
+            AssertEqual("TCVN3 to Unicode", "Đảng cộng sản", uFromTcvn);
+
+            string vniSample = "Vieät Nam ñeán"; // "Việt Nam đến"
+            string uFromVni = VietnameseEncodingConverter.ConvertVniToUnicode(vniSample);
+            AssertEqual("VNI to Unicode", "Việt Nam đến", uFromVni);
+
+            AssertEqual("IsTcvn3Font .VnTime", "true", VietnameseEncodingConverter.IsTcvn3Font(".VnTime").ToString().ToLowerInvariant());
+            AssertEqual("IsTcvn3Font Times", "false", VietnameseEncodingConverter.IsTcvn3Font("Times New Roman").ToString().ToLowerInvariant());
+            AssertEqual("IsVniFont VNI-Times", "true", VietnameseEncodingConverter.IsVniFont("VNI-Times").ToString().ToLowerInvariant());
+            AssertEqual("IsVniFont Arial", "false", VietnameseEncodingConverter.IsVniFont("Arial").ToString().ToLowerInvariant());
+
+            IToolModule w2wMod = ModuleRegistry.GetById("word-to-word");
+            AssertEqual("WordToWord Module Registered", "true", (w2wMod != null).ToString().ToLowerInvariant());
+            if (w2wMod != null)
+            {
+                AssertEqual("WordToWord Module Title", "Word ➔ Word", w2wMod.Title);
+            }
+
+            string w2wStatus;
+            bool w2wNullRes = WordToWordService.ConvertEncodingToUnicode(null, false, "TCVN3", out w2wStatus);
+            AssertEqual("WordToWord Convert Null Safe", "false", w2wNullRes.ToString().ToLowerInvariant());
+
+            bool w2wDocxRes = WordToWordService.SaveAsDocx(null, out w2wStatus);
+            AssertEqual("WordToWord Docx Null Safe", "false", w2wDocxRes.ToString().ToLowerInvariant());
+
+            bool w2wDoc97Res = WordToWordService.SaveAsDoc97(null, out w2wStatus);
+            AssertEqual("WordToWord Doc97 Null Safe", "false", w2wDoc97Res.ToString().ToLowerInvariant());
+
+            bool w2wMergeRes = WordToWordService.MergeWordDocuments(null, null, out w2wStatus);
+            AssertEqual("WordToWord Merge Null Safe", "false", w2wMergeRes.ToString().ToLowerInvariant());
+
+            bool w2wSplitSecRes = WordToWordService.SplitDocumentBySections(null, null, out w2wStatus);
+            AssertEqual("WordToWord SplitSec Null Safe", "false", w2wSplitSecRes.ToString().ToLowerInvariant());
+
+            bool w2wSplitPageRes = WordToWordService.SplitDocumentByPages(null, null, out w2wStatus);
+            AssertEqual("WordToWord SplitPage Null Safe", "false", w2wSplitPageRes.ToString().ToLowerInvariant());
 
             Console.WriteLine("--------------------------------------------------------------------");
             Console.WriteLine(string.Format("KẾT QUẢ: Đạt {0} / {1} bài kiểm thử (Thất bại: {2})", _passed, _passed + _failed, _failed));

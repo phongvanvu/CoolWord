@@ -336,7 +336,72 @@
           </menu>
         </group>
 
-        <!-- Nhóm 7: Bảng Điều Khiển CoolWord -->
+        <!-- Nhóm 7: Word ➔ Word (Chuyển đổi, chuẩn hóa & xử lý tệp Word) -->
+        <group id="grpWordToWord" label="Word ➔ Word">
+          <menu id="menuWordToWord"
+                label="Word -&gt;&#10;Word"
+                size="large"
+                imageMso="FileSaveAsWordDocx"
+                screentip="Chuyển đổi Word ➔ Word (.doc ↔ .docx, TCVN3 ↔ Unicode, Gộp/Tách file)"
+                supertip="Bộ công cụ xử lý tệp Word chuyên nghiệp: Chuyển mã TCVN3/VNI sang Unicode Times New Roman, chuyển định dạng .doc sang .docx, gộp nhiều file và tách file Word theo section/trang.">
+            <!-- Nhóm Chuyển mã Phông chữ Tiếng Việt -->
+            <button id="btnConvertTcvnToUnicode"
+                    label="Chuyển mã TCVN3 (.VnTime) sang Unicode (Times New Roman)"
+                    imageMso="FontDialog"
+                    screentip="Chuyển mã TCVN3 (.VnTime) sang Unicode"
+                    supertip="Quét toàn bộ tài liệu (hoặc đoạn chọn), tự động nhận diện và chuyển các chữ phông .VnTime, .VnArial... sang Unicode chuẩn và đổi phông sang Times New Roman."
+                    onAction="OnConvertTcvnToUnicodeClick" />
+            <button id="btnConvertVniToUnicode"
+                    label="Chuyển mã VNI (VNI-Times) sang Unicode (Times New Roman)"
+                    imageMso="FontDialog"
+                    screentip="Chuyển mã VNI sang Unicode"
+                    supertip="Quét tài liệu và chuyển bảng mã VNI-Windows sang Unicode chuẩn Times New Roman."
+                    onAction="OnConvertVniToUnicodeClick" />
+            <menuSeparator id="sepW2WFormat" />
+            <!-- Nhóm Định dạng File Word -->
+            <button id="btnSaveAsDocx"
+                    label="Nâng cấp file .doc cũ sang định dạng .docx mới"
+                    imageMso="FileSaveAsWordDocx"
+                    screentip="Nâng cấp .doc sang .docx"
+                    supertip="Chuyển tài liệu Word 97-2003 (.doc) sang định dạng Word OpenXML (.docx) hiện đại, nhẹ hơn và đầy đủ tính năng."
+                    onAction="OnSaveAsDocxClick" />
+            <button id="btnSaveAsDoc97"
+                    label="Lưu bản sao định dạng .doc (Word 97-2003)"
+                    imageMso="FileSaveAsWord97_2003"
+                    screentip="Lưu bản sao .doc"
+                    supertip="Lưu một bản sao tài liệu dưới định dạng Word 97-2003 (.doc) để tương thích với các hệ thống phần mềm cũ."
+                    onAction="OnSaveAsDoc97Click" />
+            <menuSeparator id="sepW2WMergeSplit" />
+            <!-- Nhóm Gộp & Tách File Word -->
+            <button id="btnMergeWordDocs"
+                    label="Gộp nhiều file Word thành 1 file duy nhất..."
+                    imageMso="ReviewCombineRevisions"
+                    screentip="Gộp nhiều file Word"
+                    supertip="Chọn nhiều file Word và tự động nối tiếp nội dung vào tài liệu hiện tại, giữ nguyên định dạng."
+                    onAction="OnMergeWordDocsClick" />
+            <button id="btnSplitWordBySections"
+                    label="Tách tài liệu Word theo từng Section (Phần)..."
+                    imageMso="TableSplitCells"
+                    screentip="Tách tài liệu theo Section"
+                    supertip="Tự động chia nhỏ tài liệu hiện tại thành nhiều file Word tương ứng với từng Section, rất tiện cho báo cáo, phụ lục, hợp đồng nhiều phần."
+                    onAction="OnSplitWordBySectionsClick" />
+            <button id="btnSplitWordByPages"
+                    label="Tách tài liệu Word theo từng Trang..."
+                    imageMso="MultiplePages"
+                    screentip="Tách tài liệu theo Trang"
+                    supertip="Chia tài liệu Word hiện tại thành từng file riêng biệt cho mỗi trang."
+                    onAction="OnSplitWordByPagesClick" />
+            <menuSeparator id="sepW2WPane" />
+            <button id="btnOpenWordToWordPane"
+                    label="Mở Bảng Điều Khiển Word ➔ Word..."
+                    imageMso="ApplicationOptionsDialog"
+                    screentip="Mở Bảng Điều Khiển Word ➔ Word"
+                    supertip="Mở giao diện đầy đủ trên thanh Task Pane để xem thống kê phông chữ, chuyển đổi hàng loạt và cấu hình nâng cao."
+                    onAction="OnOpenWordToWordPaneClick" />
+          </menu>
+        </group>
+
+        <!-- Nhóm 8: Bảng Điều Khiển CoolWord -->
         <group id="grpTaskPane" label="Bảng Điều Khiển &amp; Mở Rộng">
           <toggleButton id="btnToggleTaskPane"
                         label="Bảng Công Cụ CoolWord"

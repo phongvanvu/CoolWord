@@ -89,6 +89,10 @@
     <Compile Include="Modules\NameSplit\NameSplitService.cs" />
     <Compile Include="Modules\NameSplit\NameSplitModule.cs" />
     <Compile Include="Modules\NameSplit\NameSplitModuleView.cs" />
+    <Compile Include="Modules\WordToWord\VietnameseEncodingConverter.cs" />
+    <Compile Include="Modules\WordToWord\WordToWordService.cs" />
+    <Compile Include="Modules\WordToWord\WordToWordModule.cs" />
+    <Compile Include="Modules\WordToWord\WordToWordModuleView.cs" />
     <Compile Include="UI\ThemeColors.cs" />
     <Compile Include="UI\MainTaskPaneControl.cs" />
   </ItemGroup>

@@ -8,6 +8,7 @@ using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
 using CoolWord.Modules.QuickInput;
 using CoolWord.Modules.TextUtilities;
+using CoolWord.Modules.WordToWord;
 
 namespace CoolWord.Core
 {
@@ -28,6 +29,7 @@ namespace CoolWord.Core
             Register(new PdfModule());
             Register(new QuickInputModule());
             Register(new NameSplitModule());
+            Register(new WordToWordModule());
         }
 
         public static void Register(IToolModule module)

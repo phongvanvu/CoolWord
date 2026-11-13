@@ -58,5 +58,13 @@ namespace CoolWord.Core
         bool MergeTableColumns(out string statusMessage);
         bool SplitSelectedTextLines(string delimiter, out string statusMessage);
         bool NormalizeSelectedNames(out string statusMessage);
+
+        // Các tác vụ Word ➔ Word (Encoding conversion, Format migration, Merge/Split)
+        bool ConvertEncodingToUnicode(bool selectionOnly, string sourceEncoding, out string statusMessage);
+        bool SaveAsDocx(out string statusMessage);
+        bool SaveAsDoc97(out string statusMessage);
+        bool MergeWordDocuments(string[] filePaths, out string statusMessage);
+        bool SplitDocumentBySections(string outputDir, out string statusMessage);
+        bool SplitDocumentByPages(string outputDir, out string statusMessage);
     }
 }

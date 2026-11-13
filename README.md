@@ -77,6 +77,22 @@
   - **Xử lý danh sách ngoài bảng**: Tách Họ - Tên theo định dạng dấu Tab `\t` (tiện sao chép/dán sang Excel) hoặc dấu gạch đứng `|`.
   - **Chuẩn hóa danh từ riêng**: Tự động sửa lỗi viết hoa (*nguyễn văn an* $\rightarrow$ *Nguyễn Văn An*), giữ nguyên tiền tố các họ tên dân tộc thiểu số (*H'Hen Niê, Y Moan...*).
 
+### 🔄 Module 8: Word ➔ Word (`WordToWordModule`)
+- **Nút Ribbon `Word -> Word` với biểu tượng Word chuẩn**:
+  - Tích hợp menu thả xuống kích thước lớn (Large menu) với nhãn 2 dòng `Word ->` / `Word ˅` và biểu tượng Word hiện đại (`FileSaveAsWordDocx`).
+- **Chuyển đổi bảng mã Tiếng Việt cũ sang Unicode chuẩn (Times New Roman)**:
+  - Tự động nhận diện và chuyển đổi bảng mã **TCVN3 (ABC)** từ các phông `.VnTime`, `.VnArial`, `.VnTimeH`... sang Unicode dựng sẵn.
+  - Tự động nhận diện và chuyển đổi bảng mã **VNI-Windows** từ các phông `VNI-Times`, `VNI-Helve`... sang Unicode dựng sẵn.
+  - Tự động định dạng lại phông chữ sang **Times New Roman** sau khi chuyển mã.
+  - Hoạt động 100% offline, tốc độ cao, hỗ trợ thao tác hoàn tác Undo (`Ctrl+Z`).
+- **Nâng cấp & Chuyển đổi định dạng tệp Word (.doc ↔ .docx)**:
+  - 1-Click nâng cấp tệp tài liệu cũ `*.doc` (Word 97-2003) sang chuẩn OpenXML `*.docx` hiện đại, giảm dung lượng và tối ưu hóa hiển thị.
+  - Lưu bản sao tương thích `*.doc` khi cần nộp hồ sơ, gửi cho hệ thống phần mềm cũ chỉ hỗ trợ chuẩn Word 97-2003.
+- **Gộp & Tách tệp Word tự động (Merge & Split)**:
+  - **Gộp nhiều tệp Word**: Chọn nhiều tệp `*.docx`, `*.doc` và tự động ghép nối vào tài liệu đang mở, chèn ngắt trang tự động và giữ nguyên cấu trúc.
+  - **Tách tệp Word theo Section**: Chia nhỏ tài liệu nhiều chương, phụ lục, hợp đồng nhiều phần thành từng tệp Word riêng biệt (`Phan_01.docx`, `Phan_02.docx`...).
+  - **Tách tệp Word theo Trang**: Chia tách tài liệu thành các tệp Word riêng cho mỗi trang (`Trang_001.docx`, `Trang_002.docx`...).
+
 ---
 
 ## 2. Cấu trúc dự án & Kiến trúc mở rộng
@@ -90,7 +106,7 @@ c:\projects\CoolWord\
 ├── bin\                            # Thư mục chứa file thực thi sau khi build
 │   ├── CoolWord.dll                # Thư viện COM Add-in chính nạp vào MS Word
 │   ├── CoolWord.Studio.exe         # Ứng dụng Desktop quản lý cài đặt & dùng độc lập
-│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (31 test cases)
+│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (89 test cases)
 ├── src\
 │   ├── CoolWord\
 │   │   ├── AddIn\                  # Tích hợp COM (IDTExtensibility2, Ribbon XML, Custom Task Pane, Installer)
@@ -102,11 +118,12 @@ c:\projects\CoolWord\
 │   │   │   ├── Printing\           # Module In Ấn & Xuất Bản Thông Minh
 │   │   │   ├── Pdf\                # Module Tiện Ích & Xuất Bản PDF
 │   │   │   ├── QuickInput\         # Module Nhập Liệu Nhanh (Mẫu văn bản, Kế toán & Snippets)
-│   │   │   └── NameSplit\          # Module Tách Họ - Tên (Bảng biểu & Danh sách nhân sự)
+│   │   │   ├── NameSplit\          # Module Tách Họ - Tên (Bảng biểu & Danh sách nhân sự)
+│   │   │   └── WordToWord\         # Module Word ➔ Word (Chuyển mã TCVN3/VNI, .doc/.docx, Gộp/Tách file)
 │   │   └── UI\                     # Giao diện WPF Fluent Design (ThemeColors, MainTaskPaneControl)
 │   └── CoolWord.Studio\            # Ứng dụng quản lý & chạy thử giao diện độc lập
 └── tests\
-    └── CoolWord.Tests\             # Unit tests kiểm tra thuật toán đọc số Tiếng Việt
+    └── CoolWord.Tests\             # Unit tests kiểm tra thuật toán đọc số Tiếng Việt & các Module
 ```
 
 ### Cách mở rộng thêm tính năng (Module) mới sau này

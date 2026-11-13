@@ -7,6 +7,7 @@ using CoolWord.Modules.NumberToText;
 using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
 using CoolWord.Modules.QuickInput;
+using CoolWord.Modules.WordToWord;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace CoolWord.Core
@@ -802,6 +803,46 @@ namespace CoolWord.Core
         {
             Word.Application app = GetActiveWordApp();
             return NameSplitService.NormalizeSelectedNames(app, out statusMessage);
+        }
+
+        #endregion
+
+        #region Tác vụ Word ➔ Word
+
+        public bool ConvertEncodingToUnicode(bool selectionOnly, string sourceEncoding, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToWordService.ConvertEncodingToUnicode(app, selectionOnly, sourceEncoding, out statusMessage);
+        }
+
+        public bool SaveAsDocx(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToWordService.SaveAsDocx(app, out statusMessage);
+        }
+
+        public bool SaveAsDoc97(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToWordService.SaveAsDoc97(app, out statusMessage);
+        }
+
+        public bool MergeWordDocuments(string[] filePaths, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToWordService.MergeWordDocuments(app, filePaths, out statusMessage);
+        }
+
+        public bool SplitDocumentBySections(string outputDir, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToWordService.SplitDocumentBySections(app, outputDir, out statusMessage);
+        }
+
+        public bool SplitDocumentByPages(string outputDir, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToWordService.SplitDocumentByPages(app, outputDir, out statusMessage);
         }
 
         #endregion
