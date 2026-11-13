@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolWord", "src\CoolWord\CoolWord.csproj", "{8B4F2A11-9D3E-4C7A-B1E2-5F6A7B8C9D01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolWord.Studio", "src\CoolWord.Studio\CoolWord.Studio.csproj", "{7A1C3E52-6B8D-4F90-A2C1-3D4E5F6A7B82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolWord.Tests", "tests\CoolWord.Tests\CoolWord.Tests.csproj", "{9C2E4F61-7A8B-4E12-B3C4-5D6E7F8A9B03}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B4F2A11-9D3E-4C7A-B1E2-5F6A7B8C9D01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B4F2A11-9D3E-4C7A-B1E2-5F6A7B8C9D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B4F2A11-9D3E-4C7A-B1E2-5F6A7B8C9D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B4F2A11-9D3E-4C7A-B1E2-5F6A7B8C9D01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A1C3E52-6B8D-4F90-A2C1-3D4E5F6A7B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A1C3E52-6B8D-4F90-A2C1-3D4E5F6A7B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A1C3E52-6B8D-4F90-A2C1-3D4E5F6A7B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A1C3E52-6B8D-4F90-A2C1-3D4E5F6A7B82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C2E4F61-7A8B-4E12-B3C4-5D6E7F8A9B03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C2E4F61-7A8B-4E12-B3C4-5D6E7F8A9B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C2E4F61-7A8B-4E12-B3C4-5D6E7F8A9B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C2E4F61-7A8B-4E12-B3C4-5D6E7F8A9B03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="OnRibbonLoad">
+  <ribbon>
+    <tabs>
+      <tab id="tabCoolWord" label="CoolWord">
+        <!-- Nhóm 1: Đổi Số Ra Chữ Tiếng Việt -->
+        <group id="grpNumberToText" label="Đổi Số Ra Chữ Tiếng Việt">
+          <button id="btnConvertQuick"
+                  label="Đổi Số Đang Chọn"
+                  size="large"
+                  imageMso="NumberInsert"
+                  screentip="Đổi nhanh số đang bôi đen sang chữ Tiếng Việt"
+                  supertip="Chuyển đổi con số đang bôi đen trong văn bản (hoặc tại vị trí con trỏ) sang chữ Tiếng Việt theo chế độ mặc định."
+                  onAction="OnConvertQuickClick" />
+
+          <menu id="menuInsertMode"
+                label="Chế Độ Chèn"
+                size="large"
+                imageMso="PasteMenu"
+                screentip="Chọn kiểu thay thế hoặc chèn chữ sau số">
+            <button id="btnModeAppendParen"
+                    label="Chèn trong ngoặc sau số: 1.000 (Một nghìn...)"
+                    imageMso="Bullets"
+                    onAction="OnConvertAppendParenClick" />
+            <button id="btnModeReplace"
+                    label="Thay thế trực tiếp số gốc"
+                    imageMso="ReplaceDialog"
+                    onAction="OnConvertReplaceClick" />
+            <button id="btnModeAppendLabel"
+                    label="Chèn kèm nhãn: 1.000 (Bằng chữ: Một nghìn...)"
+                    imageMso="InsertCaption"
+                    onAction="OnConvertAppendLabelClick" />
+            <button id="btnModeNewLine"
+                    label="Xuống dòng mới: Bằng chữ: Một nghìn..."
+                    imageMso="ParagraphMarks"
+                    onAction="OnConvertNewLineClick" />
+            <menuSeparator id="sepBatch" />
+            <button id="btnConvertBatch"
+                    label="Đổi tất cả các số trong vùng chọn"
+                    imageMso="SelectAll"
+                    onAction="OnConvertBatchClick" />
+            <button id="btnCopyConverted"
+                    label="Chỉ sao chép chữ vào Clipboard"
+                    imageMso="Copy"
+                    onAction="OnCopyConvertedClick" />
+          </menu>
+
+          <separator id="sepOptions" />
+
+          <menu id="menuCurrencyMode"
+                label="Loại Đơn Vị"
+                imageMso="CurrencyStyle"
+                screentip="Chọn loại đơn vị đọc số (VNĐ, USD, Số thuần túy)">
+            <button id="btnUnitVnd"
+                    label="Tiền Việt Nam (đồng)"
+                    onAction="OnSetUnitVnd" />
+            <button id="btnUnitUsd"
+                    label="Ngoại tệ USD (đô la Mỹ / xu)"
+                    onAction="OnSetUnitUsd" />
+            <button id="btnUnitPure"
+                    label="Số thuần túy (không đơn vị)"
+                    onAction="OnSetUnitPure" />
+          </menu>
+
+          <menu id="menuDialectMode"
+                label="Phương Ngữ"
+                imageMso="TranslationToolTip"
+                screentip="Chọn chuẩn phương ngữ (nghìn/ngàn, lẻ/linh)">
+            <button id="btnDialectCommon"
+                    label="Phổ thông hành chính (nghìn, lẻ, tư)"
+                    onAction="OnSetDialectCommon" />
+            <button id="btnDialectNorth"
+                    label="Chuẩn Bắc Bộ (nghìn, linh, tư)"
+                    onAction="OnSetDialectNorth" />
+            <button id="btnDialectSouth"
+                    label="Chuẩn Nam Bộ (ngàn, lẻ, bốn)"
+                    onAction="OnSetDialectSouth" />
+          </menu>
+
+          <checkBox id="chkItalicInsert"
+                    label="In nghiêng chữ"
+                    getPressed="GetItalicPressed"
+                    onAction="OnToggleItalic" />
+        </group>
+
+        <!-- Nhóm 2: Thể Thức Văn Bản Hành Chính Nghị Định 30/2020/NĐ-CP -->
+        <group id="grpAdminDecree30" label="Thể Thức Hành Chính (NĐ 30/2020)">
+          <button id="btnDecree30OneClick"
+                  label="Chuẩn Hóa NĐ 30"
+                  size="large"
+                  imageMso="PageSetupPageDialog"
+                  screentip="Chuẩn hóa toàn diện văn bản hành chính theo Nghị định 30/2020/NĐ-CP (1-Click)"
+                  supertip="Tự động thiết lập khổ giấy A4, căn lề chuẩn (20-20-30-15mm), phông Times New Roman 14pt, giãn dòng, thụt đầu dòng 1,27cm, dọn rác và đánh số trang chuẩn NĐ 30/2020."
+                  onAction="OnDecree30OneClick" />
+
+          <menu id="menuDecree30Blocks"
+                label="Khung Hành Chính"
+                size="large"
+                imageMso="TableInsert"
+                screentip="Chèn nhanh Quốc hiệu - Tiêu ngữ, Nơi nhận &amp; Chữ ký chuẩn NĐ 30/2020">
+            <button id="btnInsertQuocHieu"
+                    label="Chèn Quốc hiệu - Tiêu ngữ &amp; Tiêu đề đầu trang"
+                    imageMso="HeaderInsertGallery"
+                    onAction="OnInsertQuocHieuClick" />
+            <button id="btnInsertNoiNhanChuKy"
+                    label="Chèn Nơi nhận &amp; Chữ ký cuối trang"
+                    imageMso="SignatureLineInsert"
+                    onAction="OnInsertNoiNhanChuKyClick" />
+            <menuSeparator id="sepDecree30Sub" />
+            <button id="btnDecree30MarginsOnly"
+                    label="Chỉ căn lề A4 chuẩn NĐ 30 &amp; Đánh số trang"
+                    imageMso="PageMarginsGallery"
+                    onAction="OnDecree30MarginsOnlyClick" />
+            <button id="btnCleanDocGarbage"
+                    label="Dọn dẹp định dạng rác toàn văn bản"
+                    imageMso="ClearFormatting"
+                    onAction="OnCleanDocGarbageClick" />
+            <menuSeparator id="sepDecree30Config" />
+            <button id="btnOpenDecree30Pane"
+                    label="Tùy chỉnh thông tin Cơ quan / Người ký..."
+                    imageMso="ApplicationOptionsDialog"
+                    onAction="OnOpenDecree30PaneClick" />
+          </menu>
+        </group>
+
+        <!-- Nhóm 3: Chuẩn Hóa Văn Bản & Chữ Hoa/Thường -->
+        <group id="grpTextUtilities" label="Soạn Thảo &amp; Chuẩn Hóa">
+          <button id="btnCleanText"
+                  label="Chuẩn Hóa Văn Bản"
+                  size="large"
+                  imageMso="SpellingAndGrammar"
+                  screentip="Xóa khoảng trắng thừa và chuẩn hóa dấu câu Tiếng Việt"
+                  onAction="OnCleanTextClick" />
+
+          <menu id="menuChangeCase"
+                label="Đổi Hoa / Thường"
+                size="large"
+                imageMso="ChangeCaseGallery"
+                screentip="Đổi kiểu chữ Hoa/Thường hỗ trợ Tiếng Việt">
+            <button id="btnCaseTitle"
+                    label="Viết Hoa Đầu Mỗi Từ (Họ Tên)"
+                    onAction="OnCaseTitleClick" />
+            <button id="btnCaseSentence"
+                    label="Viết hoa chữ cái đầu câu"
+                    onAction="OnCaseSentenceClick" />
+            <button id="btnCaseUpper"
+                    label="CHỮ IN HOA TOÀN BỘ"
+                    onAction="OnCaseUpperClick" />
+            <button id="btnCaseLower"
+                    label="chữ thường toàn bộ"
+                    onAction="OnCaseLowerClick" />
+          </menu>
+        </group>
+
+        <!-- Nhóm 3: Bảng Điều Khiển CoolWord -->
+        <group id="grpTaskPane" label="Bảng Điều Khiển &amp; Mở Rộng">
+          <toggleButton id="btnToggleTaskPane"
+                        label="Bảng Công Cụ CoolWord"
+                        size="large"
+                        imageMso="ApplicationOptionsDialog"
+                        screentip="Bật / Tắt bảng điều khiển CoolWord bên phải màn hình"
+                        getPressed="GetTaskPanePressed"
+                        onAction="OnToggleTaskPane" />
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+
+  <!-- Menu chuột phải thông minh khi bôi đen số trong văn bản hoặc bảng biểu -->
+  <contextMenus>
+    <contextMenu idMso="ContextMenuText">
+      <menuSeparator id="sepCtxTextTop" insertBeforeMso="Cut" />
+      <button id="ctxText_ConvertQuick"
+              insertBeforeMso="Cut"
+              imageMso="NumberInsert"
+              getLabel="GetContextQuickLabel"
+              onAction="OnConvertQuickClick" />
+      <menu id="ctxText_SubMenu"
+            label="CoolWord - Đổi số &amp; Tiện ích"
+            insertBeforeMso="Cut"
+            imageMso="PasteMenu">
+        <button id="ctxText_AppendParen"
+                label="Chèn chữ trong ngoặc sau số: 1.000 (Một nghìn...)"
+                imageMso="Bullets"
+                onAction="OnConvertAppendParenClick" />
+        <button id="ctxText_Replace"
+                label="Thay thế trực tiếp số đang chọn"
+                imageMso="ReplaceDialog"
+                onAction="OnConvertReplaceClick" />
+        <button id="ctxText_AppendLabel"
+                label="Chèn (Bằng chữ: ...) sau số"
+                imageMso="InsertCaption"
+                onAction="OnConvertAppendLabelClick" />
+        <button id="ctxText_Copy"
+                label="Sao chép kết quả đọc số vào Clipboard"
+                imageMso="Copy"
+                onAction="OnCopyConvertedClick" />
+        <menuSeparator id="ctxText_Sep1" />
+        <button id="ctxText_Clean"
+                label="Chuẩn hóa khoảng trắng &amp; dấu câu"
+                imageMso="SpellingAndGrammar"
+                onAction="OnCleanTextClick" />
+        <button id="ctxText_OpenPane"
+                label="Mở bảng điều khiển CoolWord..."
+                imageMso="ApplicationOptionsDialog"
+                onAction="OnOpenTaskPaneFromContext" />
+      </menu>
+    </contextMenu>
+
+    <contextMenu idMso="ContextMenuTableText">
+      <menuSeparator id="sepCtxTableTop" insertBeforeMso="Cut" />
+      <button id="ctxTable_ConvertQuick"
+              insertBeforeMso="Cut"
+              imageMso="NumberInsert"
+              getLabel="GetContextQuickLabel"
+              onAction="OnConvertQuickClick" />
+      <menu id="ctxTable_SubMenu"
+            label="CoolWord - Đổi số &amp; Tiện ích"
+            insertBeforeMso="Cut"
+            imageMso="PasteMenu">
+        <button id="ctxTable_AppendParen"
+                label="Chèn chữ trong ngoặc sau số: 1.000 (Một nghìn...)"
+                imageMso="Bullets"
+                onAction="OnConvertAppendParenClick" />
+        <button id="ctxTable_Replace"
+                label="Thay thế trực tiếp số đang chọn"
+                imageMso="ReplaceDialog"
+                onAction="OnConvertReplaceClick" />
+        <button id="ctxTable_AppendLabel"
+                label="Chèn (Bằng chữ: ...) sau số"
+                imageMso="InsertCaption"
+                onAction="OnConvertAppendLabelClick" />
+        <button id="ctxTable_Copy"
+                label="Sao chép kết quả đọc số vào Clipboard"
+                imageMso="Copy"
+                onAction="OnCopyConvertedClick" />
+        <menuSeparator id="ctxTable_Sep1" />
+        <button id="ctxTable_OpenPane"
+                label="Mở bảng điều khiển CoolWord..."
+                imageMso="ApplicationOptionsDialog"
+                onAction="OnOpenTaskPaneFromContext" />
+      </menu>
+    </contextMenu>
+  </contextMenus>
+</customUI>

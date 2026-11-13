@@ -1,0 +1,21 @@
+# Build results
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# Visual Studio / Editor files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.cache
+*.pdb
+
+# Windows / OS files
+Thumbs.db
+Desktop.ini
+.DS_Store

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8B4F2A11-9D3E-4C7A-B1E2-5F6A7B8C9D01}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CoolWord</RootNamespace>
+    <AssemblyName>CoolWord</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="OFFICE">
+      <HintPath>C:\Windows\assembly\GAC_MSIL\office\15.0.0.0__71e9bce111e9429c\OFFICE.DLL</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word">
+      <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Word\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AddIn\ComInterfaces.cs" />
+    <Compile Include="AddIn\CoolWordAddIn.cs" />
+    <Compile Include="AddIn\TaskPaneHost.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AddIn\AddInInstaller.cs" />
+    <Compile Include="Core\AppSettings.cs" />
+    <Compile Include="Core\SettingsService.cs" />
+    <Compile Include="Core\IWordDocumentService.cs" />
+    <Compile Include="Core\WordDocumentService.cs" />
+    <Compile Include="Core\IToolModule.cs" />
+    <Compile Include="Core\ModuleRegistry.cs" />
+    <Compile Include="Modules\NumberToText\NumberConvertOptions.cs" />
+    <Compile Include="Modules\NumberToText\NumberExtractor.cs" />
+    <Compile Include="Modules\NumberToText\VietnameseNumberConverter.cs" />
+    <Compile Include="Modules\NumberToText\NumberToTextModule.cs" />
+    <Compile Include="Modules\AdminFormat\AdminDocOptions.cs" />
+    <Compile Include="Modules\AdminFormat\Decree30Formatter.cs" />
+    <Compile Include="Modules\AdminFormat\AdminFormatModule.cs" />
+    <Compile Include="Modules\TextUtilities\TextCleanModule.cs" />
+    <Compile Include="UI\ThemeColors.cs" />
+    <Compile Include="UI\MainTaskPaneControl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AddIn\Ribbon.xml">
+      <LogicalName>CoolWord.AddIn.Ribbon.xml</LogicalName>
+    </EmbeddedResource>
+    <Content Include="AddIn\Ribbon.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

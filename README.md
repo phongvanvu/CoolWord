@@ -1,0 +1,88 @@
+# CoolWord - Bộ Công Cụ Tiếng Việt Mở Rộng Cho Microsoft Word (2016+)
+
+**CoolWord** là Add-in native (C# .NET COM Add-in + WPF Fluent UI) dành cho **Microsoft Word 2016, 2019, 2021, 2024 và Microsoft 365** trên Windows. Add-in hoạt động hoàn toàn offline, tích hợp sâu vào **Ribbon Tab**, **Menu Chuột Phải (Context Menu)** và **Bảng Điều Khiển (Custom Task Pane)** của Word, đồng thời được thiết kế theo kiến trúc **Plugin / Module (`IToolModule`)** dễ dàng mở rộng.
+
+---
+
+## 1. Tính năng nổi bật
+
+### 🔢 Module 1: Đổi Số Ra Chữ Tiếng Việt (`NumberToTextModule`)
+- **Chuyển đổi trực tiếp trên văn bản Word**:
+  - Bôi đen con số trong văn bản hoặc bảng biểu (hoặc chỉ cần đặt con trỏ vào giữa con số) và nhấn **Đổi Số Đang Chọn**.
+  - **Menu Chuột Phải thông minh**: Khi bôi đen số và nhấp chuột phải, CoolWord tự động đọc số và hiển thị **xem trước kết quả bằng chữ ngay trên dòng đầu tiên của menu chuột phải** (`Đổi số: "Một triệu hai trăm năm mươi nghìn đồng chẵn"`).
+- **4 Chế độ thay thế / chèn linh hoạt**:
+  1. **Chèn trong ngoặc sau số**: `1.250.000` → `1.250.000 (Một triệu hai trăm năm mươi nghìn đồng chẵn)`
+  2. **Thay thế trực tiếp số gốc**: `1.250.000` → `Một triệu hai trăm năm mươi nghìn đồng chẵn`
+  3. **Chèn kèm nhãn trong ngoặc**: `1.250.000` → `1.250.000 (Bằng chữ: Một triệu hai trăm năm mươi nghìn đồng chẵn)`
+  4. **Xuống dòng mới**: Chèn dòng `Bằng chữ: ...` ngay bên dưới.
+  - Hỗ trợ **Đổi hàng loạt mọi con số trong vùng bôi đen** và hỗ trợ `Ctrl+Z` (Undo 1 bước).
+- **Chuẩn âm vị & quy tắc kế toán Tiếng Việt**:
+  - Xử lý chính xác các quy tắc đọc đặc biệt: `mười`, `mốt` (`21`), `tư`/`bốn` (`14` đọc là *mười bốn*, `24` đọc là *hai mươi tư*), `lăm`/`năm` (`15` đọc là *mười lăm*, `105` đọc là *một trăm lẻ năm*), `không trăm` (`1.005`), và các cấp hàng `tỷ`, `nghìn tỷ` (`1.002.000.000.000` → *Một nghìn không trăm lẻ hai tỷ*).
+  - **Đơn vị đọc**: Tiền Việt Nam (`đồng` / `chẵn`), Ngoại tệ `USD` (`đô la Mỹ` và `xu`, tự động nhận diện ký hiệu `$` hoặc `USD`), Số thuần túy (đọc số âm, số thập phân `phẩy`), hoặc Đơn vị tùy chỉnh.
+  - **Phương ngữ**: Phổ thông hành chính (`nghìn, lẻ, tư`), Chuẩn Bắc Bộ (`nghìn, linh, tư`), Chuẩn Nam Bộ (`ngàn, lẻ, bốn`).
+
+### 🏛️ Module 2: Chuẩn Hóa Văn Bản Hành Chính Nghị Định 30/2020/NĐ-CP (`AdminFormatModule`)
+Được xây dựng mới 100% độc lập dựa trên quy chuẩn pháp lý công khai tại **Phụ lục I - Nghị định 30/2020/NĐ-CP của Chính phủ về công tác văn thư**:
+- **Chuẩn hóa toàn diện 1-Click (`ApplyFullStandardOneClick`)**:
+  - Thiết lập khổ giấy **A4**, căn lề chuẩn văn thư (Lề trên `20-25 mm`, Lề dưới `20-25 mm`, Lề trái `30-35 mm`, Lề phải `15-20 mm`).
+  - Chuẩn hóa phông chữ **Times New Roman** cỡ `13-14 pt`, căn đều 2 bên (`Justify`), thụt lề dòng đầu `1,27 cm`, khoảng cách đoạn `6 pt`, giãn dòng `1.15` cho toàn bộ nội dung (tự động nhận diện và giữ nguyên bố cục các bảng biểu).
+  - **Đánh số trang chuẩn NĐ 30/2020**: Cỡ chữ `13 pt` Times New Roman, đặt canh giữa theo chiều ngang ở lề trên (`Header`) và tự động ẩn số trang ở trang thứ nhất (`DifferentFirstPageHeaderFooter`).
+  - **Dọn dẹp định dạng rác toàn văn bản**: Xóa khoảng trắng kép, xóa dấu Tab thừa đầu dòng, xóa khoảng trắng thừa trước dấu câu và gộp các dòng trống thừa liên tiếp.
+- **Tự động tạo Khung Đầu Văn Bản (`InsertHeaderBlock`)**:
+  - Tạo bảng ẩn viền 2x2 chuẩn thể thức: **Cơ quan chủ quản / Cơ quan ban hành** (kèm đường kẻ ngang), **Quốc hiệu - Tiêu ngữ** (`CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM` / `Độc lập - Tự do - Hạnh phúc` kèm đường kẻ ngang), **Số & ký hiệu**, **Địa danh & Ngày tháng** (tự động thêm số `0` trước các ngày `< 10` và các tháng `1, 2` đúng quy định NĐ 30/2020), cùng **Tên loại văn bản & Trích yếu nội dung**.
+- **Tự động tạo Khung Cuối Văn Bản (`InsertFooterSignatureBlock`)**:
+  - Tạo bảng ẩn viền 1x2 gồm **Nơi nhận** (`12 pt` đậm nghiêng, danh sách `11 pt` đứng) và **Quyền hạn, Chức vụ, Họ tên người ký** (`13-14 pt` in đậm, căn giữa).
+- **Đọc ngày tháng năm ra chữ Tiếng Việt**: Hỗ trợ cả định dạng ngày hành chính NĐ 30 và đọc toàn bộ ngày tháng năm bằng chữ cho biên bản/hợp đồng.
+
+### ✨ Module 3: Chuẩn Hóa Văn Bản & Đổi Chữ Hoa/Thường (`TextCleanModule`)
+- Xóa khoảng trắng kép, xóa dấu cách thừa trước dấu câu (`, . ; : ! ? )`) và chuẩn hóa khoảng cách sau dấu câu.
+- Chuyển đổi kiểu chữ Hoa/Thường chuẩn Tiếng Việt (`Viết Hoa Đầu Mỗi Từ`, `Viết hoa đầu câu`, `IN HOA TOÀN BỘ`, `chữ thường`).
+
+---
+
+## 2. Cấu trúc dự án & Kiến trúc mở rộng
+
+```text
+c:\projects\CoolWord\
+├── CoolWord.sln                    # Giải pháp Visual Studio
+├── build.ps1                       # Script biên dịch & chạy bộ kiểm thử tự động
+├── install.ps1                     # Đăng ký Add-in vào MS Word (Current User - không cần quyền Admin)
+├── uninstall.ps1                   # Gỡ đăng ký Add-in khỏi MS Word
+├── bin\                            # Thư mục chứa file thực thi sau khi build
+│   ├── CoolWord.dll                # Thư viện COM Add-in chính nạp vào MS Word
+│   ├── CoolWord.Studio.exe         # Ứng dụng Desktop quản lý cài đặt & dùng độc lập
+│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (31 test cases)
+├── src\
+│   ├── CoolWord\
+│   │   ├── AddIn\                  # Tích hợp COM (IDTExtensibility2, Ribbon XML, Custom Task Pane, Installer)
+│   │   ├── Core\                   # Kiến trúc lõi (IToolModule, ModuleRegistry, WordDocumentService, SettingsService)
+│   │   ├── Modules\
+│   │   │   ├── NumberToText\       # Module Đổi Số Ra Chữ Tiếng Việt
+│   │   │   └── TextUtilities\      # Module Chuẩn Hóa Văn Bản & Chữ Hoa/Thường
+│   │   └── UI\                     # Giao diện WPF Fluent Design (ThemeColors, MainTaskPaneControl)
+│   └── CoolWord.Studio\            # Ứng dụng quản lý & chạy thử giao diện độc lập
+└── tests\
+    └── CoolWord.Tests\             # Unit tests kiểm tra thuật toán đọc số Tiếng Việt
+```
+
+### Cách mở rộng thêm tính năng (Module) mới sau này
+1. Tạo một lớp mới thực thi giao diện `IToolModule` (trong `src/CoolWord/Core/IToolModule.cs`):
+   - Khai báo `Id`, `Title`, `Subtitle`, `IconText`, `Order`.
+   - Cài đặt `ExecuteQuickAction(IWordDocumentService wordService, out string statusMessage)` cho thao tác nhanh.
+   - Cài đặt `CreateModuleView(...)` trả về `UIElement` (WPF UserControl) cho giao diện chi tiết.
+2. Đăng ký module vào `ModuleRegistry.EnsureInitialized()` (trong `src/CoolWord/Core/ModuleRegistry.cs`).
+3. Thanh điều hướng trên `MainTaskPaneControl` sẽ tự động hiển thị tab công cụ mới mà không cần sửa đổi khung giao diện chính.
+
+---
+
+## 3. Hướng dẫn Biên dịch & Cài đặt
+
+- **Biên dịch và chạy kiểm thử**:
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File .\build.ps1
+  ```
+- **Cài đặt Add-in vào MS Word (không cần quyền Admin)**:
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File .\install.ps1
+  ```
+  Hoặc mở trực tiếp `bin\CoolWord.Studio.exe` để cài đặt/gỡ cài đặt bằng giao diện đồ họa và trải nghiệm ngay các tính năng.
