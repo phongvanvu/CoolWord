@@ -463,6 +463,66 @@ namespace CoolWord.AddIn
             }
         }
 
+        #region Callbacks Nhóm In Ấn & Xuất Bản
+
+        public void OnPrintCurrentPageClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.PrintCurrentPage(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnPrintManualDuplexClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.PrintManualDuplex(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnPrintOddPagesClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.PrintOddPagesOnly(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnPrintEvenPagesClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.PrintEvenPagesOnly(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnPrintSelectionClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.PrintSelection(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnPrintTwoPagesPerSheetClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.PrintTwoPagesPerSheet(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnExportPdfClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ExportQuickPdf(null, out status);
+            NotifyStatus(status);
+        }
+
+        #endregion
+
         private void ExecuteConvertWithMode(WordInsertMode? overrideInsertMode)
         {
             if (_wordService == null) return;

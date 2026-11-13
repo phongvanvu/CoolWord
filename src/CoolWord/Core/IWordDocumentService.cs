@@ -26,5 +26,17 @@ namespace CoolWord.Core
         bool InsertDecree30Header(AdminDocOptions options, out string statusMessage);
         bool InsertDecree30FooterSignature(AdminDocOptions options, out string statusMessage);
         bool CleanFullDocumentGarbage(out string statusMessage);
+
+        // Các tác vụ In ấn & Xuất bản thông minh
+        bool PrintCurrentPage(out string statusMessage);
+        bool PrintSelection(out string statusMessage);
+        bool PrintManualDuplex(out string statusMessage);
+        bool PrintOddPagesOnly(out string statusMessage);
+        bool PrintEvenPagesOnly(out string statusMessage);
+        bool PrintTwoPagesPerSheet(out string statusMessage);
+        bool ExportQuickPdf(string targetFilePath, out string statusMessage);
+
+        // Nghiệp vụ kế toán: In chứng từ kế toán nhiều liên (Không hiển thị trên UI)
+        bool PrintMultiCopyAccountingVoucher(int copies, string voucherType, bool fitTwoPerSheet, out string statusMessage);
     }
 }

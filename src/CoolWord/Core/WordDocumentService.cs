@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using CoolWord.Modules.AdminFormat;
 using CoolWord.Modules.NumberToText;
+using CoolWord.Modules.Printing;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace CoolWord.Core
@@ -659,5 +660,57 @@ namespace CoolWord.Core
             if (string.IsNullOrEmpty(value) || value.Length <= maxLen) return value;
             return value.Substring(0, maxLen) + "...";
         }
+
+        #region Tác vụ In ấn & Xuất bản
+
+        public bool PrintCurrentPage(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PrintService.PrintCurrentPage(app, out statusMessage);
+        }
+
+        public bool PrintSelection(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PrintService.PrintSelection(app, out statusMessage);
+        }
+
+        public bool PrintManualDuplex(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PrintService.PrintManualDuplex(app, out statusMessage);
+        }
+
+        public bool PrintOddPagesOnly(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PrintService.PrintOddPagesOnly(app, out statusMessage);
+        }
+
+        public bool PrintEvenPagesOnly(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PrintService.PrintEvenPagesOnly(app, out statusMessage);
+        }
+
+        public bool PrintTwoPagesPerSheet(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PrintService.PrintTwoPagesPerSheet(app, out statusMessage);
+        }
+
+        public bool ExportQuickPdf(string targetFilePath, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PrintService.ExportQuickPdf(app, targetFilePath, out statusMessage);
+        }
+
+        public bool PrintMultiCopyAccountingVoucher(int copies, string voucherType, bool fitTwoPerSheet, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PrintService.PrintMultiCopyAccountingVoucher(app, copies, voucherType, fitTwoPerSheet, out statusMessage);
+        }
+
+        #endregion
     }
 }

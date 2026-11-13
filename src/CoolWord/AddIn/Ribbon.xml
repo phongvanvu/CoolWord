@@ -152,7 +152,51 @@
           </menu>
         </group>
 
-        <!-- Nhóm 3: Bảng Điều Khiển CoolWord -->
+        <!-- Nhóm 4: In Ấn & Xuất Bản -->
+        <group id="grpPrintUtilities" label="In Ấn &amp; Xuất Bản">
+          <button id="btnPrintCurrentPage"
+                  label="In Trang Này"
+                  size="large"
+                  imageMso="PrintQuick"
+                  screentip="In nhanh trang hiện tại"
+                  supertip="Gửi lệnh in ngay lập tức trang tài liệu Word đang đặt con trỏ."
+                  onAction="OnPrintCurrentPageClick" />
+
+          <menu id="menuPrintOptions"
+                label="Tùy Chọn In"
+                size="large"
+                imageMso="PrintOptionsMenu"
+                screentip="Các tiện ích in ấn nâng cao">
+            <button id="btnPrintManualDuplex"
+                    label="In 2 mặt thủ công (Hướng dẫn đảo giấy)"
+                    imageMso="PrintPreviewTwoPages"
+                    onAction="OnPrintManualDuplexClick" />
+            <button id="btnPrintOddPages"
+                    label="Chỉ in các trang lẻ (1, 3, 5...)"
+                    imageMso="NumberingGallery"
+                    onAction="OnPrintOddPagesClick" />
+            <button id="btnPrintEvenPages"
+                    label="Chỉ in các trang chẵn (2, 4, 6...)"
+                    imageMso="NumberingGallery"
+                    onAction="OnPrintEvenPagesClick" />
+            <menuSeparator id="sepPrintSub1" />
+            <button id="btnPrintSelection"
+                    label="In vùng văn bản đang bôi đen"
+                    imageMso="PrintSelection"
+                    onAction="OnPrintSelectionClick" />
+            <button id="btnPrintTwoPagesPerSheet"
+                    label="In 2 trang trên 1 mặt giấy A4 (N-up)"
+                    imageMso="MultiplePages"
+                    onAction="OnPrintTwoPagesPerSheetClick" />
+            <menuSeparator id="sepPrintSub2" />
+            <button id="btnExportPdf"
+                    label="Xuất nhanh tài liệu sang file PDF"
+                    imageMso="FileSaveAsPdfOrXps"
+                    onAction="OnExportPdfClick" />
+          </menu>
+        </group>
+
+        <!-- Nhóm 5: Bảng Điều Khiển CoolWord -->
         <group id="grpTaskPane" label="Bảng Điều Khiển &amp; Mở Rộng">
           <toggleButton id="btnToggleTaskPane"
                         label="Bảng Công Cụ CoolWord"

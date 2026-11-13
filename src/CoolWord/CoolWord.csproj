@@ -73,6 +73,9 @@
     <Compile Include="Modules\AdminFormat\Decree30Formatter.cs" />
     <Compile Include="Modules\AdminFormat\AdminFormatModule.cs" />
     <Compile Include="Modules\TextUtilities\TextCleanModule.cs" />
+    <Compile Include="Modules\Printing\PrintService.cs" />
+    <Compile Include="Modules\Printing\PrintModule.cs" />
+    <Compile Include="Modules\Printing\PrintModuleView.cs" />
     <Compile Include="UI\ThemeColors.cs" />
     <Compile Include="UI\MainTaskPaneControl.cs" />
   </ItemGroup>

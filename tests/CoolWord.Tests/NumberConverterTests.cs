@@ -1,6 +1,8 @@
 using System;
+using CoolWord.Core;
 using CoolWord.Modules.AdminFormat;
 using CoolWord.Modules.NumberToText;
+using CoolWord.Modules.Printing;
 using CoolWord.Modules.TextUtilities;
 
 namespace CoolWord.Tests
@@ -91,6 +93,25 @@ namespace CoolWord.Tests
 
             string wordsDate = Decree30Formatter.FormatDateInVietnameseWords(new DateTime(2026, 11, 13), "Hà Nội");
             AssertEqual("Date In Vietnamese Words", "Hà Nội, ngày mười ba tháng mười một năm hai nghìn không trăm hai mươi sáu", wordsDate);
+
+            // 9. Kiểm thử Module In Ấn & Xuất Bản (PrintModule & PrintService)
+            ModuleRegistry.EnsureInitialized();
+            IToolModule printMod = ModuleRegistry.GetById("print-utilities");
+            AssertEqual("PrintModule Registration", "true", (printMod != null).ToString().ToLowerInvariant());
+            if (printMod != null)
+            {
+                AssertEqual("PrintModule Title", "In Ấn & Xuất Bản", printMod.Title);
+                AssertEqual("PrintModule Order", "4", printMod.Order.ToString());
+            }
+
+            // Kiểm thử các hàm xử lý PrintService với null app (xử lý ngoại lệ an toàn)
+            string printStatus;
+            bool printRes = PrintService.PrintCurrentPage(null, out printStatus);
+            AssertEqual("PrintCurrentPage Null Check", "false", printRes.ToString().ToLowerInvariant());
+
+            string voucherStatus;
+            bool voucherRes = PrintService.PrintMultiCopyAccountingVoucher(null, 2, "Phiếu thu", false, out voucherStatus);
+            AssertEqual("PrintMultiCopyAccountingVoucher Null Check", "false", voucherRes.ToString().ToLowerInvariant());
 
             Console.WriteLine("--------------------------------------------------------------------");
             Console.WriteLine(string.Format("KẾT QUẢ: Đạt {0} / {1} bài kiểm thử (Thất bại: {2})", _passed, _passed + _failed, _failed));

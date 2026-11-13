@@ -38,6 +38,13 @@
 - Xóa khoảng trắng kép, xóa dấu cách thừa trước dấu câu (`, . ; : ! ? )`) và chuẩn hóa khoảng cách sau dấu câu.
 - Chuyển đổi kiểu chữ Hoa/Thường chuẩn Tiếng Việt (`Viết Hoa Đầu Mỗi Từ`, `Viết hoa đầu câu`, `IN HOA TOÀN BỘ`, `chữ thường`).
 
+### 🖨️ Module 4: In Ấn & Xuất Bản Thông Minh (`PrintModule`)
+- **In 2 mặt thủ công thông minh (Manual Duplex)**: Dành cho máy in 1 mặt, tự động in trang lẻ trước, hiển thị hướng dẫn lật giấy trực quan và in tiếp trang chẵn.
+- **In nhanh trang hiện tại & vùng chọn**: In ngay lập tức 1-Click trang đang thao tác hoặc vùng văn bản được bôi đen.
+- **In 2 trang trên 1 mặt giấy A4 (2 Pages per sheet / N-up)**: Co tỷ lệ 2 trang tài liệu trên một mặt giấy A4 nằm ngang giúp tiết kiệm giấy và đọc duyệt tài liệu nhanh.
+- **Xuất nhanh PDF chuẩn in ấn**: Xuất trực tiếp văn bản sang file PDF giữ nguyên toàn bộ định dạng và phông chữ.
+- **Tính năng nghiệp vụ kế toán (dịch vụ logic nền)**: Hỗ trợ hàm chuyên biệt in chứng từ kế toán nhiều liên (Phiếu Thu - Chi 2 liên/3 liên).
+
 ---
 
 ## 2. Cấu trúc dự án & Kiến trúc mở rộng
@@ -58,7 +65,9 @@ c:\projects\CoolWord\
 │   │   ├── Core\                   # Kiến trúc lõi (IToolModule, ModuleRegistry, WordDocumentService, SettingsService)
 │   │   ├── Modules\
 │   │   │   ├── NumberToText\       # Module Đổi Số Ra Chữ Tiếng Việt
-│   │   │   └── TextUtilities\      # Module Chuẩn Hóa Văn Bản & Chữ Hoa/Thường
+│   │   │   ├── AdminFormat\        # Module Chuẩn Hóa Văn Bản Nghị Định 30/2020
+│   │   │   ├── TextUtilities\      # Module Chuẩn Hóa Văn Bản & Chữ Hoa/Thường
+│   │   │   └── Printing\           # Module In Ấn & Xuất Bản Thông Minh
 │   │   └── UI\                     # Giao diện WPF Fluent Design (ThemeColors, MainTaskPaneControl)
 │   └── CoolWord.Studio\            # Ứng dụng quản lý & chạy thử giao diện độc lập
 └── tests\
