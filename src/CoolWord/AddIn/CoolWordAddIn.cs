@@ -36,9 +36,27 @@ namespace CoolWord.AddIn
         private Office.CustomTaskPane _customTaskPane;
         private TaskPaneHost _taskPaneHost;
 
+        public static void Log(string message)
+        {
+            try
+            {
+                string logDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CoolWord");
+                if (!Directory.Exists(logDir)) Directory.CreateDirectory(logDir);
+                string logFile = Path.Combine(logDir, "addin_debug.log");
+                File.AppendAllText(logFile, string.Format("[{0:yyyy-MM-dd HH:mm:ss.fff}] {1}\r\n", DateTime.Now, message));
+            }
+            catch { }
+        }
+
         static CoolWordAddIn()
         {
+            Log("CoolWordAddIn static ctor: AssemblyResolve registered.");
             AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+        }
+
+        public CoolWordAddIn()
+        {
+            Log("CoolWordAddIn instance created.");
         }
 
         private static Assembly OnAssemblyResolve(object sender, ResolveEventArgs args)
@@ -52,11 +70,15 @@ namespace CoolWord.AddIn
                     string candidate = Path.Combine(baseDir, requestedName.Name + ".dll");
                     if (File.Exists(candidate))
                     {
+                        Log("AssemblyResolve resolved: " + requestedName.Name);
                         return Assembly.LoadFrom(candidate);
                     }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Log("AssemblyResolve error: " + ex.Message);
+            }
             return null;
         }
 
@@ -64,6 +86,7 @@ namespace CoolWord.AddIn
 
         public void OnConnection(object Application, ext_ConnectMode ConnectMode, object AddInInst, ref Array custom)
         {
+            Log(string.Format("OnConnection called: ConnectMode={0}, App={1}", ConnectMode, Application != null));
             try
             {
                 _wordApp = Application as Word.Application;
@@ -83,8 +106,12 @@ namespace CoolWord.AddIn
                         try { _ribbon.Invalidate(); } catch { }
                     }
                 };
+                Log("OnConnection initialized WordDocumentService successfully.");
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Log("OnConnection ERROR: " + ex);
+            }
         }
 
         public void OnDisconnection(ext_DisconnectMode RemoveMode, ref Array custom)
@@ -124,8 +151,17 @@ namespace CoolWord.AddIn
 
         public string GetCustomUI(string RibbonID)
         {
+            Log(string.Format("GetCustomUI called with RibbonID={0}", RibbonID));
             try
             {
+                string overrideFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CoolWord", "test_ribbon.xml");
+                if (File.Exists(overrideFile))
+                {
+                    string xml = File.ReadAllText(overrideFile);
+                    Log(string.Format("GetCustomUI loaded test_ribbon.xml override ({0} bytes)", xml.Length));
+                    return xml;
+                }
+
                 Assembly asm = typeof(CoolWordAddIn).Assembly;
                 using (Stream stream = asm.GetManifestResourceStream("CoolWord.AddIn.Ribbon.xml"))
                 {
@@ -133,7 +169,9 @@ namespace CoolWord.AddIn
                     {
                         using (StreamReader reader = new StreamReader(stream))
                         {
-                            return reader.ReadToEnd();
+                            string xml = reader.ReadToEnd();
+                            Log(string.Format("GetCustomUI successfully loaded embedded Ribbon.xml ({0} bytes)", xml.Length));
+                            return xml;
                         }
                     }
                 }
@@ -142,10 +180,16 @@ namespace CoolWord.AddIn
                 string fileCandidate = Path.Combine(dir ?? "", "Ribbon.xml");
                 if (File.Exists(fileCandidate))
                 {
-                    return File.ReadAllText(fileCandidate);
+                    string xml = File.ReadAllText(fileCandidate);
+                    Log(string.Format("GetCustomUI successfully loaded disk Ribbon.xml ({0} bytes)", xml.Length));
+                    return xml;
                 }
+                Log("GetCustomUI WARNING: Ribbon.xml was NOT found in embedded resources or on disk!");
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Log("GetCustomUI ERROR: " + ex);
+            }
 
             return string.Empty;
         }
@@ -201,6 +245,7 @@ namespace CoolWord.AddIn
 
         public void OnRibbonLoad(Office.IRibbonUI ribbonUI)
         {
+            Log(string.Format("OnRibbonLoad called: ribbonUI={0}", ribbonUI != null));
             _ribbon = ribbonUI;
         }
 
@@ -1033,20 +1078,36 @@ namespace CoolWord.AddIn
 
         #region Callbacks Ribbon Image Loader
 
-        public System.Drawing.Bitmap GetRibbonImage(Office.IRibbonControl control)
+        public stdole.IPictureDisp GetRibbonImage(Office.IRibbonControl control)
         {
             if (control == null) return null;
-            switch (control.Id)
+            Log("GetRibbonImage called for: " + control.Id);
+            try
             {
-                case "menuBatchMail":
-                    return RibbonIconFactory.CreateMailMergeIcon();
-                case "menuImageTools":
-                    return RibbonIconFactory.CreateImageToolsIcon();
-                case "menuGoogleTranslate":
-                    return RibbonIconFactory.CreateGoogleTranslateIcon();
-                default:
-                    return null;
+                System.Drawing.Bitmap bmp = null;
+                switch (control.Id)
+                {
+                    case "menuBatchMail":
+                        bmp = RibbonIconFactory.CreateMailMergeIcon();
+                        break;
+                    case "menuImageTools":
+                        bmp = RibbonIconFactory.CreateImageToolsIcon();
+                        break;
+                    case "menuGoogleTranslate":
+                        bmp = RibbonIconFactory.CreateGoogleTranslateIcon();
+                        break;
+                }
+
+                if (bmp != null)
+                {
+                    return PictureDispConverter.ToIPictureDisp(bmp);
+                }
             }
+            catch (Exception ex)
+            {
+                Log("GetRibbonImage error: " + ex);
+            }
+            return null;
         }
 
         #endregion

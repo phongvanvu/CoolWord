@@ -75,6 +75,28 @@ namespace CoolWord.AddIn
                     }
                 }
 
+                // Đảm bảo Word không bao giờ vô hiệu hóa Add-in (DoNotDisableAddinList)
+                string[] wordVersionRoots = new[]
+                {
+                    @"Software\Microsoft\Office\16.0\Word\Resiliency",
+                    @"Software\Microsoft\Office\15.0\Word\Resiliency"
+                };
+
+                foreach (string resRoot in wordVersionRoots)
+                {
+                    try
+                    {
+                        using (RegistryKey noDisableKey = Registry.CurrentUser.CreateSubKey(resRoot + @"\DoNotDisableAddinList"))
+                        {
+                            if (noDisableKey != null)
+                            {
+                                noDisableKey.SetValue(AddInProgId, 1, RegistryValueKind.DWord);
+                            }
+                        }
+                    }
+                    catch { }
+                }
+
                 // Xóa trạng thái bị chặn (Resiliency / DisabledItems) nếu trước đó Word từng tắt Add-in
                 message = "Đã đăng ký thành công Add-in CoolWord vào Microsoft Word (" + dllPath + "). Hãy khởi động lại MS Word để sử dụng!";
                 return true;

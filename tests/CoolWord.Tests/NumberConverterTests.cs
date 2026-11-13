@@ -427,6 +427,17 @@ namespace CoolWord.Tests
             bool transTermsRes = GoogleTranslateService.TranslateFinancialAndLegalTerms(null, "en", false, out transStatus);
             AssertEqual("GoogleTranslate Terms Null Safe", "false", transTermsRes.ToString().ToLowerInvariant());
 
+            // Kiểm thử PictureDispConverter
+            stdole.IPictureDisp nullPic = CoolWord.AddIn.PictureDispConverter.ToIPictureDisp(null);
+            AssertEqual("PictureDispConverter Null Safe", "true", (nullPic == null).ToString().ToLowerInvariant());
+
+            using (System.Drawing.Bitmap testBmp = new System.Drawing.Bitmap(16, 16))
+            {
+                stdole.IPictureDisp validPic = CoolWord.AddIn.PictureDispConverter.ToIPictureDisp(testBmp);
+                AssertEqual("PictureDispConverter Valid Picture NotNull", "true", (validPic != null).ToString().ToLowerInvariant());
+                AssertEqual("PictureDispConverter Picture Type IsBitmap", "1", validPic != null ? validPic.Type.ToString() : "0");
+            }
+
             Console.WriteLine("--------------------------------------------------------------------");
             Console.WriteLine(string.Format("KẾT QUẢ: Đạt {0} / {1} bài kiểm thử (Thất bại: {2})", _passed, _passed + _failed, _failed));
             return _failed == 0 ? 0 : 1;

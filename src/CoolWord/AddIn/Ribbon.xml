@@ -501,7 +501,6 @@
                 label="Gửi Mail&#10;hàng loạt"
                 size="large"
                 getImage="GetRibbonImage"
-                imageMso="MailMergeSendEmail"
                 screentip="Gửi Mail hàng loạt (Outlook &amp; Gmail, Phiếu lương, Chứng từ kế toán)"
                 supertip="Gửi email trộn hàng loạt, gửi phiếu lương / phiếu thu chi / hóa đơn đính kèm file PDF cá nhân hóa cho từng người, hoặc gửi ngay tài liệu Word đang mở qua email.">
             <!-- Nhóm Gửi Tài Liệu Hiện Tại -->
@@ -546,7 +545,6 @@
                 label="Ảnh"
                 size="large"
                 getImage="GetRibbonImage"
-                imageMso="ExportPicture"
                 screentip="Công cụ Xử lý Hình ảnh trong Word (Trích xuất, chèn con dấu/chữ ký, nén ảnh)"
                 supertip="Bộ tiện ích xử lý ảnh chuyên nghiệp: Trích xuất toàn bộ ảnh gốc ra thư mục, chèn con dấu đỏ tách nền trong suốt, chèn ảnh hàng loạt và căn giữa toàn bộ ảnh.">
             <!-- Nhóm Trích Xuất Ảnh -->
@@ -591,7 +589,6 @@
                 label="Google&#10;Dịch"
                 size="large"
                 getImage="GetRibbonImage"
-                imageMso="Translate"
                 screentip="Google Dịch (Dịch đoạn văn, toàn bộ tài liệu, thuật ngữ kế toán &amp; hợp đồng)"
                 supertip="Tự động dịch thuật văn bản qua Google Dịch (hỗ trợ hơn 100 ngôn ngữ): Dịch đoạn chọn, dịch toàn bộ tài liệu sang file mới và tra từ điển thuật ngữ Kế toán - Hợp đồng song ngữ.">
             <!-- Nhóm Dịch Thuật -->
