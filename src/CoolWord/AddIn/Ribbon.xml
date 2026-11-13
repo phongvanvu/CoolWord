@@ -188,15 +188,71 @@
                     label="In 2 trang trên 1 mặt giấy A4 (N-up)"
                     imageMso="MultiplePages"
                     onAction="OnPrintTwoPagesPerSheetClick" />
-            <menuSeparator id="sepPrintSub2" />
-            <button id="btnExportPdf"
-                    label="Xuất nhanh tài liệu sang file PDF"
-                    imageMso="FileSaveAsPdfOrXps"
-                    onAction="OnExportPdfClick" />
           </menu>
         </group>
 
-        <!-- Nhóm 5: Bảng Điều Khiển CoolWord -->
+        <!-- Nhóm 5: Tiện Ích & Xuất Bản PDF -->
+        <group id="grpPdfUtilities" label="Tiện Ích &amp; Xuất PDF">
+          <button id="btnAccountingPdfA"
+                  label="Xuất PDF/A Kế Toán"
+                  size="large"
+                  imageMso="FileSaveAsPdfOrXps"
+                  screentip="Xuất Báo Cáo Tài Chính &amp; Sổ Kế Toán chuẩn lưu trữ PDF/A (ISO 19005-1)"
+                  supertip="Nhúng 100% phông chữ và dữ liệu toàn vẹn, đảm bảo tính pháp lý theo Luật Kế toán và quy định của Tổng cục Thuế để lưu trữ dài hạn (10-20 năm)."
+                  onAction="OnExportAccountingPdfAClick" />
+
+          <menu id="menuPdfTools"
+                label="Menu PDF"
+                size="large"
+                imageMso="SaveSelectionToQuickPartGallery"
+                screentip="Menu các tiện ích xuất PDF nâng cao &amp; Dấu chìm kế toán">
+            <button id="btnPdfQuickExport"
+                    label="Xuất PDF 1-Click (Chuẩn in ấn)"
+                    imageMso="FileSaveAsPdfOrXps"
+                    onAction="OnExportQuickPdfClick" />
+            <button id="btnPdfSelection"
+                    label="Chỉ xuất vùng văn bản đang chọn ra PDF"
+                    imageMso="ReviewSendForReview"
+                    onAction="OnExportSelectionPdfClick" />
+            <button id="btnPdfCurrentPage"
+                    label="Chỉ xuất trang hiện tại ra PDF"
+                    imageMso="FilePrintQuick"
+                    onAction="OnExportCurrentPagePdfClick" />
+            <button id="btnPdfOptimized"
+                    label="Xuất PDF nén nhỏ gọn (Gửi Email / Zalo)"
+                    imageMso="FileInternetFax"
+                    onAction="OnExportOptimizedPdfClick" />
+            <menuSeparator id="sepPdfWm" />
+            <menu id="menuWatermark"
+                  label="Đóng Dấu Chìm Kế Toán (Watermark)"
+                  imageMso="PageWatermarkGallery">
+              <button id="btnWmThanhToan"
+                      label="Đóng dấu: ĐÃ THANH TOÁN"
+                      onAction="OnWatermarkThanhToanClick" />
+              <button id="btnWmKiemToan"
+                      label="Đóng dấu: ĐÃ KIỂM TOÁN"
+                      onAction="OnWatermarkKiemToanClick" />
+              <button id="btnWmBanSao"
+                      label="Đóng dấu: BẢN SAO KẾ TOÁN"
+                      onAction="OnWatermarkBanSaoClick" />
+              <button id="btnWmNoiBo"
+                      label="Đóng dấu: LƯU HÀNH NỘI BỘ"
+                      onAction="OnWatermarkNoiBoClick" />
+              <menuSeparator id="sepWmClear" />
+              <button id="btnWmRemove"
+                      label="Gỡ bỏ toàn bộ dấu chìm khỏi tài liệu"
+                      imageMso="Clear"
+                      onAction="OnRemoveWatermarkClick" />
+            </menu>
+            <menuSeparator id="sepPdfPane" />
+            <button id="btnOpenPdfPane"
+                    label="Mở Bảng Điều Khiển PDF..."
+                    imageMso="ApplicationOptionsDialog"
+                    onAction="OnOpenPdfPaneClick" />
+          </menu>
+        </group>
+
+        <!-- Nhóm 6: Bảng Điều Khiển CoolWord -->
         <group id="grpTaskPane" label="Bảng Điều Khiển &amp; Mở Rộng">
           <toggleButton id="btnToggleTaskPane"
                         label="Bảng Công Cụ CoolWord"
@@ -244,6 +300,10 @@
                 label="Chuẩn hóa khoảng trắng &amp; dấu câu"
                 imageMso="SpellingAndGrammar"
                 onAction="OnCleanTextClick" />
+        <button id="ctxText_ExportPdf"
+                label="Xuất vùng chọn ra file PDF"
+                imageMso="FileSaveAsPdfOrXps"
+                onAction="OnExportSelectionPdfClick" />
         <button id="ctxText_OpenPane"
                 label="Mở bảng điều khiển CoolWord..."
                 imageMso="ApplicationOptionsDialog"
@@ -279,6 +339,10 @@
                 imageMso="Copy"
                 onAction="OnCopyConvertedClick" />
         <menuSeparator id="ctxTable_Sep1" />
+        <button id="ctxTable_ExportPdf"
+                label="Xuất vùng chọn ra file PDF"
+                imageMso="FileSaveAsPdfOrXps"
+                onAction="OnExportSelectionPdfClick" />
         <button id="ctxTable_OpenPane"
                 label="Mở bảng điều khiển CoolWord..."
                 imageMso="ApplicationOptionsDialog"

@@ -76,6 +76,10 @@
     <Compile Include="Modules\Printing\PrintService.cs" />
     <Compile Include="Modules\Printing\PrintModule.cs" />
     <Compile Include="Modules\Printing\PrintModuleView.cs" />
+    <Compile Include="Modules\Pdf\PdfOptions.cs" />
+    <Compile Include="Modules\Pdf\PdfService.cs" />
+    <Compile Include="Modules\Pdf\PdfModule.cs" />
+    <Compile Include="Modules\Pdf\PdfModuleView.cs" />
     <Compile Include="UI\ThemeColors.cs" />
     <Compile Include="UI\MainTaskPaneControl.cs" />
   </ItemGroup>

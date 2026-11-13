@@ -45,6 +45,19 @@
 - **Xuất nhanh PDF chuẩn in ấn**: Xuất trực tiếp văn bản sang file PDF giữ nguyên toàn bộ định dạng và phông chữ.
 - **Tính năng nghiệp vụ kế toán (dịch vụ logic nền)**: Hỗ trợ hàm chuyên biệt in chứng từ kế toán nhiều liên (Phiếu Thu - Chi 2 liên/3 liên).
 
+### 📑 Module 5: Tiện Ích & Xuất Bản PDF (`PdfModule`)
+- **Nghiệp vụ kế toán: Xuất PDF/A Chuẩn Lưu Trữ Kế Toán & Thuế (ISO 19005-1)**:
+  - 1-Click xuất Báo cáo tài chính, Sổ kế toán, Chứng từ điện tử chuẩn quốc tế ISO 19005-1 (PDF/A).
+  - Tự động nhúng 100% phông chữ hệ thống và cấu trúc dữ liệu toàn vẹn, đáp ứng quy định của Luật Kế toán và Tổng cục Thuế về lưu trữ hồ sơ điện tử lâu dài (10 - 20 năm).
+- **Xuất nhanh PDF theo phạm vi**:
+  - Chỉ xuất đoạn văn bản hoặc bảng biểu đang bôi đen ra file PDF riêng biệt.
+  - Chỉ xuất trang tài liệu hiện tại nơi con trỏ đang đứng ra file PDF.
+- **Tối ưu hóa dung lượng (Web/Email)**: Nén kích thước file PDF nhỏ gọn phục vụ gửi nhanh qua Email, Zalo.
+- **Hệ thống đóng dấu chìm kế toán & bản quyền (Watermark)**:
+  - Đóng dấu chìm xoay nghiêng 45° màu xám mờ trong suốt trên toàn bộ trang.
+  - Hỗ trợ các mẫu nghiệp vụ kế toán: `ĐÃ THANH TOÁN`, `ĐÃ KIỂM TOÁN`, `BẢN SAO KẾ TOÁN`, `LƯU HÀNH NỘI BỘ`, `DỰ THẢO` hoặc dấu chìm tùy biến.
+  - Hỗ trợ gỡ bỏ toàn bộ dấu chìm 1-Click an toàn.
+
 ---
 
 ## 2. Cấu trúc dự án & Kiến trúc mở rộng
@@ -67,7 +80,8 @@ c:\projects\CoolWord\
 │   │   │   ├── NumberToText\       # Module Đổi Số Ra Chữ Tiếng Việt
 │   │   │   ├── AdminFormat\        # Module Chuẩn Hóa Văn Bản Nghị Định 30/2020
 │   │   │   ├── TextUtilities\      # Module Chuẩn Hóa Văn Bản & Chữ Hoa/Thường
-│   │   │   └── Printing\           # Module In Ấn & Xuất Bản Thông Minh
+│   │   │   ├── Printing\           # Module In Ấn & Xuất Bản Thông Minh
+│   │   │   └── Pdf\                # Module Tiện Ích & Xuất Bản PDF
 │   │   └── UI\                     # Giao diện WPF Fluent Design (ThemeColors, MainTaskPaneControl)
 │   └── CoolWord.Studio\            # Ứng dụng quản lý & chạy thử giao diện độc lập
 └── tests\

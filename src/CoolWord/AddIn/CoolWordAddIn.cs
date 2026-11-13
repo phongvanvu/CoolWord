@@ -7,6 +7,7 @@ using System.Windows;
 using CoolWord.Core;
 using CoolWord.Modules.AdminFormat;
 using CoolWord.Modules.NumberToText;
+using CoolWord.Modules.Pdf;
 using CoolWord.Modules.TextUtilities;
 using Office = Microsoft.Office.Core;
 using Word = Microsoft.Office.Interop.Word;
@@ -519,6 +520,112 @@ namespace CoolWord.AddIn
             string status;
             _wordService.ExportQuickPdf(null, out status);
             NotifyStatus(status);
+        }
+
+        #endregion
+
+        #region Callbacks Nhóm Tiện Ích & Xuất Bản PDF
+
+        public void OnExportAccountingPdfAClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ExportAccountingPdfA(null, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnExportQuickPdfClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ExportQuickPdf(null, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnExportSelectionPdfClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ExportSelectionToPdf(null, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnExportCurrentPagePdfClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ExportCurrentPageToPdf(null, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnExportOptimizedPdfClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            PdfOptions opts = new PdfOptions
+            {
+                OptimizeForMinimumSize = true,
+                OpenAfterExport = true
+            };
+            string status;
+            _wordService.ExportCustomPdf(opts, null, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnWatermarkThanhToanClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.AddAccountingWatermark("ĐÃ THANH TOÁN", out status);
+            NotifyStatus(status);
+        }
+
+        public void OnWatermarkKiemToanClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.AddAccountingWatermark("ĐÃ KIỂM TOÁN", out status);
+            NotifyStatus(status);
+        }
+
+        public void OnWatermarkBanSaoClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.AddAccountingWatermark("BẢN SAO KẾ TOÁN", out status);
+            NotifyStatus(status);
+        }
+
+        public void OnWatermarkNoiBoClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.AddAccountingWatermark("LƯU HÀNH NỘI BỘ", out status);
+            NotifyStatus(status);
+        }
+
+        public void OnRemoveWatermarkClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.RemoveAccountingWatermark(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnOpenPdfPaneClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null)
+            {
+                _customTaskPane.Visible = true;
+            }
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("pdf-utilities");
+            }
+            if (_ribbon != null)
+            {
+                try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+            }
         }
 
         #endregion

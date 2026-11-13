@@ -2,6 +2,7 @@ using System;
 using CoolWord.Core;
 using CoolWord.Modules.AdminFormat;
 using CoolWord.Modules.NumberToText;
+using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
 using CoolWord.Modules.TextUtilities;
 
@@ -112,6 +113,28 @@ namespace CoolWord.Tests
             string voucherStatus;
             bool voucherRes = PrintService.PrintMultiCopyAccountingVoucher(null, 2, "Phiếu thu", false, out voucherStatus);
             AssertEqual("PrintMultiCopyAccountingVoucher Null Check", "false", voucherRes.ToString().ToLowerInvariant());
+
+            // 10. Kiểm thử Module Tiện Ích PDF (PdfModule, PdfOptions & PdfService)
+            IToolModule pdfMod = ModuleRegistry.GetById("pdf-utilities");
+            AssertEqual("PdfModule Registration", "true", (pdfMod != null).ToString().ToLowerInvariant());
+            if (pdfMod != null)
+            {
+                AssertEqual("PdfModule Title", "Tiện Ích PDF", pdfMod.Title);
+                AssertEqual("PdfModule Order", "5", pdfMod.Order.ToString());
+            }
+
+            PdfOptions accPdfOpts = PdfOptions.CreateAccountingPdfAStandard();
+            AssertEqual("Accounting PDF/A Option UsePdfA", "true", accPdfOpts.UsePdfA.ToString().ToLowerInvariant());
+            AssertEqual("Accounting PDF/A Option OpenAfterExport", "true", accPdfOpts.OpenAfterExport.ToString().ToLowerInvariant());
+
+            // Kiểm thử các hàm xử lý PdfService với null app (xử lý ngoại lệ an toàn)
+            string pdfStatus;
+            bool pdfRes = PdfService.ExportAccountingPdfA(null, null, out pdfStatus);
+            AssertEqual("ExportAccountingPdfA Null Check", "false", pdfRes.ToString().ToLowerInvariant());
+
+            string wmStatus;
+            bool wmRes = PdfService.AddAccountingWatermark(null, "ĐÃ THANH TOÁN", out wmStatus);
+            AssertEqual("AddAccountingWatermark Null Check", "false", wmRes.ToString().ToLowerInvariant());
 
             Console.WriteLine("--------------------------------------------------------------------");
             Console.WriteLine(string.Format("KẾT QUẢ: Đạt {0} / {1} bài kiểm thử (Thất bại: {2})", _passed, _passed + _failed, _failed));

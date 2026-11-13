@@ -1,6 +1,7 @@
 using System;
 using CoolWord.Modules.AdminFormat;
 using CoolWord.Modules.NumberToText;
+using CoolWord.Modules.Pdf;
 
 namespace CoolWord.Core
 {
@@ -38,5 +39,13 @@ namespace CoolWord.Core
 
         // Nghiệp vụ kế toán: In chứng từ kế toán nhiều liên (Không hiển thị trên UI)
         bool PrintMultiCopyAccountingVoucher(int copies, string voucherType, bool fitTwoPerSheet, out string statusMessage);
+
+        // Các tác vụ Tiện ích PDF & Chuẩn lưu trữ kế toán PDF/A
+        bool ExportCustomPdf(PdfOptions options, string targetFilePath, out string statusMessage);
+        bool ExportAccountingPdfA(string targetFilePath, out string statusMessage);
+        bool ExportSelectionToPdf(string targetFilePath, out string statusMessage);
+        bool ExportCurrentPageToPdf(string targetFilePath, out string statusMessage);
+        bool AddAccountingWatermark(string watermarkText, out string statusMessage);
+        bool RemoveAccountingWatermark(out string statusMessage);
     }
 }

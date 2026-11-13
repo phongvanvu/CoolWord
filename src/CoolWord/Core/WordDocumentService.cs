@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using CoolWord.Modules.AdminFormat;
 using CoolWord.Modules.NumberToText;
+using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -709,6 +710,46 @@ namespace CoolWord.Core
         {
             Word.Application app = GetActiveWordApp();
             return PrintService.PrintMultiCopyAccountingVoucher(app, copies, voucherType, fitTwoPerSheet, out statusMessage);
+        }
+
+        #endregion
+
+        #region Tác vụ Tiện ích PDF & Kế toán
+
+        public bool ExportCustomPdf(PdfOptions options, string targetFilePath, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PdfService.ExportPdf(app, options, targetFilePath, out statusMessage);
+        }
+
+        public bool ExportAccountingPdfA(string targetFilePath, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PdfService.ExportAccountingPdfA(app, targetFilePath, out statusMessage);
+        }
+
+        public bool ExportSelectionToPdf(string targetFilePath, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PdfService.ExportSelectionToPdf(app, targetFilePath, out statusMessage);
+        }
+
+        public bool ExportCurrentPageToPdf(string targetFilePath, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PdfService.ExportCurrentPageToPdf(app, targetFilePath, out statusMessage);
+        }
+
+        public bool AddAccountingWatermark(string watermarkText, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PdfService.AddAccountingWatermark(app, watermarkText, out statusMessage);
+        }
+
+        public bool RemoveAccountingWatermark(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return PdfService.RemoveAccountingWatermark(app, out statusMessage);
         }
 
         #endregion
