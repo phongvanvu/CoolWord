@@ -118,6 +118,36 @@
   - **Xuất bảng biểu sang Slide**: Copy và căn giữa từng bảng biểu lên một slide riêng biệt.
   - **Tạo bộ Slide Báo Cáo Tài Chính**: Tự động tạo bài thuyết trình hoàn chỉnh gồm slide bìa, căn cứ số liệu, bảng biểu tài chính và slide kết luận.
 
+### ✉️ Module 11: Gửi Mail Hàng Loạt (`BatchEmailModule`)
+- **Nút Ribbon `Gửi Mail hàng loạt` với biểu tượng Outlook & Gmail**:
+  - Tích hợp biểu tượng kép Outlook + Gmail độ nét cao (`GetRibbonImage`).
+- **Gửi tài liệu Word đang mở qua Email (1-Click)**:
+  - Tự động xuất file PDF hoặc đính kèm file DOCX và mở cửa sổ soạn thư Microsoft Outlook / ứng dụng Mail mặc định.
+- **Nghiệp vụ Kế toán: Gửi Phiếu Lương / Hóa Đơn / Chứng Từ Hàng Loạt**:
+  - Tự động chia tách tài liệu Word theo từng trang / section thành các file PDF riêng biệt cho từng người và gửi kèm email riêng cho từng nhân sự / khách hàng theo danh sách Excel/CSV.
+- **Gửi Mail Trộn (Mail Merge) qua Outlook / SMTP**:
+  - Cá nhân hóa nội dung thư theo các biến giữ chỗ `{HoTen}`, `{Email}`, `{SoTien}`, `{PhongBan}`... và gửi hàng loạt an toàn.
+
+### 🖼️ Module 12: Xử Lý Hình Ảnh (`ImageToolsModule`)
+- **Nút Ribbon `Ảnh` với biểu tượng trích xuất ảnh chuẩn**:
+  - Tích hợp biểu tượng khung tranh và mũi tên xuất ảnh độ nét cao (`GetRibbonImage`).
+- **Trích xuất toàn bộ ảnh gốc ra thư mục (Export All Images)**:
+  - Quét toàn bộ hình ảnh nhúng trong tài liệu Word (Shapes & InlineShapes) và lưu thành các tệp ảnh chất lượng gốc (PNG).
+- **Nghiệp vụ Kế toán & Hành chính: Chèn Con Dấu Đỏ & Chữ Ký Số**:
+  - Tự động chèn con dấu tròn công ty / chữ ký số vào văn bản, thiết lập hiển thị nổi trên chữ (`InFrontOfText`), tự động tách trong suốt màu nền trắng để con dấu trùm lên chữ ký chuẩn thể thức Việt Nam.
+- **Chèn ảnh hàng loạt & Căn giữa toàn bộ ảnh**:
+  - Chèn nhiều ảnh đồng thời theo kích thước chuẩn thống nhất và 1-Click căn giữa toàn bộ ảnh trong tài liệu.
+
+### 🌐 Module 13: Google Dịch (`GoogleTranslateModule`)
+- **Nút Ribbon `Google Dịch` với biểu tượng Google Translate chuẩn**:
+  - Tích hợp biểu tượng Google Translate chính thức độ nét cao (`GetRibbonImage`).
+- **Dịch thuật Online & Offline thông minh**:
+  - Dịch đoạn văn bản đang bôi đen hoặc dịch toàn bộ tài liệu sang hơn 100 ngôn ngữ (Anh, Việt, Trung, Pháp, Nhật, Hàn...) qua Google Translate API.
+  - Tùy chọn thay thế đoạn văn bản gốc hoặc chèn bản dịch ngay bên dưới.
+- **Nghiệp vụ Kế toán & Hợp đồng: Từ điển & Bảng Song Ngữ Anh - Việt**:
+  - Tích hợp sẵn hơn 100+ thuật ngữ chuyên ngành tài chính, kế toán, thuế và hợp đồng chuẩn mực (VAS, IFRS, Incoterms).
+  - Tự động tạo Bảng Báo cáo tài chính & Điều khoản hợp đồng song ngữ 2 cột (Cột 1: Tiếng Việt, Cột 2: Tiếng Anh) chuẩn mực.
+
 ---
 
 ## 2. Cấu trúc dự án & Kiến trúc mở rộng
@@ -131,10 +161,10 @@ c:\projects\CoolWord\
 ├── bin\                            # Thư mục chứa file thực thi sau khi build
 │   ├── CoolWord.dll                # Thư viện COM Add-in chính nạp vào MS Word
 │   ├── CoolWord.Studio.exe         # Ứng dụng Desktop quản lý cài đặt & dùng độc lập
-│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (109 test cases)
+│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (136 test cases)
 ├── src\
 │   ├── CoolWord\
-│   │   ├── AddIn\                  # Tích hợp COM (IDTExtensibility2, Ribbon XML, Custom Task Pane, Installer)
+│   │   ├── AddIn\                  # Tích hợp COM (Ribbon XML, RibbonIconFactory, Custom Task Pane, Installer)
 │   │   ├── Core\                   # Kiến trúc lõi (IToolModule, ModuleRegistry, WordDocumentService, SettingsService)
 │   │   ├── Modules\
 │   │   │   ├── NumberToText\       # Module Đổi Số Ra Chữ Tiếng Việt
@@ -146,7 +176,10 @@ c:\projects\CoolWord\
 │   │   │   ├── NameSplit\          # Module Tách Họ - Tên (Bảng biểu & Danh sách nhân sự)
 │   │   │   ├── WordToWord\         # Module Word ➔ Word (Chuyển mã TCVN3/VNI, .doc/.docx, Gộp/Tách file)
 │   │   │   ├── WordToExcel\        # Module Word ➔ Excel (Xuất bảng biểu, chứng từ kế toán kèm SUM)
-│   │   │   └── WordToPowerPoint\   # Module Word ➔ PowerPoint (Tạo slide từ Heading 1-2-3, Báo cáo tài chính)
+│   │   │   ├── WordToPowerPoint\   # Module Word ➔ PowerPoint (Tạo slide từ Heading 1-2-3, Báo cáo tài chính)
+│   │   │   ├── BatchEmail\         # Module Gửi Mail Hàng Loạt (Mail Merge, Gửi phiếu lương kèm PDF)
+│   │   │   ├── ImageTools\         # Module Xử Lý Hình Ảnh (Xuất ảnh gốc, Chèn con dấu đỏ tách nền)
+│   │   │   └── GoogleTranslate\    # Module Google Dịch (Dịch trực tiếp & Thuật ngữ kế toán song ngữ)
 │   │   └── UI\                     # Giao diện WPF Fluent Design (ThemeColors, MainTaskPaneControl)
 │   └── CoolWord.Studio\            # Ứng dụng quản lý & chạy thử giao diện độc lập
 └── tests\

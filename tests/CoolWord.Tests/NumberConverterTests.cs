@@ -10,6 +10,10 @@ using CoolWord.Modules.TextUtilities;
 using CoolWord.Modules.WordToWord;
 using CoolWord.Modules.WordToExcel;
 using CoolWord.Modules.WordToPowerPoint;
+using CoolWord.AddIn;
+using CoolWord.Modules.BatchEmail;
+using CoolWord.Modules.ImageTools;
+using CoolWord.Modules.GoogleTranslate;
 
 namespace CoolWord.Tests
 {
@@ -331,6 +335,97 @@ namespace CoolWord.Tests
 
             bool w2pFinRes = WordToPowerPointService.CreateFinancialPresentation(null, null, false, out w2pStatus);
             AssertEqual("WordToPpt FinancialPresentation Null Safe", "false", w2pFinRes.ToString().ToLowerInvariant());
+
+            // 10. Kiểm thử Biểu tượng Ribbon RibbonIconFactory (32x32)
+            using (var bmpMail = RibbonIconFactory.CreateMailMergeIcon())
+            {
+                AssertEqual("RibbonIcon MailMerge NotNull", "true", (bmpMail != null).ToString().ToLowerInvariant());
+                AssertEqual("RibbonIcon MailMerge Width", "32", bmpMail.Width.ToString());
+            }
+
+            using (var bmpImg = RibbonIconFactory.CreateImageToolsIcon())
+            {
+                AssertEqual("RibbonIcon ImageTools NotNull", "true", (bmpImg != null).ToString().ToLowerInvariant());
+                AssertEqual("RibbonIcon ImageTools Width", "32", bmpImg.Width.ToString());
+            }
+
+            using (var bmpTrans = RibbonIconFactory.CreateGoogleTranslateIcon())
+            {
+                AssertEqual("RibbonIcon GoogleTranslate NotNull", "true", (bmpTrans != null).ToString().ToLowerInvariant());
+                AssertEqual("RibbonIcon GoogleTranslate Width", "32", bmpTrans.Width.ToString());
+            }
+
+            // 11. Kiểm thử Mô-đun Gửi Mail Hàng Loạt (BatchEmail)
+            string sampleCsv = "HoTen,Email,SoTien\nNguyen Van A,a@test.com,5000000\nTran Thi B,b@test.com,7000000";
+            var parsedRecipients = BatchEmailService.ParseCsvRecipients(sampleCsv);
+            AssertEqual("ParseCsvRecipients Count", "2", parsedRecipients.Count.ToString());
+            AssertEqual("ParseCsvRecipients Name", "Nguyen Van A", parsedRecipients[0]["HoTen"]);
+
+            IToolModule emailMod = ModuleRegistry.GetById("batch-email");
+            AssertEqual("BatchEmail Module Registered", "true", (emailMod != null).ToString().ToLowerInvariant());
+            if (emailMod != null)
+            {
+                AssertEqual("BatchEmail Module Title", "Gửi Mail Hàng Loạt", emailMod.Title);
+            }
+
+            string emailStatus;
+            bool emailCurRes = BatchEmailService.SendCurrentDocumentViaEmail(null, null, null, null, true, out emailStatus);
+            AssertEqual("BatchEmail SendCurrent Null Safe", "false", emailCurRes.ToString().ToLowerInvariant());
+
+            bool emailBatchRes = BatchEmailService.SendBatchMailMerge(null, null, null, null, true, out emailStatus);
+            AssertEqual("BatchEmail MailMerge Null Safe", "false", emailBatchRes.ToString().ToLowerInvariant());
+
+            bool emailVouchRes = BatchEmailService.SendAccountingVouchersBatch(null, null, null, null, out emailStatus);
+            AssertEqual("BatchEmail Vouchers Null Safe", "false", emailVouchRes.ToString().ToLowerInvariant());
+
+            // 12. Kiểm thử Mô-đun Xử Lý Hình Ảnh (ImageTools)
+            IToolModule imgMod = ModuleRegistry.GetById("image-tools");
+            AssertEqual("ImageTools Module Registered", "true", (imgMod != null).ToString().ToLowerInvariant());
+            if (imgMod != null)
+            {
+                AssertEqual("ImageTools Module Title", "Xử Lý Hình Ảnh", imgMod.Title);
+            }
+
+            string imgStatus;
+            bool imgExportRes = ImageToolsService.ExportAllImages(null, null, out imgStatus);
+            AssertEqual("ImageTools ExportAll Null Safe", "false", imgExportRes.ToString().ToLowerInvariant());
+
+            bool imgStampRes = ImageToolsService.InsertOfficialStampOrSignature(null, null, true, 130f, out imgStatus);
+            AssertEqual("ImageTools InsertStamp Null Safe", "false", imgStampRes.ToString().ToLowerInvariant());
+
+            bool imgBatchRes = ImageToolsService.BatchInsertImages(null, null, 350f, out imgStatus);
+            AssertEqual("ImageTools BatchInsert Null Safe", "false", imgBatchRes.ToString().ToLowerInvariant());
+
+            bool imgCenterRes = ImageToolsService.CenterAllImages(null, out imgStatus);
+            AssertEqual("ImageTools CenterAll Null Safe", "false", imgCenterRes.ToString().ToLowerInvariant());
+
+            // 13. Kiểm thử Mô-đun Google Dịch (GoogleTranslate)
+            string dictTransEn = GoogleTranslateService.TranslateText("Bảng cân đối kế toán", "vi", "en");
+            AssertEqual("Dictionary Translate Vi to En", "Balance Sheet", dictTransEn);
+
+            string dictTransVi = GoogleTranslateService.TranslateText("Balance Sheet", "en", "vi");
+            AssertEqual("Dictionary Translate En to Vi", "Bảng cân đối kế toán", dictTransVi);
+
+            string jsonSample = "[[[\"Xin chào\",\"Hello\",null,null,1]],null,\"en\"]";
+            string parsedJson = GoogleTranslateService.ParseGoogleTranslateJson(jsonSample);
+            AssertEqual("ParseGoogleTranslateJson", "Xin chào", parsedJson);
+
+            IToolModule transMod = ModuleRegistry.GetById("google-translate");
+            AssertEqual("GoogleTranslate Module Registered", "true", (transMod != null).ToString().ToLowerInvariant());
+            if (transMod != null)
+            {
+                AssertEqual("GoogleTranslate Module Title", "Google Dịch", transMod.Title);
+            }
+
+            string transStatus;
+            bool transSelRes = GoogleTranslateService.TranslateSelectedText(null, "auto", "vi", false, out transStatus);
+            AssertEqual("GoogleTranslate Selected Null Safe", "false", transSelRes.ToString().ToLowerInvariant());
+
+            bool transDocRes = GoogleTranslateService.TranslateEntireDocument(null, "auto", "vi", out transStatus);
+            AssertEqual("GoogleTranslate EntireDoc Null Safe", "false", transDocRes.ToString().ToLowerInvariant());
+
+            bool transTermsRes = GoogleTranslateService.TranslateFinancialAndLegalTerms(null, "en", false, out transStatus);
+            AssertEqual("GoogleTranslate Terms Null Safe", "false", transTermsRes.ToString().ToLowerInvariant());
 
             Console.WriteLine("--------------------------------------------------------------------");
             Console.WriteLine(string.Format("KẾT QUẢ: Đạt {0} / {1} bài kiểm thử (Thất bại: {2})", _passed, _passed + _failed, _failed));

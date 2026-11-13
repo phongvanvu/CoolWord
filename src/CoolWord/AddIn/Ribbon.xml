@@ -495,7 +495,143 @@
           </menu>
         </group>
 
-        <!-- Nhóm 8: Bảng Điều Khiển CoolWord -->
+        <!-- Nhóm 8: Tiện Ích Mở Rộng: Gửi Mail Hàng Loạt, Ảnh, Google Dịch -->
+        <group id="grpExtendedTools" label="Tiện Ích &amp; Kết Nối">
+          <menu id="menuBatchMail"
+                label="Gửi Mail&#10;hàng loạt"
+                size="large"
+                getImage="GetRibbonImage"
+                imageMso="MailMergeSendEmail"
+                screentip="Gửi Mail hàng loạt (Outlook &amp; Gmail, Phiếu lương, Chứng từ kế toán)"
+                supertip="Gửi email trộn hàng loạt, gửi phiếu lương / phiếu thu chi / hóa đơn đính kèm file PDF cá nhân hóa cho từng người, hoặc gửi ngay tài liệu Word đang mở qua email.">
+            <!-- Nhóm Gửi Tài Liệu Hiện Tại -->
+            <button id="btnSendCurrentDocPdf"
+                    label="Gửi tài liệu hiện tại qua Email (Đính kèm file PDF)"
+                    imageMso="FileSendAsAttachment"
+                    screentip="Gửi tài liệu PDF qua Email"
+                    supertip="Tự động xuất tài liệu Word đang mở thành file PDF và mở cửa sổ soạn thư Outlook/Gmail để gửi ngay."
+                    onAction="OnSendCurrentDocPdfClick" />
+            <button id="btnSendCurrentDocDocx"
+                    label="Gửi tài liệu hiện tại qua Email (Đính kèm file .docx)"
+                    imageMso="FileSendEmail"
+                    screentip="Gửi tài liệu .docx qua Email"
+                    supertip="Đính kèm file Word (.docx) hiện tại vào email Outlook/Gmail."
+                    onAction="OnSendCurrentDocDocxClick" />
+            <menuSeparator id="sepMailVoucher" />
+            <!-- Nhóm Kế Toán: Gửi Phiếu Lương / Chứng Từ -->
+            <button id="btnSendAccountingVouchers"
+                    label="Gửi Phiếu Lương / Chứng Từ kế toán hàng loạt (Tách PDF riêng)..."
+                    imageMso="ViewCalculation"
+                    screentip="Gửi phiếu lương / chứng từ hàng loạt"
+                    supertip="Tự động trích xuất chứng từ hoặc phiếu lương của từng nhân sự thành file PDF riêng biệt và gửi qua email cho từng người theo danh sách."
+                    onAction="OnSendAccountingVouchersClick" />
+            <menuSeparator id="sepMailMerge" />
+            <!-- Nhóm Gửi Mail Trộn -->
+            <button id="btnBatchMailMerge"
+                    label="Gửi Mail Trộn (Mail Merge) từ danh sách Excel/CSV..."
+                    imageMso="MailMergeSendEmail"
+                    screentip="Gửi Mail Trộn hàng loạt"
+                    supertip="Cá nhân hóa nội dung thư theo các trường {HoTen}, {Email}, {SoTien} và tự động gửi hàng loạt qua Outlook."
+                    onAction="OnBatchMailMergeClick" />
+            <menuSeparator id="sepMailPane" />
+            <button id="btnOpenBatchEmailPane"
+                    label="Mở Bảng Điều Khiển Gửi Mail Hàng Loạt..."
+                    imageMso="ApplicationOptionsDialog"
+                    screentip="Mở Bảng Gửi Mail"
+                    supertip="Mở bảng điều khiển Task Pane để quản lý danh sách email người nhận, mẫu thư và cấu hình gửi."
+                    onAction="OnOpenBatchEmailPaneClick" />
+          </menu>
+          <separator id="sepExtImage" />
+          <menu id="menuImageTools"
+                label="Ảnh"
+                size="large"
+                getImage="GetRibbonImage"
+                imageMso="ExportPicture"
+                screentip="Công cụ Xử lý Hình ảnh trong Word (Trích xuất, chèn con dấu/chữ ký, nén ảnh)"
+                supertip="Bộ tiện ích xử lý ảnh chuyên nghiệp: Trích xuất toàn bộ ảnh gốc ra thư mục, chèn con dấu đỏ tách nền trong suốt, chèn ảnh hàng loạt và căn giữa toàn bộ ảnh.">
+            <!-- Nhóm Trích Xuất Ảnh -->
+            <button id="btnExportAllImages"
+                    label="Xuất toàn bộ hình ảnh trong tài liệu ra thư mục..."
+                    imageMso="ExportPicture"
+                    screentip="Xuất toàn bộ ảnh gốc"
+                    supertip="Trích xuất tất cả ảnh nhúng trong tài liệu Word ra một thư mục riêng biệt với chất lượng và độ phân giải gốc (PNG)."
+                    onAction="OnExportAllImagesClick" />
+            <button id="btnCenterAllImages"
+                    label="Căn giữa toàn bộ hình ảnh trong văn bản"
+                    imageMso="AlignCenter"
+                    screentip="Căn giữa toàn bộ ảnh"
+                    supertip="Tự động căn giữa tất cả các hình ảnh inline trong toàn bộ tài liệu để trình bày đẹp mắt."
+                    onAction="OnCenterAllImagesClick" />
+            <menuSeparator id="sepImageStamp" />
+            <!-- Nhóm Kế Toán & Hành Chính: Con Dấu Đỏ & Chữ Ký -->
+            <button id="btnInsertOfficialStamp"
+                    label="Chèn Con Dấu Đỏ / Chữ Ký Số (Tự động tách nền trong suốt)..."
+                    imageMso="SignatureLineInsert"
+                    screentip="Chèn con dấu đỏ / chữ ký số"
+                    supertip="Chèn hình ảnh con dấu tròn công ty hoặc chữ ký số vào văn bản, tự động làm trong suốt nền trắng để con dấu đè lên chữ ký chuẩn thể thức Việt Nam."
+                    onAction="OnInsertOfficialStampClick" />
+            <menuSeparator id="sepImageBatch" />
+            <!-- Nhóm Chèn Ảnh Hàng Loạt -->
+            <button id="btnBatchInsertImages"
+                    label="Chèn nhiều ảnh hàng loạt vào tài liệu theo kích thước chuẩn..."
+                    imageMso="PictureInsert"
+                    screentip="Chèn ảnh hàng loạt"
+                    supertip="Chọn nhiều file ảnh từ máy tính và tự động chèn vào tài liệu Word theo kích thước đồng nhất."
+                    onAction="OnBatchInsertImagesClick" />
+            <menuSeparator id="sepImagePane" />
+            <button id="btnOpenImageToolsPane"
+                    label="Mở Bảng Điều Khiển Xử Lý Ảnh..."
+                    imageMso="ApplicationOptionsDialog"
+                    screentip="Mở Bảng Xử Lý Ảnh"
+                    supertip="Mở bảng điều khiển Task Pane để quản lý kích thước, nén ảnh và cấu hình ảnh."
+                    onAction="OnOpenImageToolsPaneClick" />
+          </menu>
+          <separator id="sepExtTranslate" />
+          <menu id="menuGoogleTranslate"
+                label="Google&#10;Dịch"
+                size="large"
+                getImage="GetRibbonImage"
+                imageMso="Translate"
+                screentip="Google Dịch (Dịch đoạn văn, toàn bộ tài liệu, thuật ngữ kế toán &amp; hợp đồng)"
+                supertip="Tự động dịch thuật văn bản qua Google Dịch (hỗ trợ hơn 100 ngôn ngữ): Dịch đoạn chọn, dịch toàn bộ tài liệu sang file mới và tra từ điển thuật ngữ Kế toán - Hợp đồng song ngữ.">
+            <!-- Nhóm Dịch Thuật -->
+            <button id="btnTranslateSelectionAppend"
+                    label="Dịch đoạn đang chọn (Chèn bản dịch ngay bên dưới)"
+                    imageMso="Translate"
+                    screentip="Dịch đoạn bôi đen"
+                    supertip="Dịch đoạn văn bản đang bôi đen qua Google Dịch và chèn kết quả ngay bên dưới đoạn văn bản gốc."
+                    onAction="OnTranslateSelectionAppendClick" />
+            <button id="btnTranslateSelectionReplace"
+                    label="Dịch đoạn đang chọn (Thay thế trực tiếp)"
+                    imageMso="Translate"
+                    screentip="Dịch và thay thế"
+                    supertip="Dịch đoạn văn bản bôi đen và thay thế trực tiếp bằng bản dịch."
+                    onAction="OnTranslateSelectionReplaceClick" />
+            <button id="btnTranslateEntireDoc"
+                    label="Dịch toàn bộ tài liệu sang một file Word mới"
+                    imageMso="FileSaveAsWordDocx"
+                    screentip="Dịch toàn bộ tài liệu"
+                    supertip="Dịch toàn bộ nội dung tài liệu Word sang tiếng Việt (hoặc tiếng Anh) và mở trong một tài liệu mới."
+                    onAction="OnTranslateEntireDocClick" />
+            <menuSeparator id="sepTranslateBilingual" />
+            <!-- Nhóm Kế Toán & Hợp Đồng: Song Ngữ -->
+            <button id="btnInsertBilingualFinancialTable"
+                    label="Chèn Bảng Thuật Ngữ Kế Toán &amp; Hợp Đồng Song Ngữ (Anh - Việt)"
+                    imageMso="TableInsert"
+                    screentip="Chèn bảng thuật ngữ song ngữ"
+                    supertip="Chèn bảng thuật ngữ chuyên ngành Báo cáo tài chính, Bảng cân đối kế toán và điều khoản hợp đồng song ngữ Anh - Việt chuẩn mực (VAS/IFRS)."
+                    onAction="OnInsertBilingualFinancialTableClick" />
+            <menuSeparator id="sepTranslatePane" />
+            <button id="btnOpenGoogleTranslatePane"
+                    label="Mở Bảng Điều Khiển Google Dịch..."
+                    imageMso="ApplicationOptionsDialog"
+                    screentip="Mở Bảng Google Dịch"
+                    supertip="Mở giao diện dịch trực quan trên thanh Task Pane để chọn chiều dịch và kiểm tra văn bản."
+                    onAction="OnOpenGoogleTranslatePaneClick" />
+          </menu>
+        </group>
+
+        <!-- Nhóm 9: Bảng Điều Khiển CoolWord -->
         <group id="grpTaskPane" label="Bảng Điều Khiển &amp; Mở Rộng">
           <toggleButton id="btnToggleTaskPane"
                         label="Bảng Công Cụ CoolWord"

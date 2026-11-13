@@ -10,6 +10,9 @@ using CoolWord.Modules.QuickInput;
 using CoolWord.Modules.WordToWord;
 using CoolWord.Modules.WordToExcel;
 using CoolWord.Modules.WordToPowerPoint;
+using CoolWord.Modules.BatchEmail;
+using CoolWord.Modules.ImageTools;
+using CoolWord.Modules.GoogleTranslate;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace CoolWord.Core
@@ -907,6 +910,78 @@ namespace CoolWord.Core
         {
             Word.Application app = GetActiveWordApp();
             return WordToPowerPointService.CreateFinancialPresentation(app, outputPath, openAfterExport, out statusMessage);
+        }
+
+        #endregion
+
+        #region Tác vụ Gửi Mail Hàng Loạt
+
+        public bool SendCurrentDocumentViaEmail(string recipientEmail, string subject, string body, bool asPdf, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return BatchEmailService.SendCurrentDocumentViaEmail(app, recipientEmail, subject, body, asPdf, out statusMessage);
+        }
+
+        public bool SendBatchMailMerge(System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> recipientList, string subjectTemplate, string bodyTemplate, bool attachDocumentPdf, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return BatchEmailService.SendBatchMailMerge(app, recipientList, subjectTemplate, bodyTemplate, attachDocumentPdf, out statusMessage);
+        }
+
+        public bool SendAccountingVouchersBatch(System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> employeeList, string subjectTemplate, string bodyTemplate, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return BatchEmailService.SendAccountingVouchersBatch(app, employeeList, subjectTemplate, bodyTemplate, out statusMessage);
+        }
+
+        #endregion
+
+        #region Tác vụ Xử Lý Hình Ảnh
+
+        public bool ExportAllImages(string outputDir, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return ImageToolsService.ExportAllImages(app, outputDir, out statusMessage);
+        }
+
+        public bool InsertOfficialStampOrSignature(string stampImagePath, bool inFrontOfText, float widthPoints, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return ImageToolsService.InsertOfficialStampOrSignature(app, stampImagePath, inFrontOfText, widthPoints, out statusMessage);
+        }
+
+        public bool BatchInsertImages(string[] imageFiles, float widthPoints, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return ImageToolsService.BatchInsertImages(app, imageFiles, widthPoints, out statusMessage);
+        }
+
+        public bool CenterAllImages(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return ImageToolsService.CenterAllImages(app, out statusMessage);
+        }
+
+        #endregion
+
+        #region Tác vụ Google Dịch
+
+        public bool TranslateSelectedText(string sourceLang, string targetLang, bool replaceSelection, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return GoogleTranslateService.TranslateSelectedText(app, sourceLang, targetLang, replaceSelection, out statusMessage);
+        }
+
+        public bool TranslateEntireDocument(string sourceLang, string targetLang, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return GoogleTranslateService.TranslateEntireDocument(app, sourceLang, targetLang, out statusMessage);
+        }
+
+        public bool TranslateFinancialAndLegalTerms(string targetLang, bool createBilingualTable, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return GoogleTranslateService.TranslateFinancialAndLegalTerms(app, targetLang, createBilingualTable, out statusMessage);
         }
 
         #endregion

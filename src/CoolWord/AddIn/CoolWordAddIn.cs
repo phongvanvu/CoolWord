@@ -15,6 +15,9 @@ using CoolWord.Modules.TextUtilities;
 using CoolWord.Modules.WordToWord;
 using CoolWord.Modules.WordToExcel;
 using CoolWord.Modules.WordToPowerPoint;
+using CoolWord.Modules.BatchEmail;
+using CoolWord.Modules.ImageTools;
+using CoolWord.Modules.GoogleTranslate;
 using Office = Microsoft.Office.Core;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -1024,6 +1027,173 @@ namespace CoolWord.AddIn
             {
                 try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
             }
+        }
+
+        #endregion
+
+        #region Callbacks Ribbon Image Loader
+
+        public System.Drawing.Bitmap GetRibbonImage(Office.IRibbonControl control)
+        {
+            if (control == null) return null;
+            switch (control.Id)
+            {
+                case "menuBatchMail":
+                    return RibbonIconFactory.CreateMailMergeIcon();
+                case "menuImageTools":
+                    return RibbonIconFactory.CreateImageToolsIcon();
+                case "menuGoogleTranslate":
+                    return RibbonIconFactory.CreateGoogleTranslateIcon();
+                default:
+                    return null;
+            }
+        }
+
+        #endregion
+
+        #region Callbacks Nhóm Gửi Mail Hàng Loạt
+
+        public void OnSendCurrentDocPdfClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.SendCurrentDocumentViaEmail(string.Empty, string.Empty, string.Empty, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnSendCurrentDocDocxClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.SendCurrentDocumentViaEmail(string.Empty, string.Empty, string.Empty, false, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnSendAccountingVouchersClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null) _customTaskPane.Visible = true;
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("batch-email");
+            }
+            if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+        }
+
+        public void OnBatchMailMergeClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null) _customTaskPane.Visible = true;
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("batch-email");
+            }
+            if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+        }
+
+        public void OnOpenBatchEmailPaneClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null) _customTaskPane.Visible = true;
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("batch-email");
+            }
+            if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+        }
+
+        #endregion
+
+        #region Callbacks Nhóm Xử Lý Hình Ảnh
+
+        public void OnExportAllImagesClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ExportAllImages(null, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnCenterAllImagesClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.CenterAllImages(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnInsertOfficialStampClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.InsertOfficialStampOrSignature(null, true, 130f, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnBatchInsertImagesClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.BatchInsertImages(null, 360f, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnOpenImageToolsPaneClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null) _customTaskPane.Visible = true;
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("image-tools");
+            }
+            if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+        }
+
+        #endregion
+
+        #region Callbacks Nhóm Google Dịch
+
+        public void OnTranslateSelectionAppendClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.TranslateSelectedText("auto", "vi", false, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnTranslateSelectionReplaceClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.TranslateSelectedText("auto", "vi", true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnTranslateEntireDocClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.TranslateEntireDocument("auto", "vi", out status);
+            NotifyStatus(status);
+        }
+
+        public void OnInsertBilingualFinancialTableClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.TranslateFinancialAndLegalTerms("en", true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnOpenGoogleTranslatePaneClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null) _customTaskPane.Visible = true;
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("google-translate");
+            }
+            if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
         }
 
         #endregion

@@ -79,5 +79,21 @@ namespace CoolWord.Core
         bool CreateSlidesFromSections(string outputPath, bool openAfterExport, out string statusMessage);
         bool ExportTablesToSlides(string outputPath, bool openAfterExport, out string statusMessage);
         bool CreateFinancialPresentation(string outputPath, bool openAfterExport, out string statusMessage);
+
+        // Các tác vụ Gửi Mail Hàng Loạt (Batch Email & Mail Merge)
+        bool SendCurrentDocumentViaEmail(string recipientEmail, string subject, string body, bool asPdf, out string statusMessage);
+        bool SendBatchMailMerge(System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> recipientList, string subjectTemplate, string bodyTemplate, bool attachDocumentPdf, out string statusMessage);
+        bool SendAccountingVouchersBatch(System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> employeeList, string subjectTemplate, string bodyTemplate, out string statusMessage);
+
+        // Các tác vụ Xử Lý Hình Ảnh (Image Tools)
+        bool ExportAllImages(string outputDir, out string statusMessage);
+        bool InsertOfficialStampOrSignature(string stampImagePath, bool inFrontOfText, float widthPoints, out string statusMessage);
+        bool BatchInsertImages(string[] imageFiles, float widthPoints, out string statusMessage);
+        bool CenterAllImages(out string statusMessage);
+
+        // Các tác vụ Google Dịch (Google Translate)
+        bool TranslateSelectedText(string sourceLang, string targetLang, bool replaceSelection, out string statusMessage);
+        bool TranslateEntireDocument(string sourceLang, string targetLang, out string statusMessage);
+        bool TranslateFinancialAndLegalTerms(string targetLang, bool createBilingualTable, out string statusMessage);
     }
 }
