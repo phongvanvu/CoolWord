@@ -9,6 +9,8 @@ using CoolWord.Modules.Printing;
 using CoolWord.Modules.QuickInput;
 using CoolWord.Modules.TextUtilities;
 using CoolWord.Modules.WordToWord;
+using CoolWord.Modules.WordToExcel;
+using CoolWord.Modules.WordToPowerPoint;
 
 namespace CoolWord.Core
 {
@@ -30,6 +32,8 @@ namespace CoolWord.Core
             Register(new QuickInputModule());
             Register(new NameSplitModule());
             Register(new WordToWordModule());
+            Register(new WordToExcelModule());
+            Register(new WordToPowerPointModule());
         }
 
         public static void Register(IToolModule module)

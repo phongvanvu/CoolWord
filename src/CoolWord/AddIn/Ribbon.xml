@@ -336,8 +336,8 @@
           </menu>
         </group>
 
-        <!-- Nhóm 7: Word ➔ Word (Chuyển đổi, chuẩn hóa & xử lý tệp Word) -->
-        <group id="grpWordToWord" label="Word ➔ Word">
+        <!-- Nhóm 7: Chuyển Đổi Office (Word -> Word, Word -> Excel, Word -> PowerPoint) -->
+        <group id="grpWordOfficeConvert" label="Chuyển Đổi Office">
           <menu id="menuWordToWord"
                 label="Word -&gt;&#10;Word"
                 size="large"
@@ -398,6 +398,100 @@
                     screentip="Mở Bảng Điều Khiển Word ➔ Word"
                     supertip="Mở giao diện đầy đủ trên thanh Task Pane để xem thống kê phông chữ, chuyển đổi hàng loạt và cấu hình nâng cao."
                     onAction="OnOpenWordToWordPaneClick" />
+          </menu>
+          <separator id="sepConvertExcel" />
+          <menu id="menuWordToExcel"
+                label="Word -&gt;&#10;Excel"
+                size="large"
+                imageMso="FileSaveAsExcelXlsx"
+                screentip="Chuyển đổi Word ➔ Excel (Xuất bảng biểu, chứng từ kế toán, danh sách sang Excel)"
+                supertip="Trích xuất dữ liệu từ văn bản Word sang Microsoft Excel (.xlsx): Xuất tất cả bảng biểu, xuất bảng kế toán kèm công thức SUM, xuất danh sách đoạn văn.">
+            <!-- Nhóm Xuất Bảng Biểu -->
+            <button id="btnExportAllTablesExcel"
+                    label="Xuất tất cả bảng biểu trong tài liệu sang Excel (.xlsx)"
+                    imageMso="TableInsert"
+                    screentip="Xuất tất cả bảng sang Excel"
+                    supertip="Quét toàn bộ tài liệu Word và xuất tất cả các bảng biểu sang tệp Excel mới, tự động căn chỉnh ô và giữ nguyên cấu trúc."
+                    onAction="OnExportAllTablesExcelClick" />
+            <button id="btnExportSelectedTableExcel"
+                    label="Xuất bảng biểu đang chọn sang Excel"
+                    imageMso="TableSelectTable"
+                    screentip="Xuất bảng đang chọn sang Excel"
+                    supertip="Chỉ xuất bảng biểu nơi con trỏ đang đứng hoặc đang bôi đen sang một bảng tính Excel."
+                    onAction="OnExportSelectedTableExcelClick" />
+            <menuSeparator id="sepW2EAccounting" />
+            <!-- Nhóm Nghiệp Vụ Kế Toán -->
+            <button id="btnExportAccountingTableExcel"
+                    label="Xuất Bảng Kê / Báo Cáo Kế Toán sang Excel (Kèm công thức SUM)"
+                    imageMso="ViewCalculation"
+                    screentip="Xuất bảng kế toán có công thức SUM"
+                    supertip="Tự động nhận diện các cột tiền tệ (Số tiền, Thành tiền, Đơn giá...), chuyển sang định dạng số kế toán (#,##0) và tự động chèn hàng TỔNG CỘNG với công thức =SUM(...) chuẩn Excel."
+                    onAction="OnExportAccountingTableExcelClick" />
+            <menuSeparator id="sepW2EList" />
+            <!-- Nhóm Xuất Dòng Văn Bản -->
+            <button id="btnExportParagraphsExcel"
+                    label="Xuất danh sách các đoạn văn / danh mục sang dòng Excel"
+                    imageMso="ListNumbering"
+                    screentip="Xuất danh sách sang Excel"
+                    supertip="Chuyển từng đoạn văn bản hoặc mục gạch đầu dòng từ Word thành các dòng tương ứng trong cột Excel kèm cột STT tự động."
+                    onAction="OnExportParagraphsExcelClick" />
+            <menuSeparator id="sepW2EPane" />
+            <button id="btnOpenWordToExcelPane"
+                    label="Mở Bảng Điều Khiển Word ➔ Excel..."
+                    imageMso="ApplicationOptionsDialog"
+                    screentip="Mở Bảng Điều Khiển Word ➔ Excel"
+                    supertip="Mở giao diện đầy đủ trên thanh Task Pane để tùy chọn phân chia Sheet và cấu hình xuất Excel."
+                    onAction="OnOpenWordToExcelPaneClick" />
+          </menu>
+          <separator id="sepConvertPpt" />
+          <menu id="menuWordToPowerPoint"
+                label="Word -&gt;&#10;PowerPoint"
+                size="large"
+                imageMso="FileSaveAsPowerPointPptx"
+                screentip="Chuyển đổi Word ➔ PowerPoint (Tạo bài trình chiếu slide từ văn bản Word)"
+                supertip="Tự động chuyển dàn ý, đề mục và nội dung Word thành bài thuyết trình PowerPoint (.pptx): Tạo slide từ Heading 1-2-3, tạo slide theo trang/section và xuất bảng biểu sang slide.">
+            <!-- Nhóm Tạo Slide từ Đề mục & Dàn ý -->
+            <button id="btnCreateSlidesFromHeadings"
+                    label="Tạo Slide từ Dàn ý &amp; Đề mục Heading 1-2-3 (Khuyên dùng)"
+                    imageMso="SlideMasterMasterLayout"
+                    screentip="Tạo Slide từ Heading 1-2-3"
+                    supertip="Phân tích văn bản Word: Heading 1 làm Tiêu đề Slide, Heading 2-3 và các ý chính làm các gạch đầu dòng (Bullets) chuẩn mực trên slide PowerPoint."
+                    onAction="OnCreateSlidesFromHeadingsClick" />
+            <menuSeparator id="sepW2PLayout" />
+            <!-- Nhóm Tạo Slide theo Trang & Section -->
+            <button id="btnCreateSlidesFromPages"
+                    label="Tạo Slide theo từng Trang tài liệu Word"
+                    imageMso="MultiplePages"
+                    screentip="Tạo Slide theo Trang"
+                    supertip="Mỗi trang văn bản Word được trích xuất thành một slide riêng biệt trong bài trình chiếu PowerPoint."
+                    onAction="OnCreateSlidesFromPagesClick" />
+            <button id="btnCreateSlidesFromSections"
+                    label="Tạo Slide theo từng Section (Phần) Word"
+                    imageMso="TableSplitCells"
+                    screentip="Tạo Slide theo Section"
+                    supertip="Tạo slide phân chia chương/phần theo từng Section trong tài liệu Word, phù hợp cho hợp đồng và báo cáo dài."
+                    onAction="OnCreateSlidesFromSectionsClick" />
+            <menuSeparator id="sepW2PTables" />
+            <!-- Nhóm Bảng biểu & Báo cáo tài chính -->
+            <button id="btnExportTablesToSlides"
+                    label="Xuất toàn bộ bảng biểu sang các Slide PowerPoint riêng"
+                    imageMso="TableInsert"
+                    screentip="Xuất bảng biểu sang Slide"
+                    supertip="Mỗi bảng biểu trong tài liệu được copy và dán căn giữa vào một slide PowerPoint riêng biệt."
+                    onAction="OnExportTablesToSlidesClick" />
+            <button id="btnCreateFinancialPpt"
+                    label="Tạo bộ Slide Báo Cáo Tài Chính &amp; Tổng Kết"
+                    imageMso="SlideDesign"
+                    screentip="Tạo slide báo cáo tài chính"
+                    supertip="Tự động tạo bộ slide thuyết trình tài chính hoàn chỉnh gồm trang bìa, căn cứ số liệu, bảng biểu tài chính và slide kết luận."
+                    onAction="OnCreateFinancialPptClick" />
+            <menuSeparator id="sepW2PPane" />
+            <button id="btnOpenWordToPowerPointPane"
+                    label="Mở Bảng Điều Khiển Word ➔ PowerPoint..."
+                    imageMso="ApplicationOptionsDialog"
+                    screentip="Mở Bảng Điều Khiển Word ➔ PowerPoint"
+                    supertip="Mở giao diện đầy đủ trên thanh Task Pane để xem trước dàn ý và tùy chọn trình chiếu PowerPoint."
+                    onAction="OnOpenWordToPowerPointPaneClick" />
           </menu>
         </group>
 

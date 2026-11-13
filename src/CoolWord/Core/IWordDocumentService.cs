@@ -66,5 +66,18 @@ namespace CoolWord.Core
         bool MergeWordDocuments(string[] filePaths, out string statusMessage);
         bool SplitDocumentBySections(string outputDir, out string statusMessage);
         bool SplitDocumentByPages(string outputDir, out string statusMessage);
+
+        // Các tác vụ Word ➔ Excel (Export tables, Accounting tables, Paragraphs)
+        bool ExportAllTablesToExcel(string outputPath, bool openAfterExport, bool separateSheets, out string statusMessage);
+        bool ExportSelectedTableToExcel(string outputPath, bool openAfterExport, out string statusMessage);
+        bool ExportAccountingTableToExcel(string outputPath, bool openAfterExport, out string statusMessage);
+        bool ExportParagraphsToExcel(string outputPath, bool openAfterExport, out string statusMessage);
+
+        // Các tác vụ Word ➔ PowerPoint (Create slides from headings, pages, sections, tables)
+        bool CreateSlidesFromHeadings(string outputPath, bool openAfterExport, out string statusMessage);
+        bool CreateSlidesFromPages(string outputPath, bool openAfterExport, out string statusMessage);
+        bool CreateSlidesFromSections(string outputPath, bool openAfterExport, out string statusMessage);
+        bool ExportTablesToSlides(string outputPath, bool openAfterExport, out string statusMessage);
+        bool CreateFinancialPresentation(string outputPath, bool openAfterExport, out string statusMessage);
     }
 }

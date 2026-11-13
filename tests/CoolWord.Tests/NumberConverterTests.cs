@@ -8,6 +8,8 @@ using CoolWord.Modules.Printing;
 using CoolWord.Modules.QuickInput;
 using CoolWord.Modules.TextUtilities;
 using CoolWord.Modules.WordToWord;
+using CoolWord.Modules.WordToExcel;
+using CoolWord.Modules.WordToPowerPoint;
 
 namespace CoolWord.Tests
 {
@@ -266,6 +268,69 @@ namespace CoolWord.Tests
 
             bool w2wSplitPageRes = WordToWordService.SplitDocumentByPages(null, null, out w2wStatus);
             AssertEqual("WordToWord SplitPage Null Safe", "false", w2wSplitPageRes.ToString().ToLowerInvariant());
+
+            // 8. Kiểm thử Mô-đun Word ➔ Excel (Dữ liệu, số kế toán, Registry, An toàn null)
+            string cleanCell = WordToExcelService.CleanCellText("Doanh thu năm 2026\r\a");
+            AssertEqual("CleanCellText", "Doanh thu năm 2026", cleanCell);
+
+            double accVal1;
+            bool accParse1 = WordToExcelService.TryParseAccountingNumber("1.250.000", out accVal1);
+            AssertEqual("TryParseAccountingNumber 1.250.000", "true", accParse1.ToString().ToLowerInvariant());
+            AssertEqual("Accounting Number Value", "1250000", ((long)accVal1).ToString());
+
+            double accVal2;
+            bool accParse2 = WordToExcelService.TryParseAccountingNumber("(500.000)", out accVal2);
+            AssertEqual("TryParseAccountingNumber Negative (500.000)", "true", accParse2.ToString().ToLowerInvariant());
+            AssertEqual("Negative Number Value", "-500000", ((long)accVal2).ToString());
+
+            double accVal3;
+            bool accParse3 = WordToExcelService.TryParseAccountingNumber("15%", out accVal3);
+            AssertEqual("TryParseAccountingNumber 15%", "true", accParse3.ToString().ToLowerInvariant());
+            AssertEqual("Percent Value", "15", ((long)accVal3).ToString());
+
+            IToolModule w2eMod = ModuleRegistry.GetById("word-to-excel");
+            AssertEqual("WordToExcel Module Registered", "true", (w2eMod != null).ToString().ToLowerInvariant());
+            if (w2eMod != null)
+            {
+                AssertEqual("WordToExcel Module Title", "Word ➔ Excel", w2eMod.Title);
+            }
+
+            string w2eStatus;
+            bool w2eAllRes = WordToExcelService.ExportAllTablesToExcel(null, null, false, false, out w2eStatus);
+            AssertEqual("WordToExcel AllTables Null Safe", "false", w2eAllRes.ToString().ToLowerInvariant());
+
+            bool w2eSelRes = WordToExcelService.ExportSelectedTableToExcel(null, null, false, out w2eStatus);
+            AssertEqual("WordToExcel SelTable Null Safe", "false", w2eSelRes.ToString().ToLowerInvariant());
+
+            bool w2eAccRes = WordToExcelService.ExportAccountingTableToExcel(null, null, false, out w2eStatus);
+            AssertEqual("WordToExcel AccTable Null Safe", "false", w2eAccRes.ToString().ToLowerInvariant());
+
+            bool w2eParaRes = WordToExcelService.ExportParagraphsToExcel(null, null, false, out w2eStatus);
+            AssertEqual("WordToExcel Paras Null Safe", "false", w2eParaRes.ToString().ToLowerInvariant());
+
+            // 9. Kiểm thử Mô-đun Word ➔ PowerPoint (Registry, An toàn null)
+            IToolModule w2pMod = ModuleRegistry.GetById("word-to-ppt");
+            AssertEqual("WordToPpt Module Registered", "true", (w2pMod != null).ToString().ToLowerInvariant());
+            if (w2pMod != null)
+            {
+                AssertEqual("WordToPpt Module Title", "Word ➔ PowerPoint", w2pMod.Title);
+            }
+
+            string w2pStatus;
+            bool w2pHeadRes = WordToPowerPointService.CreateSlidesFromHeadings(null, null, false, out w2pStatus);
+            AssertEqual("WordToPpt Headings Null Safe", "false", w2pHeadRes.ToString().ToLowerInvariant());
+
+            bool w2pPageRes = WordToPowerPointService.CreateSlidesFromPages(null, null, false, out w2pStatus);
+            AssertEqual("WordToPpt Pages Null Safe", "false", w2pPageRes.ToString().ToLowerInvariant());
+
+            bool w2pSecRes = WordToPowerPointService.CreateSlidesFromSections(null, null, false, out w2pStatus);
+            AssertEqual("WordToPpt Sections Null Safe", "false", w2pSecRes.ToString().ToLowerInvariant());
+
+            bool w2pTableRes = WordToPowerPointService.ExportTablesToSlides(null, null, false, out w2pStatus);
+            AssertEqual("WordToPpt Tables Null Safe", "false", w2pTableRes.ToString().ToLowerInvariant());
+
+            bool w2pFinRes = WordToPowerPointService.CreateFinancialPresentation(null, null, false, out w2pStatus);
+            AssertEqual("WordToPpt FinancialPresentation Null Safe", "false", w2pFinRes.ToString().ToLowerInvariant());
 
             Console.WriteLine("--------------------------------------------------------------------");
             Console.WriteLine(string.Format("KẾT QUẢ: Đạt {0} / {1} bài kiểm thử (Thất bại: {2})", _passed, _passed + _failed, _failed));

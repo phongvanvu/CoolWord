@@ -13,6 +13,8 @@ using CoolWord.Modules.Pdf;
 using CoolWord.Modules.QuickInput;
 using CoolWord.Modules.TextUtilities;
 using CoolWord.Modules.WordToWord;
+using CoolWord.Modules.WordToExcel;
+using CoolWord.Modules.WordToPowerPoint;
 using Office = Microsoft.Office.Core;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -903,6 +905,120 @@ namespace CoolWord.AddIn
             if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
             {
                 _taskPaneHost.WpfControl.SelectModule("word-to-word");
+            }
+            if (_ribbon != null)
+            {
+                try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+            }
+        }
+
+        #endregion
+
+        #region Callbacks Nhóm Word ➔ Excel
+
+        public void OnExportAllTablesExcelClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ExportAllTablesToExcel(null, true, false, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnExportSelectedTableExcelClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ExportSelectedTableToExcel(null, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnExportAccountingTableExcelClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ExportAccountingTableToExcel(null, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnExportParagraphsExcelClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ExportParagraphsToExcel(null, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnOpenWordToExcelPaneClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null)
+            {
+                _customTaskPane.Visible = true;
+            }
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("word-to-excel");
+            }
+            if (_ribbon != null)
+            {
+                try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+            }
+        }
+
+        #endregion
+
+        #region Callbacks Nhóm Word ➔ PowerPoint
+
+        public void OnCreateSlidesFromHeadingsClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.CreateSlidesFromHeadings(null, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnCreateSlidesFromPagesClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.CreateSlidesFromPages(null, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnCreateSlidesFromSectionsClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.CreateSlidesFromSections(null, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnExportTablesToSlidesClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.ExportTablesToSlides(null, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnCreateFinancialPptClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.CreateFinancialPresentation(null, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnOpenWordToPowerPointPaneClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null)
+            {
+                _customTaskPane.Visible = true;
+            }
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("word-to-ppt");
             }
             if (_ribbon != null)
             {

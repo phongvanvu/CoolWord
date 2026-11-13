@@ -8,6 +8,8 @@ using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
 using CoolWord.Modules.QuickInput;
 using CoolWord.Modules.WordToWord;
+using CoolWord.Modules.WordToExcel;
+using CoolWord.Modules.WordToPowerPoint;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace CoolWord.Core
@@ -843,6 +845,68 @@ namespace CoolWord.Core
         {
             Word.Application app = GetActiveWordApp();
             return WordToWordService.SplitDocumentByPages(app, outputDir, out statusMessage);
+        }
+
+        #endregion
+
+        #region Tác vụ Word ➔ Excel
+
+        public bool ExportAllTablesToExcel(string outputPath, bool openAfterExport, bool separateSheets, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToExcelService.ExportAllTablesToExcel(app, outputPath, openAfterExport, separateSheets, out statusMessage);
+        }
+
+        public bool ExportSelectedTableToExcel(string outputPath, bool openAfterExport, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToExcelService.ExportSelectedTableToExcel(app, outputPath, openAfterExport, out statusMessage);
+        }
+
+        public bool ExportAccountingTableToExcel(string outputPath, bool openAfterExport, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToExcelService.ExportAccountingTableToExcel(app, outputPath, openAfterExport, out statusMessage);
+        }
+
+        public bool ExportParagraphsToExcel(string outputPath, bool openAfterExport, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToExcelService.ExportParagraphsToExcel(app, outputPath, openAfterExport, out statusMessage);
+        }
+
+        #endregion
+
+        #region Tác vụ Word ➔ PowerPoint
+
+        public bool CreateSlidesFromHeadings(string outputPath, bool openAfterExport, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToPowerPointService.CreateSlidesFromHeadings(app, outputPath, openAfterExport, out statusMessage);
+        }
+
+        public bool CreateSlidesFromPages(string outputPath, bool openAfterExport, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToPowerPointService.CreateSlidesFromPages(app, outputPath, openAfterExport, out statusMessage);
+        }
+
+        public bool CreateSlidesFromSections(string outputPath, bool openAfterExport, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToPowerPointService.CreateSlidesFromSections(app, outputPath, openAfterExport, out statusMessage);
+        }
+
+        public bool ExportTablesToSlides(string outputPath, bool openAfterExport, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToPowerPointService.ExportTablesToSlides(app, outputPath, openAfterExport, out statusMessage);
+        }
+
+        public bool CreateFinancialPresentation(string outputPath, bool openAfterExport, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToPowerPointService.CreateFinancialPresentation(app, outputPath, openAfterExport, out statusMessage);
         }
 
         #endregion

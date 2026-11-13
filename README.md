@@ -93,6 +93,31 @@
   - **Tách tệp Word theo Section**: Chia nhỏ tài liệu nhiều chương, phụ lục, hợp đồng nhiều phần thành từng tệp Word riêng biệt (`Phan_01.docx`, `Phan_02.docx`...).
   - **Tách tệp Word theo Trang**: Chia tách tài liệu thành các tệp Word riêng cho mỗi trang (`Trang_001.docx`, `Trang_002.docx`...).
 
+### 📊 Module 9: Word ➔ Excel (`WordToExcelModule`)
+- **Nút Ribbon `Word -> Excel` với biểu tượng Excel chuẩn**:
+  - Tích hợp menu thả xuống kích thước lớn với nhãn 2 dòng `Word ->` / `Excel ˅` và biểu tượng Excel hiện đại (`FileSaveAsExcelXlsx`).
+- **Xuất Bảng biểu Word sang Microsoft Excel (.xlsx)**:
+  - **Xuất tất cả bảng biểu**: Trích xuất toàn bộ bảng trong Word sang các bảng tính Excel với đường viền, căn lề và định dạng ô hoàn hảo.
+  - **Xuất bảng đang chọn**: Nhanh chóng xuất bảng biểu nơi con trỏ đang đứng hoặc bôi đen.
+  - **Tùy chọn phân chia Sheet**: Mỗi bảng trên một Sheet riêng biệt hoặc tất cả bảng xếp nối tiếp trên cùng một Sheet.
+- **Tính năng Kế Toán: Xuất Bảng Kê & Báo Cáo Tài Chính Kèm Công Thức SUM**:
+  - Tự động nhận diện các cột tiền tệ (`Số tiền`, `Thành tiền`, `Đơn giá`, `Phát sinh Nợ/Có`...) và gán định dạng số kế toán (`#,##0`).
+  - Tự động chèn dòng **TỔNG CỘNG** ở chân bảng với công thức `=SUM(...)` chuẩn Excel, kẻ viền kép chuẩn kế toán.
+- **Xuất Dòng Văn Bản sang Cột Excel**:
+  - Chuyển đổi danh sách đoạn văn, danh mục hàng hóa, câu hỏi, điều khoản thành các dòng trong Excel kèm cột STT tự động.
+
+### 📽️ Module 10: Word ➔ PowerPoint (`WordToPowerPointModule`)
+- **Nút Ribbon `Word -> PowerPoint` với biểu tượng PowerPoint chuẩn**:
+  - Tích hợp menu thả xuống kích thước lớn với nhãn 2 dòng `Word ->` / `PowerPoint ˅` và biểu tượng PowerPoint hiện đại (`FileSaveAsPowerPointPptx`).
+- **Tạo Slide thuyết trình từ Đề mục & Dàn ý (Heading 1-2-3)**:
+  - Phân tích cấu trúc phân cấp tài liệu: Heading 1 làm Tiêu đề slide, Heading 2-3 và các ý chính làm các gạch đầu dòng (Bullets) tinh gọn.
+- **Tạo Slide linh hoạt theo Trang & Section**:
+  - **Theo từng Trang**: Trích xuất mỗi trang tài liệu Word thành một slide trình chiếu tương ứng.
+  - **Theo từng Section**: Phù hợp cho báo cáo nhiều chương và đề án phân đoạn.
+- **Xuất Bảng biểu & Bộ Slide Báo Cáo Tài Chính Tổng Kết**:
+  - **Xuất bảng biểu sang Slide**: Copy và căn giữa từng bảng biểu lên một slide riêng biệt.
+  - **Tạo bộ Slide Báo Cáo Tài Chính**: Tự động tạo bài thuyết trình hoàn chỉnh gồm slide bìa, căn cứ số liệu, bảng biểu tài chính và slide kết luận.
+
 ---
 
 ## 2. Cấu trúc dự án & Kiến trúc mở rộng
@@ -106,7 +131,7 @@ c:\projects\CoolWord\
 ├── bin\                            # Thư mục chứa file thực thi sau khi build
 │   ├── CoolWord.dll                # Thư viện COM Add-in chính nạp vào MS Word
 │   ├── CoolWord.Studio.exe         # Ứng dụng Desktop quản lý cài đặt & dùng độc lập
-│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (89 test cases)
+│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (109 test cases)
 ├── src\
 │   ├── CoolWord\
 │   │   ├── AddIn\                  # Tích hợp COM (IDTExtensibility2, Ribbon XML, Custom Task Pane, Installer)
@@ -119,7 +144,9 @@ c:\projects\CoolWord\
 │   │   │   ├── Pdf\                # Module Tiện Ích & Xuất Bản PDF
 │   │   │   ├── QuickInput\         # Module Nhập Liệu Nhanh (Mẫu văn bản, Kế toán & Snippets)
 │   │   │   ├── NameSplit\          # Module Tách Họ - Tên (Bảng biểu & Danh sách nhân sự)
-│   │   │   └── WordToWord\         # Module Word ➔ Word (Chuyển mã TCVN3/VNI, .doc/.docx, Gộp/Tách file)
+│   │   │   ├── WordToWord\         # Module Word ➔ Word (Chuyển mã TCVN3/VNI, .doc/.docx, Gộp/Tách file)
+│   │   │   ├── WordToExcel\        # Module Word ➔ Excel (Xuất bảng biểu, chứng từ kế toán kèm SUM)
+│   │   │   └── WordToPowerPoint\   # Module Word ➔ PowerPoint (Tạo slide từ Heading 1-2-3, Báo cáo tài chính)
 │   │   └── UI\                     # Giao diện WPF Fluent Design (ThemeColors, MainTaskPaneControl)
 │   └── CoolWord.Studio\            # Ứng dụng quản lý & chạy thử giao diện độc lập
 └── tests\
