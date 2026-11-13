@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -8,6 +9,7 @@ using CoolWord.Core;
 using CoolWord.Modules.AdminFormat;
 using CoolWord.Modules.NumberToText;
 using CoolWord.Modules.Pdf;
+using CoolWord.Modules.QuickInput;
 using CoolWord.Modules.TextUtilities;
 using Office = Microsoft.Office.Core;
 using Word = Microsoft.Office.Interop.Word;
@@ -627,6 +629,146 @@ namespace CoolWord.AddIn
                 try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
             }
         }
+
+        #region Callbacks Nhóm Nhập Liệu Nhanh
+
+        public void OnSaveSelectionAsSnippetClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            bool ok = _wordService.SaveCurrentSelectionAsSnippet(null, "Cá nhân", null, out status);
+            NotifyStatus(status);
+            if (ok)
+            {
+                EnsureTaskPaneCreated();
+                if (_customTaskPane != null)
+                {
+                    _customTaskPane.Visible = true;
+                }
+                if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+                {
+                    _taskPaneHost.WpfControl.SelectModule("quick-input");
+                }
+            }
+        }
+
+        public void OnInsertSnippetLuatDn(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-luat-dn");
+        }
+
+        public void OnInsertSnippetLuatLd(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-luat-ld");
+        }
+
+        public void OnInsertSnippetNd30(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-nd30");
+        }
+
+        public void OnInsertSnippetKinhGui(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-kinh-gui");
+        }
+
+        public void OnInsertSnippetHieuLucQd(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-hieu-luc-qd");
+        }
+
+        public void OnInsertSnippetDnTamUng(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-dn-tam-ung");
+        }
+
+        public void OnInsertSnippetDnThanhToan(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-dn-thanh-toan");
+        }
+
+        public void OnInsertSnippetThongTinNh(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-tt-nh");
+        }
+
+        public void OnInsertSnippetDieuKhoanTt(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-dk-tt");
+        }
+
+        public void OnInsertSnippetCamDoanKt(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-cam-ket-kt");
+        }
+
+        public void OnInsertSnippetBaoMat(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-bao-mat");
+        }
+
+        public void OnInsertSnippetBatKhaKhang(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-bat-kha-khang");
+        }
+
+        public void OnInsertSnippetTranhChap(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-tranh-chap");
+        }
+
+        public void OnInsertSnippetBoxUnchecked(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-box-unchecked");
+        }
+
+        public void OnInsertSnippetBoxChecked(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-box-checked");
+        }
+
+        public void OnInsertSnippetArrow(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-arrow");
+        }
+
+        public void OnInsertSnippetStar(Office.IRibbonControl control)
+        {
+            InsertSnippetById("snip-star");
+        }
+
+        public void OnOpenQuickInputPaneClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null)
+            {
+                _customTaskPane.Visible = true;
+            }
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("quick-input");
+            }
+            if (_ribbon != null)
+            {
+                try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+            }
+        }
+
+        private void InsertSnippetById(string snippetId)
+        {
+            if (_wordService == null || string.IsNullOrEmpty(snippetId)) return;
+
+            QuickSnippet snip = QuickInputService.GetAllSnippets()
+                .FirstOrDefault(s => string.Equals(s.Id, snippetId, StringComparison.OrdinalIgnoreCase));
+            if (snip != null)
+            {
+                string status;
+                _wordService.InsertTextSnippet(snip.Content, out status);
+                NotifyStatus(status);
+            }
+        }
+
+        #endregion
 
         #endregion
 

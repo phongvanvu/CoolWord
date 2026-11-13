@@ -252,7 +252,57 @@
           </menu>
         </group>
 
-        <!-- Nhóm 6: Bảng Điều Khiển CoolWord -->
+        <!-- Nhóm 6: Nhập Liệu Nhanh -->
+        <group id="grpQuickInput" label="Nhập Liệu">
+          <menu id="menuQuickInput"
+                label="Nhập liệu&#10;nhanh"
+                size="large"
+                imageMso="QuickPartsInsertMenu"
+                screentip="Nhập liệu nhanh các mẫu văn bản &amp; cụm từ thông dụng"
+                supertip="Chèn nhanh các căn cứ pháp lý, mẫu biểu kế toán, điều khoản hợp đồng thường dùng hoặc lưu đoạn văn bản chọn thành mẫu mới.">
+            <button id="btnSaveSelectionAsSnippet"
+                    label="Lưu đoạn đang chọn thành mẫu mới..."
+                    imageMso="CreateBuildingBlock"
+                    onAction="OnSaveSelectionAsSnippetClick" />
+            <menuSeparator id="sepQuickInput1" />
+            <!-- Submenu: Căn Cứ Pháp Lý & Hành Chính -->
+            <menu id="menuQuickAdmin" label="Căn Cứ Pháp Lý &amp; Hành Chính" imageMso="TableInsert">
+              <button id="btnSnipLuatDn" label="Căn cứ Luật Doanh nghiệp số 59/2020/QH14" onAction="OnInsertSnippetLuatDn" />
+              <button id="btnSnipLuatLd" label="Căn cứ Bộ luật Lao động số 45/2019/QH14" onAction="OnInsertSnippetLuatLd" />
+              <button id="btnSnipNd30" label="Căn cứ Nghị định 30/2020/NĐ-CP về văn thư" onAction="OnInsertSnippetNd30" />
+              <button id="btnSnipKinhGui" label="Kính gửi Ban Giám đốc cùng toàn thể CBNV" onAction="OnInsertSnippetKinhGui" />
+              <button id="btnSnipHieuLucQd" label="Quyết định này có hiệu lực kể từ ngày ký" onAction="OnInsertSnippetHieuLucQd" />
+            </menu>
+            <!-- Submenu: Nghiệp Vụ Kế Toán & Biểu Mẫu -->
+            <menu id="menuQuickAccounting" label="Mẫu Kế Toán &amp; Thanh Toán" imageMso="AccountingFormat">
+              <button id="btnSnipDnTamUng" label="Giấy đề nghị tạm ứng (Mẫu chuẩn)" onAction="OnInsertSnippetDnTamUng" />
+              <button id="btnSnipDnThanhToan" label="Giấy đề nghị thanh toán (Mẫu chuẩn)" onAction="OnInsertSnippetDnThanhToan" />
+              <button id="btnSnipThongTinNh" label="Thông tin tài khoản ngân hàng &amp; Thuế" onAction="OnInsertSnippetThongTinNh" />
+              <button id="btnSnipDieuKhoanTt" label="Điều khoản thanh toán &amp; Hóa đơn VAT" onAction="OnInsertSnippetDieuKhoanTt" />
+              <button id="btnSnipCamDoanKt" label="Cam đoan số liệu trung thực, chính xác" onAction="OnInsertSnippetCamDoanKt" />
+            </menu>
+            <!-- Submenu: Điều Khoản Hợp Đồng -->
+            <menu id="menuQuickContracts" label="Điều Khoản Hợp Đồng" imageMso="SignatureLineInsert">
+              <button id="btnSnipBaoMat" label="Điều khoản bảo mật thông tin (NDA)" onAction="OnInsertSnippetBaoMat" />
+              <button id="btnSnipBatKhaKhang" label="Điều khoản sự kiện bất khả kháng" onAction="OnInsertSnippetBatKhaKhang" />
+              <button id="btnSnipTranhChap" label="Điều khoản giải quyết tranh chấp / Tòa án" onAction="OnInsertSnippetTranhChap" />
+            </menu>
+            <!-- Submenu: Ký Hiệu & Đánh Dấu -->
+            <menu id="menuQuickSymbols" label="Ký Hiệu &amp; Đánh Dấu" imageMso="SymbolInsert">
+              <button id="btnSnipBoxUnchecked" label="Ô vuông chưa chọn: ☐" onAction="OnInsertSnippetBoxUnchecked" />
+              <button id="btnSnipBoxChecked" label="Ô vuông đã chọn: ☑" onAction="OnInsertSnippetBoxChecked" />
+              <button id="btnSnipArrow" label="Mũi tên chỉ dẫn: ➔" onAction="OnInsertSnippetArrow" />
+              <button id="btnSnipStar" label="Dấu sao ghi chú: ⭐" onAction="OnInsertSnippetStar" />
+            </menu>
+            <menuSeparator id="sepQuickInput2" />
+            <button id="btnOpenQuickInputPane"
+                    label="Mở Bảng Quản Lý Mẫu Nhập Liệu..."
+                    imageMso="ApplicationOptionsDialog"
+                    onAction="OnOpenQuickInputPaneClick" />
+          </menu>
+        </group>
+
+        <!-- Nhóm 7: Bảng Điều Khiển CoolWord -->
         <group id="grpTaskPane" label="Bảng Điều Khiển &amp; Mở Rộng">
           <toggleButton id="btnToggleTaskPane"
                         label="Bảng Công Cụ CoolWord"
@@ -304,6 +354,10 @@
                 label="Xuất vùng chọn ra file PDF"
                 imageMso="FileSaveAsPdfOrXps"
                 onAction="OnExportSelectionPdfClick" />
+        <button id="ctxText_SaveSnippet"
+                label="Lưu đoạn chọn làm mẫu nhập liệu..."
+                imageMso="CreateBuildingBlock"
+                onAction="OnSaveSelectionAsSnippetClick" />
         <button id="ctxText_OpenPane"
                 label="Mở bảng điều khiển CoolWord..."
                 imageMso="ApplicationOptionsDialog"
@@ -343,6 +397,10 @@
                 label="Xuất vùng chọn ra file PDF"
                 imageMso="FileSaveAsPdfOrXps"
                 onAction="OnExportSelectionPdfClick" />
+        <button id="ctxTable_SaveSnippet"
+                label="Lưu đoạn chọn làm mẫu nhập liệu..."
+                imageMso="CreateBuildingBlock"
+                onAction="OnSaveSelectionAsSnippetClick" />
         <button id="ctxTable_OpenPane"
                 label="Mở bảng điều khiển CoolWord..."
                 imageMso="ApplicationOptionsDialog"

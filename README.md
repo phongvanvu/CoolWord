@@ -58,6 +58,17 @@
   - Hỗ trợ các mẫu nghiệp vụ kế toán: `ĐÃ THANH TOÁN`, `ĐÃ KIỂM TOÁN`, `BẢN SAO KẾ TOÁN`, `LƯU HÀNH NỘI BỘ`, `DỰ THẢO` hoặc dấu chìm tùy biến.
   - Hỗ trợ gỡ bỏ toàn bộ dấu chìm 1-Click an toàn.
 
+### 📝 Module 6: Nhập Liệu Nhanh (`QuickInputModule`)
+- **Menu Nhập Liệu Nhanh trên Ribbon & Menu Chuột Phải**:
+  - Chèn nhanh các **Căn cứ pháp lý** thông dụng: Luật Doanh nghiệp 59/2020, Bộ luật Lao động 45/2019, Nghị định 30/2020/NĐ-CP, Kính gửi Ban Giám đốc, Điều khoản hiệu lực thi hành.
+  - Chèn nhanh **Mẫu biểu Kế toán & Thanh toán**: Giấy đề nghị tạm ứng, Giấy đề nghị thanh toán, Thông tin số tài khoản ngân hàng & Xuất hóa đơn VAT, Điều khoản thanh toán, Cam đoan số liệu kế toán trung thực.
+  - Chèn nhanh **Điều khoản Hợp đồng**: Điều khoản bảo mật (NDA), Điều khoản bất khả kháng, Điều khoản giải quyết tranh chấp.
+  - Chèn nhanh **Ký hiệu & Đánh dấu**: Ô vuông kiểm tra `☐`, Ô vuông đã chọn `☑`, Mũi tên `➔`, Dấu sao `⭐ Ghi chú`.
+- **Tạo & Quản lý mẫu người dùng tùy biến**:
+  - Bôi đen đoạn văn bản bất kỳ trong Word và nhấn **Lưu đoạn đang chọn thành mẫu mới** để tái sử dụng lâu dài.
+  - Tìm kiếm mẫu thông minh, phân loại theo nhóm (*Hành chính, Kế toán, Hợp đồng, Cá nhân, Ký hiệu*) trên bảng điều khiển Task Pane.
+  - Hỗ trợ các biến tự động động hóa ngày giờ: `{DATE}` (ngày hiện tại), `{DOC_DATE}` (ngày tháng theo chuẩn văn thư), `{TIME}`, `{YEAR}`.
+
 ---
 
 ## 2. Cấu trúc dự án & Kiến trúc mở rộng
@@ -81,7 +92,8 @@ c:\projects\CoolWord\
 │   │   │   ├── AdminFormat\        # Module Chuẩn Hóa Văn Bản Nghị Định 30/2020
 │   │   │   ├── TextUtilities\      # Module Chuẩn Hóa Văn Bản & Chữ Hoa/Thường
 │   │   │   ├── Printing\           # Module In Ấn & Xuất Bản Thông Minh
-│   │   │   └── Pdf\                # Module Tiện Ích & Xuất Bản PDF
+│   │   │   ├── Pdf\                # Module Tiện Ích & Xuất Bản PDF
+│   │   │   └── QuickInput\         # Module Nhập Liệu Nhanh (Mẫu văn bản, Kế toán & Snippets)
 │   │   └── UI\                     # Giao diện WPF Fluent Design (ThemeColors, MainTaskPaneControl)
 │   └── CoolWord.Studio\            # Ứng dụng quản lý & chạy thử giao diện độc lập
 └── tests\

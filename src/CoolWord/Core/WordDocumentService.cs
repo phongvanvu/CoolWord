@@ -5,6 +5,7 @@ using CoolWord.Modules.AdminFormat;
 using CoolWord.Modules.NumberToText;
 using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
+using CoolWord.Modules.QuickInput;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace CoolWord.Core
@@ -750,6 +751,22 @@ namespace CoolWord.Core
         {
             Word.Application app = GetActiveWordApp();
             return PdfService.RemoveAccountingWatermark(app, out statusMessage);
+        }
+
+        #endregion
+
+        #region Tác vụ Nhập Liệu Nhanh
+
+        public bool InsertTextSnippet(string text, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return QuickInputService.InsertSnippetIntoWord(app, text, out statusMessage);
+        }
+
+        public bool SaveCurrentSelectionAsSnippet(string title, string category, string shortcut, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return QuickInputService.SaveSelectionAsCustomSnippet(app, title, category, shortcut, out statusMessage);
         }
 
         #endregion

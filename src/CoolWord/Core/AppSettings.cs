@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using CoolWord.Modules.NumberToText;
+using CoolWord.Modules.QuickInput;
 
 namespace CoolWord.Core
 {
@@ -57,6 +58,9 @@ namespace CoolWord.Core
         [DataMember]
         public List<ConversionHistoryItem> History { get; set; }
 
+        [DataMember]
+        public List<QuickSnippet> CustomSnippets { get; set; }
+
         public AppSettings()
         {
             ReadingMode = (int)NumberReadingMode.CurrencyVnd;
@@ -71,6 +75,7 @@ namespace CoolWord.Core
             CustomMinorUnit = "xu";
             LiveSyncSelectionToTaskPane = true;
             History = new List<ConversionHistoryItem>();
+            CustomSnippets = new List<QuickSnippet>();
         }
 
         public NumberConvertOptions ToNumberConvertOptions()

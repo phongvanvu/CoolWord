@@ -80,6 +80,10 @@
     <Compile Include="Modules\Pdf\PdfService.cs" />
     <Compile Include="Modules\Pdf\PdfModule.cs" />
     <Compile Include="Modules\Pdf\PdfModuleView.cs" />
+    <Compile Include="Modules\QuickInput\QuickSnippet.cs" />
+    <Compile Include="Modules\QuickInput\QuickInputService.cs" />
+    <Compile Include="Modules\QuickInput\QuickInputModule.cs" />
+    <Compile Include="Modules\QuickInput\QuickInputModuleView.cs" />
     <Compile Include="UI\ThemeColors.cs" />
     <Compile Include="UI\MainTaskPaneControl.cs" />
   </ItemGroup>

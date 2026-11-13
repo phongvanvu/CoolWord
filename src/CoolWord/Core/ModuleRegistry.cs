@@ -5,6 +5,7 @@ using CoolWord.Modules.AdminFormat;
 using CoolWord.Modules.NumberToText;
 using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
+using CoolWord.Modules.QuickInput;
 using CoolWord.Modules.TextUtilities;
 
 namespace CoolWord.Core
@@ -24,6 +25,7 @@ namespace CoolWord.Core
             Register(new TextCleanModule());
             Register(new PrintModule());
             Register(new PdfModule());
+            Register(new QuickInputModule());
         }
 
         public static void Register(IToolModule module)

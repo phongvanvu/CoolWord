@@ -4,6 +4,7 @@ using CoolWord.Modules.AdminFormat;
 using CoolWord.Modules.NumberToText;
 using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
+using CoolWord.Modules.QuickInput;
 using CoolWord.Modules.TextUtilities;
 
 namespace CoolWord.Tests
@@ -135,6 +136,47 @@ namespace CoolWord.Tests
             string wmStatus;
             bool wmRes = PdfService.AddAccountingWatermark(null, "ĐÃ THANH TOÁN", out wmStatus);
             AssertEqual("AddAccountingWatermark Null Check", "false", wmRes.ToString().ToLowerInvariant());
+
+            // 11. Kiểm thử Module Nhập Liệu Nhanh (QuickInputModule & QuickInputService)
+            IToolModule qiMod = ModuleRegistry.GetById("quick-input");
+            AssertEqual("QuickInputModule Registration", "true", (qiMod != null).ToString().ToLowerInvariant());
+            if (qiMod != null)
+            {
+                AssertEqual("QuickInputModule Title", "Nhập Liệu Nhanh", qiMod.Title);
+                AssertEqual("QuickInputModule Order", "6", qiMod.Order.ToString());
+            }
+
+            var builtIns = QuickInputService.GetBuiltInSnippets();
+            AssertEqual("BuiltIn Snippets Count > 0", "true", (builtIns.Count >= 10).ToString().ToLowerInvariant());
+
+            string dateTemplate = "Hôm nay {DATE}";
+            string resolvedDate = QuickInputService.ResolvePlaceholders(dateTemplate);
+            AssertEqual("ResolvePlaceholders DATE", "true", resolvedDate.Contains(DateTime.Now.ToString("dd/MM/yyyy")).ToString().ToLowerInvariant());
+
+            string docDateTemplate = "Hà Nội, {DOC_DATE}";
+            string resolvedDocDate = QuickInputService.ResolvePlaceholders(docDateTemplate);
+            AssertEqual("ResolvePlaceholders DOC_DATE", "true", resolvedDocDate.Contains("tháng").ToString().ToLowerInvariant());
+
+            // Kiểm thử Thêm & Xóa mẫu cá nhân
+            string addStatus;
+            bool addOk = QuickInputService.AddCustomSnippet("Mẫu thử nghiệm", "Cá nhân", "Nội dung mẫu {DATE}", "mtn", out addStatus);
+            AssertEqual("AddCustomSnippet", "true", addOk.ToString().ToLowerInvariant());
+
+            var allSnippets = QuickInputService.GetAllSnippets();
+            var added = allSnippets.Find(s => s.Title == "Mẫu thử nghiệm");
+            AssertEqual("Find Added Snippet", "true", (added != null).ToString().ToLowerInvariant());
+
+            if (added != null)
+            {
+                string delStatus;
+                bool delOk = QuickInputService.DeleteCustomSnippet(added.Id, out delStatus);
+                AssertEqual("DeleteCustomSnippet", "true", delOk.ToString().ToLowerInvariant());
+            }
+
+            // Kiểm thử hàm Insert với null app (xử lý ngoại lệ an toàn)
+            string insertStatus;
+            bool insertRes = QuickInputService.InsertSnippetIntoWord(null, "Test", out insertStatus);
+            AssertEqual("InsertSnippetIntoWord Null Check", "false", insertRes.ToString().ToLowerInvariant());
 
             Console.WriteLine("--------------------------------------------------------------------");
             Console.WriteLine(string.Format("KẾT QUẢ: Đạt {0} / {1} bài kiểm thử (Thất bại: {2})", _passed, _passed + _failed, _failed));

@@ -47,5 +47,9 @@ namespace CoolWord.Core
         bool ExportCurrentPageToPdf(string targetFilePath, out string statusMessage);
         bool AddAccountingWatermark(string watermarkText, out string statusMessage);
         bool RemoveAccountingWatermark(out string statusMessage);
+
+        // Các tác vụ Nhập Liệu Nhanh (Quick Input & Snippets)
+        bool InsertTextSnippet(string text, out string statusMessage);
+        bool SaveCurrentSelectionAsSnippet(string title, string category, string shortcut, out string statusMessage);
     }
 }
