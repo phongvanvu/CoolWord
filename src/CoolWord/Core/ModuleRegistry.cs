@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CoolWord.Modules.AdminFormat;
+using CoolWord.Modules.NameSplit;
 using CoolWord.Modules.NumberToText;
 using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
@@ -26,6 +27,7 @@ namespace CoolWord.Core
             Register(new PrintModule());
             Register(new PdfModule());
             Register(new QuickInputModule());
+            Register(new NameSplitModule());
         }
 
         public static void Register(IToolModule module)

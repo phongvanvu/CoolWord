@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using CoolWord.Modules.AdminFormat;
+using CoolWord.Modules.NameSplit;
 using CoolWord.Modules.NumberToText;
 using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
@@ -767,6 +768,40 @@ namespace CoolWord.Core
         {
             Word.Application app = GetActiveWordApp();
             return QuickInputService.SaveSelectionAsCustomSnippet(app, title, category, shortcut, out statusMessage);
+        }
+
+        #endregion
+
+        #region Tác vụ Tách Họ - Tên
+
+        public bool SplitTableColumn2(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return NameSplitService.SplitTableColumn2(app, out statusMessage);
+        }
+
+        public bool SplitTableColumn3(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return NameSplitService.SplitTableColumn3(app, out statusMessage);
+        }
+
+        public bool MergeTableColumns(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return NameSplitService.MergeTableColumns(app, out statusMessage);
+        }
+
+        public bool SplitSelectedTextLines(string delimiter, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return NameSplitService.SplitSelectedTextLines(app, delimiter, out statusMessage);
+        }
+
+        public bool NormalizeSelectedNames(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return NameSplitService.NormalizeSelectedNames(app, out statusMessage);
         }
 
         #endregion

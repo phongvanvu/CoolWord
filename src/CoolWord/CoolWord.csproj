@@ -84,6 +84,11 @@
     <Compile Include="Modules\QuickInput\QuickInputService.cs" />
     <Compile Include="Modules\QuickInput\QuickInputModule.cs" />
     <Compile Include="Modules\QuickInput\QuickInputModuleView.cs" />
+    <Compile Include="Modules\NameSplit\ParsedVietnameseName.cs" />
+    <Compile Include="Modules\NameSplit\VietnameseNameSplitter.cs" />
+    <Compile Include="Modules\NameSplit\NameSplitService.cs" />
+    <Compile Include="Modules\NameSplit\NameSplitModule.cs" />
+    <Compile Include="Modules\NameSplit\NameSplitModuleView.cs" />
     <Compile Include="UI\ThemeColors.cs" />
     <Compile Include="UI\MainTaskPaneControl.cs" />
   </ItemGroup>

@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using CoolWord.Core;
 using CoolWord.Modules.AdminFormat;
+using CoolWord.Modules.NameSplit;
 using CoolWord.Modules.NumberToText;
 using CoolWord.Modules.Pdf;
 using CoolWord.Modules.QuickInput;
@@ -630,6 +631,8 @@ namespace CoolWord.AddIn
             }
         }
 
+        #endregion
+
         #region Callbacks Nhóm Nhập Liệu Nhanh
 
         public void OnSaveSelectionAsSnippetClick(Office.IRibbonControl control)
@@ -769,6 +772,65 @@ namespace CoolWord.AddIn
         }
 
         #endregion
+
+        #region Callbacks Nhóm Tách Họ - Tên
+
+        public void OnSplitNameTable2Click(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.SplitTableColumn2(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnSplitNameTable3Click(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.SplitTableColumn3(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnMergeNameColumnsClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.MergeTableColumns(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnSplitNameSelectionTextClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.SplitSelectedTextLines("\t", out status);
+            NotifyStatus(status);
+        }
+
+        public void OnNormalizeNameSelectionClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.NormalizeSelectedNames(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnOpenNameSplitPaneClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null)
+            {
+                _customTaskPane.Visible = true;
+            }
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("name-split");
+            }
+            if (_ribbon != null)
+            {
+                try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+            }
+        }
 
         #endregion
 

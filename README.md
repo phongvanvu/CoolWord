@@ -69,6 +69,14 @@
   - Tìm kiếm mẫu thông minh, phân loại theo nhóm (*Hành chính, Kế toán, Hợp đồng, Cá nhân, Ký hiệu*) trên bảng điều khiển Task Pane.
   - Hỗ trợ các biến tự động động hóa ngày giờ: `{DATE}` (ngày hiện tại), `{DOC_DATE}` (ngày tháng theo chuẩn văn thư), `{TIME}`, `{YEAR}`.
 
+### 👥 Module 7: Tách Họ - Tên (`NameSplitModule`)
+- **Nút bấm Ribbon `Tách Họ-Tên` & Menu Chuột Phải**:
+  - **Tách 2 cột trong bảng (Họ đệm & Tên)**: Tự động chèn 1 cột "Tên" bên phải, đổi tiêu đề thành "Họ và tên đệm" và "Tên" để phục vụ sắp xếp danh sách nhân sự, học sinh theo thứ tự A-Z.
+  - **Tách 3 cột trong bảng (Họ | Đệm | Tên)**: Phân tách chi tiết 3 cột riêng biệt, tự động nhận diện họ đơn và các họ ghép thông dụng tiếng Việt (*Tôn Thất, Tôn Nữ, Nguyễn Phước, Đặng Vũ...*).
+  - **Gộp 2 cột thành 1 cột "Họ và tên"**: Gộp nhanh cột Họ đệm và cột Tên liền kề thành 1 cột Họ và tên hoàn chỉnh và tự động xóa cột phụ.
+  - **Xử lý danh sách ngoài bảng**: Tách Họ - Tên theo định dạng dấu Tab `\t` (tiện sao chép/dán sang Excel) hoặc dấu gạch đứng `|`.
+  - **Chuẩn hóa danh từ riêng**: Tự động sửa lỗi viết hoa (*nguyễn văn an* $\rightarrow$ *Nguyễn Văn An*), giữ nguyên tiền tố các họ tên dân tộc thiểu số (*H'Hen Niê, Y Moan...*).
+
 ---
 
 ## 2. Cấu trúc dự án & Kiến trúc mở rộng
@@ -93,7 +101,8 @@ c:\projects\CoolWord\
 │   │   │   ├── TextUtilities\      # Module Chuẩn Hóa Văn Bản & Chữ Hoa/Thường
 │   │   │   ├── Printing\           # Module In Ấn & Xuất Bản Thông Minh
 │   │   │   ├── Pdf\                # Module Tiện Ích & Xuất Bản PDF
-│   │   │   └── QuickInput\         # Module Nhập Liệu Nhanh (Mẫu văn bản, Kế toán & Snippets)
+│   │   │   ├── QuickInput\         # Module Nhập Liệu Nhanh (Mẫu văn bản, Kế toán & Snippets)
+│   │   │   └── NameSplit\          # Module Tách Họ - Tên (Bảng biểu & Danh sách nhân sự)
 │   │   └── UI\                     # Giao diện WPF Fluent Design (ThemeColors, MainTaskPaneControl)
 │   └── CoolWord.Studio\            # Ứng dụng quản lý & chạy thử giao diện độc lập
 └── tests\

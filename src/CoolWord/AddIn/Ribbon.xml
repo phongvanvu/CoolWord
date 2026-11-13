@@ -150,6 +150,40 @@
                     label="chữ thường toàn bộ"
                     onAction="OnCaseLowerClick" />
           </menu>
+
+          <menu id="menuNameSplit"
+                label="Tách Họ-&#10;Tên"
+                size="large"
+                imageMso="CompareCompare"
+                screentip="Tách và chuẩn hóa Họ - Tên tiếng Việt"
+                supertip="Tách cột họ tên trong bảng biểu thành 2 cột (Họ đệm &amp; Tên) hoặc 3 cột (Họ | Đệm | Tên), gộp cột và chuẩn hóa danh từ riêng.">
+            <button id="btnSplitNameTable2"
+                    label="Tách cột thành 2 cột (Họ đệm &amp; Tên)"
+                    imageMso="TableSplitCells"
+                    onAction="OnSplitNameTable2Click" />
+            <button id="btnSplitNameTable3"
+                    label="Tách cột thành 3 cột (Họ | Đệm | Tên)"
+                    imageMso="TableColumnsInsertRight"
+                    onAction="OnSplitNameTable3Click" />
+            <button id="btnMergeNameColumns"
+                    label="Gộp 2 cột thành 1 cột 'Họ và tên'"
+                    imageMso="TableMergeCells"
+                    onAction="OnMergeNameColumnsClick" />
+            <menuSeparator id="sepNameSplit1" />
+            <button id="btnSplitNameSelectionText"
+                    label="Tách danh sách Họ - Tên (dấu Tab)"
+                    imageMso="ParagraphMarks"
+                    onAction="OnSplitNameSelectionTextClick" />
+            <button id="btnNormalizeNameSelection"
+                    label="Chuẩn hóa viết hoa danh từ riêng Họ Tên"
+                    imageMso="ChangeCaseGallery"
+                    onAction="OnNormalizeNameSelectionClick" />
+            <menuSeparator id="sepNameSplit2" />
+            <button id="btnOpenNameSplitPane"
+                    label="Mở Bảng Điều Khiển Tách Họ - Tên..."
+                    imageMso="ApplicationOptionsDialog"
+                    onAction="OnOpenNameSplitPaneClick" />
+          </menu>
         </group>
 
         <!-- Nhóm 4: In Ấn & Xuất Bản -->
@@ -401,6 +435,10 @@
                 label="Lưu đoạn chọn làm mẫu nhập liệu..."
                 imageMso="CreateBuildingBlock"
                 onAction="OnSaveSelectionAsSnippetClick" />
+        <button id="ctxTable_SplitName"
+                label="Tách cột Họ và Tên (2 cột)..."
+                imageMso="CompareCompare"
+                onAction="OnSplitNameTable2Click" />
         <button id="ctxTable_OpenPane"
                 label="Mở bảng điều khiển CoolWord..."
                 imageMso="ApplicationOptionsDialog"

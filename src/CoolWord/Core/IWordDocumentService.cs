@@ -51,5 +51,12 @@ namespace CoolWord.Core
         // Các tác vụ Nhập Liệu Nhanh (Quick Input & Snippets)
         bool InsertTextSnippet(string text, out string statusMessage);
         bool SaveCurrentSelectionAsSnippet(string title, string category, string shortcut, out string statusMessage);
+
+        // Các tác vụ Tách Họ - Tên (Vietnamese Name Splitting)
+        bool SplitTableColumn2(out string statusMessage);
+        bool SplitTableColumn3(out string statusMessage);
+        bool MergeTableColumns(out string statusMessage);
+        bool SplitSelectedTextLines(string delimiter, out string statusMessage);
+        bool NormalizeSelectedNames(out string statusMessage);
     }
 }

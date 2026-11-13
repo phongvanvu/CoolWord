@@ -1,6 +1,7 @@
 using System;
 using CoolWord.Core;
 using CoolWord.Modules.AdminFormat;
+using CoolWord.Modules.NameSplit;
 using CoolWord.Modules.NumberToText;
 using CoolWord.Modules.Pdf;
 using CoolWord.Modules.Printing;
@@ -177,6 +178,53 @@ namespace CoolWord.Tests
             string insertStatus;
             bool insertRes = QuickInputService.InsertSnippetIntoWord(null, "Test", out insertStatus);
             AssertEqual("InsertSnippetIntoWord Null Check", "false", insertRes.ToString().ToLowerInvariant());
+
+            // 12. Kiểm thử Module Tách Họ - Tên (VietnameseNameSplitter & NameSplitModule)
+            IToolModule nameMod = ModuleRegistry.GetById("name-split");
+            AssertEqual("NameSplitModule Registration", "true", (nameMod != null).ToString().ToLowerInvariant());
+            if (nameMod != null)
+            {
+                AssertEqual("NameSplitModule Title", "Tách Họ - Tên", nameMod.Title);
+                AssertEqual("NameSplitModule Order", "7", nameMod.Order.ToString());
+            }
+
+            // Trường hợp 3 từ: "Nguyễn Văn An"
+            ParsedVietnameseName p1 = VietnameseNameSplitter.Split("Nguyễn Văn An");
+            AssertEqual("Split 3-words HoDem", "Nguyễn Văn", p1.HoDem);
+            AssertEqual("Split 3-words Ten", "An", p1.Ten);
+            AssertEqual("Split 3-words Ho", "Nguyễn", p1.Ho);
+            AssertEqual("Split 3-words Dem", "Văn", p1.Dem);
+
+            // Trường hợp 4 từ: "Trần Thị Bích Ngọc"
+            ParsedVietnameseName p2 = VietnameseNameSplitter.Split("Trần Thị Bích Ngọc");
+            AssertEqual("Split 4-words HoDem", "Trần Thị Bích", p2.HoDem);
+            AssertEqual("Split 4-words Ten", "Ngọc", p2.Ten);
+            AssertEqual("Split 4-words Ho", "Trần", p2.Ho);
+            AssertEqual("Split 4-words Dem", "Thị Bích", p2.Dem);
+
+            // Trường hợp 2 từ: "Lê Nam"
+            ParsedVietnameseName p3 = VietnameseNameSplitter.Split("Lê Nam");
+            AssertEqual("Split 2-words HoDem", "Lê", p3.HoDem);
+            AssertEqual("Split 2-words Ten", "Nam", p3.Ten);
+            AssertEqual("Split 2-words Ho", "Lê", p3.Ho);
+            AssertEqual("Split 2-words Dem", "", p3.Dem);
+
+            // Chuẩn hóa họ tên viết hoa
+            string normName = VietnameseNameSplitter.NormalizeName("  nguyễn   văn   an  ");
+            AssertEqual("Normalize Name TitleCase", "Nguyễn Văn An", normName);
+
+            // Chuẩn hóa họ tên dân tộc thiểu số
+            string normEthnic = VietnameseNameSplitter.NormalizeName("h'hen niê");
+            AssertEqual("Normalize Ethnic Name", "H'Hen Niê", normEthnic);
+
+            // Gộp Họ đệm và Tên
+            string merged = VietnameseNameSplitter.Merge("Nguyễn Văn", "An");
+            AssertEqual("Merge Name", "Nguyễn Văn An", merged);
+
+            // Kiểm thử các hàm Word table với null app (xử lý ngoại lệ an toàn)
+            string splitTableStatus;
+            bool splitTableRes = NameSplitService.SplitTableColumn2(null, out splitTableStatus);
+            AssertEqual("SplitTableColumn2 Null Check", "false", splitTableRes.ToString().ToLowerInvariant());
 
             Console.WriteLine("--------------------------------------------------------------------");
             Console.WriteLine(string.Format("KẾT QUẢ: Đạt {0} / {1} bài kiểm thử (Thất bại: {2})", _passed, _passed + _failed, _failed));
