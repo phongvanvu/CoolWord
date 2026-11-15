@@ -438,6 +438,51 @@ namespace CoolWord.Tests
                 AssertEqual("PictureDispConverter Picture Type IsBitmap", "1", validPic != null ? validPic.Type.ToString() : "0");
             }
 
+            // Kiểm thử Biểu tượng Tạo Mục Lục (TableOfContents)
+            System.Drawing.Bitmap tocIcon = CoolWord.AddIn.RibbonIconFactory.CreateTableOfContentsIcon();
+            AssertEqual("RibbonIcon TableOfContents NotNull", "true", (tocIcon != null).ToString().ToLowerInvariant());
+            if (tocIcon != null)
+            {
+                AssertEqual("RibbonIcon TableOfContents Width", "32", tocIcon.Width.ToString());
+            }
+
+            // Kiểm thử DetectHeadingLevel
+            AssertEqual("DetectHeading Level 1 Chuong", "1", CoolWord.Modules.TableOfContents.TableOfContentsService.DetectHeadingLevel("CHƯƠNG I: TỔNG QUAN VỀ DOANH NGHIỆP").ToString());
+            AssertEqual("DetectHeading Level 1 Phan", "1", CoolWord.Modules.TableOfContents.TableOfContentsService.DetectHeadingLevel("Phần 1: Những quy định chung").ToString());
+            AssertEqual("DetectHeading Level 1 Dieu", "1", CoolWord.Modules.TableOfContents.TableOfContentsService.DetectHeadingLevel("Điều 12. Quyền và trách nhiệm kế toán").ToString());
+            AssertEqual("DetectHeading Level 1 LaMa", "1", CoolWord.Modules.TableOfContents.TableOfContentsService.DetectHeadingLevel("I. TỔNG QUAN TÀI CHÍNH").ToString());
+            AssertEqual("DetectHeading Level 1 BCTC", "1", CoolWord.Modules.TableOfContents.TableOfContentsService.DetectHeadingLevel("BẢNG CÂN ĐỐI KẾ TOÁN (Mẫu B01-DN)").ToString());
+            AssertEqual("DetectHeading Level 2 NumDot", "2", CoolWord.Modules.TableOfContents.TableOfContentsService.DetectHeadingLevel("1. Doanh thu bán hàng và cung cấp dịch vụ").ToString());
+            AssertEqual("DetectHeading Level 2 DotDot", "2", CoolWord.Modules.TableOfContents.TableOfContentsService.DetectHeadingLevel("1.2 Chi phí quản lý doanh nghiệp").ToString());
+            AssertEqual("DetectHeading Level 2 Muc", "2", CoolWord.Modules.TableOfContents.TableOfContentsService.DetectHeadingLevel("Mục 2: Thời hạn nộp báo cáo").ToString());
+            AssertEqual("DetectHeading Level 3 DotDotDot", "3", CoolWord.Modules.TableOfContents.TableOfContentsService.DetectHeadingLevel("1.1.1 Chi phí bán hàng nội bộ").ToString());
+            AssertEqual("DetectHeading Level 3 Paren", "3", CoolWord.Modules.TableOfContents.TableOfContentsService.DetectHeadingLevel("a) Thuế giá trị gia tăng được khấu trừ").ToString());
+            AssertEqual("DetectHeading Level 0 Normal Text", "0", CoolWord.Modules.TableOfContents.TableOfContentsService.DetectHeadingLevel("Đây là một đoạn văn bản bình thường không phải tiêu đề mục lục.").ToString());
+
+            // Kiểm thử Mẫu đề mục kế toán
+            var accTemplates = CoolWord.Modules.TableOfContents.TableOfContentsService.GetAccountingFinancialHeadingsTemplate();
+            AssertEqual("Accounting TOC Template Count > 0", "true", (accTemplates != null && accTemplates.Count > 10).ToString().ToLowerInvariant());
+
+            // Kiểm thử Đăng ký Module TableOfContents
+            IToolModule tocMod = ModuleRegistry.GetById("table-of-contents");
+            AssertEqual("TableOfContents Module Registered", "true", (tocMod != null).ToString().ToLowerInvariant());
+            if (tocMod != null)
+            {
+                AssertEqual("TableOfContents Module Title", "Tạo Mục Lục", tocMod.Title);
+                AssertEqual("TableOfContents Module Order", "14", tocMod.Order.ToString());
+            }
+
+            // Kiểm thử Null-Safety của TableOfContentsService
+            string tocStatus;
+            int assignedCount;
+            AssertEqual("TOC Insert Null Safe", "false", CoolWord.Modules.TableOfContents.TableOfContentsService.InsertTableOfContents(null, 3, false, true, "dots", out tocStatus).ToString().ToLowerInvariant());
+            AssertEqual("TOC InsertAccounting Null Safe", "false", CoolWord.Modules.TableOfContents.TableOfContentsService.InsertAccountingFinancialToc(null, false, out tocStatus).ToString().ToLowerInvariant());
+            AssertEqual("TOC AutoAssign Null Safe", "false", CoolWord.Modules.TableOfContents.TableOfContentsService.AutoAssignHeadings(null, out assignedCount, out tocStatus).ToString().ToLowerInvariant());
+            AssertEqual("TOC UpdateAll Null Safe", "false", CoolWord.Modules.TableOfContents.TableOfContentsService.UpdateAllTablesOfContents(null, true, out tocStatus).ToString().ToLowerInvariant());
+            AssertEqual("TOC DeleteAll Null Safe", "false", CoolWord.Modules.TableOfContents.TableOfContentsService.DeleteAllTablesOfContents(null, out tocStatus).ToString().ToLowerInvariant());
+            AssertEqual("TOC InsertFigures Null Safe", "false", CoolWord.Modules.TableOfContents.TableOfContentsService.InsertTableOfFigures(null, true, false, out tocStatus).ToString().ToLowerInvariant());
+            AssertEqual("TOC FormatDecree30 Null Safe", "false", CoolWord.Modules.TableOfContents.TableOfContentsService.FormatTableOfContentsDecree30(null, out tocStatus).ToString().ToLowerInvariant());
+
             Console.WriteLine("--------------------------------------------------------------------");
             Console.WriteLine(string.Format("KẾT QUẢ: Đạt {0} / {1} bài kiểm thử (Thất bại: {2})", _passed, _passed + _failed, _failed));
             return _failed == 0 ? 0 : 1;

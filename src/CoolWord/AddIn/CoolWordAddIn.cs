@@ -1096,6 +1096,9 @@ namespace CoolWord.AddIn
                     case "menuGoogleTranslate":
                         bmp = RibbonIconFactory.CreateGoogleTranslateIcon();
                         break;
+                    case "menuTableOfContents":
+                        bmp = RibbonIconFactory.CreateTableOfContentsIcon();
+                        break;
                 }
 
                 if (bmp != null)
@@ -1253,6 +1256,102 @@ namespace CoolWord.AddIn
             if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
             {
                 _taskPaneHost.WpfControl.SelectModule("google-translate");
+            }
+            if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+        }
+
+        #endregion
+
+        #region Callbacks Nhóm Tạo Mục Lục (Table of Contents)
+
+        public void OnInsertTocStandardClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.InsertTableOfContents(3, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnInsertTocDetailedClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.InsertTableOfContents(5, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnInsertAccountingTocClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.InsertAccountingFinancialToc(true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnAutoAssignHeadingsClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            int count;
+            string status;
+            _wordService.AutoAssignHeadings(out count, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnInsertTableOfTablesClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.InsertTableOfFigures(true, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnInsertTableOfFiguresClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.InsertTableOfFigures(false, true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnUpdateAllTocClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.UpdateAllTablesOfContents(true, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnUpdateTocPageNumbersOnlyClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.UpdateAllTablesOfContents(false, out status);
+            NotifyStatus(status);
+        }
+
+        public void OnFormatTocDecree30Click(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.FormatTableOfContentsDecree30(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnDeleteAllTocClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            _wordService.DeleteAllTablesOfContents(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnOpenTocPaneClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null) _customTaskPane.Visible = true;
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("table-of-contents");
             }
             if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
         }

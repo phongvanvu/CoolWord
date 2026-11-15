@@ -626,6 +626,88 @@
                     supertip="Mở giao diện dịch trực quan trên thanh Task Pane để chọn chiều dịch và kiểm tra văn bản."
                     onAction="OnOpenGoogleTranslatePaneClick" />
           </menu>
+          <separator id="sepExtToc" />
+          <menu id="menuTableOfContents"
+                label="Tạo Mục&#10;Lục"
+                size="large"
+                getImage="GetRibbonImage"
+                screentip="Tạo Mục Lục Tự Động (Heading 1-3, Báo cáo tài chính, Danh mục bảng biểu/hình ảnh)"
+                supertip="Công cụ tạo và quản lý mục lục thông minh cho tài liệu Word: Chèn mục lục tự động, tự động nhận diện tiêu đề gán Heading 1-2-3, tạo mục lục báo cáo tài chính/chứng từ kế toán, danh mục bảng biểu và cập nhật số trang tự động.">
+            <!-- Nhóm Tạo Mục Lục -->
+            <button id="btnInsertTocStandard"
+                    label="Mục lục chuẩn (Heading 1 - 3)"
+                    imageMso="TableOfContentsGallery"
+                    screentip="Chèn mục lục chuẩn 3 cấp"
+                    supertip="Tạo bảng mục lục tự động liên kết các đề mục Heading 1, Heading 2 và Heading 3 kèm số trang và đường dẫn chấm."
+                    onAction="OnInsertTocStandardClick" />
+            <button id="btnInsertTocDetailed"
+                    label="Mục lục chi tiết (Heading 1 - 5)"
+                    imageMso="TableOfContentsInsertDialog"
+                    screentip="Chèn mục lục chi tiết 5 cấp"
+                    supertip="Tạo bảng mục lục tự động mở rộng từ Heading 1 đến Heading 5 cho tài liệu dài, đề tài hoặc luận văn."
+                    onAction="OnInsertTocDetailedClick" />
+            <menuSeparator id="sepTocAccounting" />
+            <!-- Nhóm Báo Cáo Tài Chính & Kế Toán -->
+            <button id="btnInsertAccountingToc"
+                    label="Mục lục Báo cáo tài chính &amp; Chứng từ kế toán chuẩn..."
+                    imageMso="ViewCalculation"
+                    screentip="Mục lục Báo cáo tài chính &amp; Kế toán"
+                    supertip="Chèn mục lục cấu trúc chuẩn Báo cáo tài chính doanh nghiệp (Cân đối kế toán, KQKD, Lưu chuyển tiền tệ, Thuyết minh BCTC và Danh mục chứng từ kiểm toán)."
+                    onAction="OnInsertAccountingTocClick" />
+            <button id="btnAutoAssignHeadings"
+                    label="Quét &amp; Tự động gán Heading 1-2-3 thông minh"
+                    imageMso="OutlineView"
+                    screentip="Tự động nhận diện tiêu đề"
+                    supertip="Quét toàn bộ tài liệu, tự động phát hiện các dòng tiêu đề (Chương I, Phần I, Điều, Khoản, 1.1, 1.2, a, b...) và gán Style Heading tương ứng để tạo mục lục tự động."
+                    onAction="OnAutoAssignHeadingsClick" />
+            <menuSeparator id="sepTocFigures" />
+            <!-- Nhóm Danh Mục Bảng Biểu & Hình Ảnh -->
+            <button id="btnInsertTableOfTables"
+                    label="Danh mục Bảng Biểu (List of Tables)"
+                    imageMso="TableInsert"
+                    screentip="Tạo danh mục bảng biểu"
+                    supertip="Tạo danh mục tổng hợp tất cả các bảng biểu có chú thích trong tài liệu."
+                    onAction="OnInsertTableOfTablesClick" />
+            <button id="btnInsertTableOfFigures"
+                    label="Danh mục Hình Ảnh / Sơ đồ (List of Figures)"
+                    imageMso="PictureInsert"
+                    screentip="Tạo danh mục hình ảnh"
+                    supertip="Tạo danh mục tổng hợp tất cả các hình ảnh, biểu đồ và sơ đồ có chú thích trong tài liệu."
+                    onAction="OnInsertTableOfFiguresClick" />
+            <menuSeparator id="sepTocManage" />
+            <!-- Nhóm Cập Nhật & Quản Lý -->
+            <button id="btnUpdateAllToc"
+                    label="Cập nhật toàn bộ mục lục (Nội dung &amp; Số trang)"
+                    imageMso="Refresh"
+                    screentip="Cập nhật toàn bộ mục lục"
+                    supertip="Làm mới lại toàn bộ tiêu đề và số trang của tất cả các bảng mục lục trong tài liệu."
+                    onAction="OnUpdateAllTocClick" />
+            <button id="btnUpdateTocPageNumbersOnly"
+                    label="Chỉ cập nhật lại số trang của mục lục"
+                    imageMso="PageNumberInsert"
+                    screentip="Cập nhật số trang mục lục"
+                    supertip="Cập nhật nhanh lại số trang của mục lục khi nội dung tiêu đề không thay đổi."
+                    onAction="OnUpdateTocPageNumbersOnlyClick" />
+            <button id="btnFormatTocDecree30"
+                    label="Chuẩn hóa định dạng mục lục (Times New Roman chuẩn NĐ 30)"
+                    imageMso="StyleChangeStyle"
+                    screentip="Chuẩn hóa font &amp; lề mục lục"
+                    supertip="Định dạng lại toàn bộ mục lục về phông Times New Roman 13-14pt, giãn dòng 1.15-1.2 chuẩn Nghị định 30/2020."
+                    onAction="OnFormatTocDecree30Click" />
+            <button id="btnDeleteAllToc"
+                    label="Xóa bỏ mục lục khỏi tài liệu"
+                    imageMso="Delete"
+                    screentip="Xóa mục lục"
+                    supertip="Xóa tất cả các bảng mục lục hiện có trong văn bản."
+                    onAction="OnDeleteAllTocClick" />
+            <menuSeparator id="sepTocPane" />
+            <button id="btnOpenTocPane"
+                    label="Mở Bảng Điều Khiển Tạo Mục Lục..."
+                    imageMso="ApplicationOptionsDialog"
+                    screentip="Mở Bảng Tạo Mục Lục"
+                    supertip="Mở giao diện điều khiển trực quan trên thanh Task Pane để tùy chỉnh chi tiết cấu trúc mục lục."
+                    onAction="OnOpenTocPaneClick" />
+          </menu>
         </group>
 
         <!-- Nhóm 9: Bảng Điều Khiển CoolWord -->

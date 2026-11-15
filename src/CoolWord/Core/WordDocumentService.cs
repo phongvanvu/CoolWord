@@ -13,6 +13,7 @@ using CoolWord.Modules.WordToPowerPoint;
 using CoolWord.Modules.BatchEmail;
 using CoolWord.Modules.ImageTools;
 using CoolWord.Modules.GoogleTranslate;
+using CoolWord.Modules.TableOfContents;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace CoolWord.Core
@@ -982,6 +983,88 @@ namespace CoolWord.Core
         {
             Word.Application app = GetActiveWordApp();
             return GoogleTranslateService.TranslateFinancialAndLegalTerms(app, targetLang, createBilingualTable, out statusMessage);
+        }
+
+        #endregion
+
+        #region Tác vụ Tạo & Quản Lý Mục Lục
+
+        public bool InsertTableOfContents(int maxLevels, bool atStartOfDoc, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            if (app == null || app.Documents.Count == 0)
+            {
+                statusMessage = "Không có tài liệu Word nào đang mở.";
+                return false;
+            }
+            return TableOfContentsService.InsertTableOfContents(app.ActiveDocument, maxLevels, atStartOfDoc, true, "dots", out statusMessage);
+        }
+
+        public bool InsertAccountingFinancialToc(bool atStartOfDoc, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            if (app == null || app.Documents.Count == 0)
+            {
+                statusMessage = "Không có tài liệu Word nào đang mở.";
+                return false;
+            }
+            return TableOfContentsService.InsertAccountingFinancialToc(app.ActiveDocument, atStartOfDoc, out statusMessage);
+        }
+
+        public bool AutoAssignHeadings(out int assignedCount, out string statusMessage)
+        {
+            assignedCount = 0;
+            Word.Application app = GetActiveWordApp();
+            if (app == null || app.Documents.Count == 0)
+            {
+                statusMessage = "Không có tài liệu Word nào đang mở.";
+                return false;
+            }
+            return TableOfContentsService.AutoAssignHeadings(app.ActiveDocument, out assignedCount, out statusMessage);
+        }
+
+        public bool UpdateAllTablesOfContents(bool entireTable, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            if (app == null || app.Documents.Count == 0)
+            {
+                statusMessage = "Không có tài liệu Word nào đang mở.";
+                return false;
+            }
+            return TableOfContentsService.UpdateAllTablesOfContents(app.ActiveDocument, entireTable, out statusMessage);
+        }
+
+        public bool DeleteAllTablesOfContents(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            if (app == null || app.Documents.Count == 0)
+            {
+                statusMessage = "Không có tài liệu Word nào đang mở.";
+                return false;
+            }
+            return TableOfContentsService.DeleteAllTablesOfContents(app.ActiveDocument, out statusMessage);
+        }
+
+        public bool InsertTableOfFigures(bool isTable, bool atStartOfDoc, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            if (app == null || app.Documents.Count == 0)
+            {
+                statusMessage = "Không có tài liệu Word nào đang mở.";
+                return false;
+            }
+            return TableOfContentsService.InsertTableOfFigures(app.ActiveDocument, isTable, atStartOfDoc, out statusMessage);
+        }
+
+        public bool FormatTableOfContentsDecree30(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            if (app == null || app.Documents.Count == 0)
+            {
+                statusMessage = "Không có tài liệu Word nào đang mở.";
+                return false;
+            }
+            return TableOfContentsService.FormatTableOfContentsDecree30(app.ActiveDocument, out statusMessage);
         }
 
         #endregion

@@ -16,6 +16,7 @@ namespace CoolWord.AddIn
         private static Bitmap _mailIcon;
         private static Bitmap _imageIcon;
         private static Bitmap _translateIcon;
+        private static Bitmap _tocIcon;
 
         private static readonly object LockObj = new object();
 
@@ -245,6 +246,77 @@ namespace CoolWord.AddIn
 
                 _translateIcon = bmp;
                 return _translateIcon;
+            }
+        }
+
+        public static Bitmap CreateTableOfContentsIcon()
+        {
+            lock (LockObj)
+            {
+                if (_tocIcon != null) return _tocIcon;
+
+                Bitmap bmp = new Bitmap(32, 32);
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+                    g.Clear(Color.Transparent);
+
+                    // 1. Thân bảng kẹp tài liệu (Clipboard body)
+                    Rectangle boardRect = new Rectangle(5, 4, 22, 26);
+                    using (GraphicsPath boardPath = CreateRoundedRectangle(boardRect, 3))
+                    {
+                        using (LinearGradientBrush bgBrush = new LinearGradientBrush(boardRect, Color.FromArgb(254, 254, 255), Color.FromArgb(236, 239, 243), LinearGradientMode.Vertical))
+                        {
+                            g.FillPath(bgBrush, boardPath);
+                        }
+                        using (Pen borderPen = new Pen(Color.FromArgb(100, 116, 139), 1.4f))
+                        {
+                            g.DrawPath(borderPen, boardPath);
+                        }
+                    }
+
+                    // 2. Kẹp phía trên (Top clip) - Thanh kẹp bo tròn màu xanh Cyan/Sky Blue (#38B6FF / #00A4EF)
+                    Rectangle clipRect = new Rectangle(11, 2, 10, 5);
+                    using (GraphicsPath clipPath = CreateRoundedRectangle(clipRect, 2))
+                    {
+                        using (SolidBrush clipBrush = new SolidBrush(Color.FromArgb(56, 182, 255)))
+                        {
+                            g.FillPath(clipBrush, clipPath);
+                        }
+                        using (Pen clipPen = new Pen(Color.FromArgb(0, 130, 200), 1.1f))
+                        {
+                            g.DrawPath(clipPen, clipPath);
+                        }
+                    }
+
+                    // 3. 3 dòng mục lục: mỗi dòng gồm 1 ô vuông check box màu xanh Cyan và 1 đường kẻ ngang màu xám đậm
+                    int startY = 10;
+                    int lineHeight = 6;
+                    using (SolidBrush boxBrush = new SolidBrush(Color.FromArgb(56, 182, 255)))
+                    using (Pen boxPen = new Pen(Color.FromArgb(0, 130, 200), 1f))
+                    using (Pen textLinePen = new Pen(Color.FromArgb(71, 85, 105), 1.8f))
+                    {
+                        textLinePen.StartCap = LineCap.Round;
+                        textLinePen.EndCap = LineCap.Round;
+
+                        for (int i = 0; i < 3; i++)
+                        {
+                            int y = startY + i * lineHeight;
+                            // Ô vuông check box
+                            Rectangle boxRect = new Rectangle(9, y, 4, 4);
+                            g.FillRectangle(boxBrush, boxRect);
+                            g.DrawRectangle(boxPen, boxRect);
+
+                            // Đường kẻ ngang đại diện tiêu đề mục lục
+                            g.DrawLine(textLinePen, 16, y + 2, 23, y + 2);
+                        }
+                    }
+                }
+
+                _tocIcon = bmp;
+                return _tocIcon;
             }
         }
 

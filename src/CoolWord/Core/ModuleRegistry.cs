@@ -14,6 +14,7 @@ using CoolWord.Modules.WordToPowerPoint;
 using CoolWord.Modules.BatchEmail;
 using CoolWord.Modules.ImageTools;
 using CoolWord.Modules.GoogleTranslate;
+using CoolWord.Modules.TableOfContents;
 
 namespace CoolWord.Core
 {
@@ -40,6 +41,7 @@ namespace CoolWord.Core
             Register(new BatchEmailModule());
             Register(new ImageToolsModule());
             Register(new GoogleTranslateModule());
+            Register(new TableOfContentsModule());
         }
 
         public static void Register(IToolModule module)

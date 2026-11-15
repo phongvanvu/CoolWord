@@ -126,6 +126,9 @@
     <Compile Include="Modules\GoogleTranslate\GoogleTranslateService.cs" />
     <Compile Include="Modules\GoogleTranslate\GoogleTranslateModule.cs" />
     <Compile Include="Modules\GoogleTranslate\GoogleTranslateModuleView.cs" />
+    <Compile Include="Modules\TableOfContents\TableOfContentsService.cs" />
+    <Compile Include="Modules\TableOfContents\TableOfContentsModule.cs" />
+    <Compile Include="Modules\TableOfContents\TableOfContentsModuleView.cs" />
     <Compile Include="UI\ThemeColors.cs" />
     <Compile Include="UI\MainTaskPaneControl.cs" />
   </ItemGroup>

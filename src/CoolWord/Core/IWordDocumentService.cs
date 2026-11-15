@@ -95,5 +95,14 @@ namespace CoolWord.Core
         bool TranslateSelectedText(string sourceLang, string targetLang, bool replaceSelection, out string statusMessage);
         bool TranslateEntireDocument(string sourceLang, string targetLang, out string statusMessage);
         bool TranslateFinancialAndLegalTerms(string targetLang, bool createBilingualTable, out string statusMessage);
+
+        // Các tác vụ Tạo & Quản Lý Mục Lục (Table of Contents)
+        bool InsertTableOfContents(int maxLevels, bool atStartOfDoc, out string statusMessage);
+        bool InsertAccountingFinancialToc(bool atStartOfDoc, out string statusMessage);
+        bool AutoAssignHeadings(out int assignedCount, out string statusMessage);
+        bool UpdateAllTablesOfContents(bool entireTable, out string statusMessage);
+        bool DeleteAllTablesOfContents(out string statusMessage);
+        bool InsertTableOfFigures(bool isTable, bool atStartOfDoc, out string statusMessage);
+        bool FormatTableOfContentsDecree30(out string statusMessage);
     }
 }
