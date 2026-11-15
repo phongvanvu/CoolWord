@@ -148,6 +148,20 @@
   - Tích hợp sẵn hơn 100+ thuật ngữ chuyên ngành tài chính, kế toán, thuế và hợp đồng chuẩn mực (VAS, IFRS, Incoterms).
   - Tự động tạo Bảng Báo cáo tài chính & Điều khoản hợp đồng song ngữ 2 cột (Cột 1: Tiếng Việt, Cột 2: Tiếng Anh) chuẩn mực.
 
+### 📋 Module 14: Tạo Mục Lục Tự Động (`TableOfContentsModule`)
+- **Nút Ribbon `Mục Lục` với biểu tượng phân cấp văn bản chuẩn**:
+  - Tích hợp biểu tượng Table of Contents độ nét cao (`GetRibbonImage`) và Ribbon Menu đa năng.
+- **Tạo Mục lục Đa cấp & Chuyên biệt**:
+  - Chèn bảng mục lục tự động 1 - 3 cấp Heading vào đầu văn bản hoặc tại vị trí con trỏ.
+  - **Mục lục Báo cáo tài chính & Kế toán**: Mẫu bố cục chuẩn cho hồ sơ quyết toán, BCTC, danh mục chứng từ kế toán.
+  - Tự động định dạng phông chữ Times New Roman theo thể thức văn bản hành chính **Nghị định 30/2020/NĐ-CP**.
+- **Quét & Gán Heading Thông Minh**:
+  - Tự động phân tích và gán Heading 1-2-3 theo cấu trúc đề mục Tiếng Việt: `Chương`, `Phần`, `Điều`, số La Mã `I, II, III`, số thập phân `1.1, 1.2`, tiểu mục `a), b)`.
+- **Cập nhật & Quản lý Mục lục**:
+  - 1-Click làm mới toàn bộ mục lục hoặc chỉ cập nhật số trang.
+  - Chèn danh mục Bảng biểu & Hình ảnh (Table of Figures) tự động.
+  - Gỡ bỏ mục lục an toàn khi cần tái cấu trúc tài liệu.
+
 ---
 
 ## 2. Cấu trúc dự án & Kiến trúc mở rộng
@@ -161,7 +175,7 @@ c:\projects\CoolWord\
 ├── bin\                            # Thư mục chứa file thực thi sau khi build
 │   ├── CoolWord.dll                # Thư viện COM Add-in chính nạp vào MS Word
 │   ├── CoolWord.Studio.exe         # Ứng dụng Desktop quản lý cài đặt & dùng độc lập
-│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (136 test cases)
+│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (163 test cases)
 ├── src\
 │   ├── CoolWord\
 │   │   ├── AddIn\                  # Tích hợp COM (Ribbon XML, RibbonIconFactory, Custom Task Pane, Installer)
@@ -179,7 +193,8 @@ c:\projects\CoolWord\
 │   │   │   ├── WordToPowerPoint\   # Module Word ➔ PowerPoint (Tạo slide từ Heading 1-2-3, Báo cáo tài chính)
 │   │   │   ├── BatchEmail\         # Module Gửi Mail Hàng Loạt (Mail Merge, Gửi phiếu lương kèm PDF)
 │   │   │   ├── ImageTools\         # Module Xử Lý Hình Ảnh (Xuất ảnh gốc, Chèn con dấu đỏ tách nền)
-│   │   │   └── GoogleTranslate\    # Module Google Dịch (Dịch trực tiếp & Thuật ngữ kế toán song ngữ)
+│   │   │   ├── GoogleTranslate\    # Module Google Dịch (Dịch trực tiếp & Thuật ngữ kế toán song ngữ)
+│   │   │   └── TableOfContents\    # Module Tạo Mục Lục (Mục lục tự động, Heading thông minh, BCTC)
 │   │   └── UI\                     # Giao diện WPF Fluent Design (ThemeColors, MainTaskPaneControl)
 │   └── CoolWord.Studio\            # Ứng dụng quản lý & chạy thử giao diện độc lập
 └── tests\
