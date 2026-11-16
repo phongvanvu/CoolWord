@@ -105,5 +105,10 @@ namespace CoolWord.Core
         bool DeleteAllTablesOfContents(out string statusMessage);
         bool InsertTableOfFigures(bool isTable, bool atStartOfDoc, out string statusMessage);
         bool FormatTableOfContentsDecree30(out string statusMessage);
+
+        // Các tác vụ Mã QR Code
+        bool InsertQrCode(string content, float widthPt, bool center, string caption, out string statusMessage);
+        bool InsertQrCodeFromSelection(out string statusMessage);
+        bool InsertVietQr(string bankBin, string accountNo, string accountName, decimal amount, string description, float widthPt, bool center, string caption, out string statusMessage);
     }
 }

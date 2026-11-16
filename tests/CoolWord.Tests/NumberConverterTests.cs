@@ -533,6 +533,52 @@ namespace CoolWord.Tests
             AssertEqual("TOC InsertFigures Null Safe", "false", CoolWord.Modules.TableOfContents.TableOfContentsService.InsertTableOfFigures(null, true, false, out tocStatus).ToString().ToLowerInvariant());
             AssertEqual("TOC FormatDecree30 Null Safe", "false", CoolWord.Modules.TableOfContents.TableOfContentsService.FormatTableOfContentsDecree30(null, out tocStatus).ToString().ToLowerInvariant());
 
+            // 15. Kiểm thử Mô-đun Mã QR Code (QRCode)
+            System.Drawing.Bitmap qrIcon = CoolWord.AddIn.RibbonIconFactory.CreateQrCodeIcon();
+            AssertEqual("RibbonIcon QrCode NotNull", "true", (qrIcon != null).ToString().ToLowerInvariant());
+            if (qrIcon != null)
+            {
+                AssertEqual("RibbonIcon QrCode Width", "32", qrIcon.Width.ToString());
+            }
+
+            // Kiểm thử GenerateQrBitmap
+            using (System.Drawing.Bitmap qrTestBmp = CoolWord.Modules.QRCode.QRCodeService.GenerateQrBitmap("https://coolword.vn", 5))
+            {
+                AssertEqual("QRCode GenerateQrBitmap Valid", "true", (qrTestBmp != null && qrTestBmp.Width > 0).ToString().ToLowerInvariant());
+            }
+
+            // Kiểm thử VietQR Payload (Chuẩn NAPAS EMVCo)
+            string vietQrPayload = CoolWord.Modules.QRCode.QRCodeService.GenerateVietQrPayload("970436", "0123456789", "CONG TY TNHH COOLWORD", 500000, "Thanh toan hop dong");
+            AssertEqual("VietQR Payload NotEmpty", "true", (!string.IsNullOrEmpty(vietQrPayload)).ToString().ToLowerInvariant());
+            AssertEqual("VietQR Payload Contains AID", "true", vietQrPayload.Contains("A000000727").ToString().ToLowerInvariant());
+            AssertEqual("VietQR Payload Contains BIN", "true", vietQrPayload.Contains("970436").ToString().ToLowerInvariant());
+            AssertEqual("VietQR Payload Contains Account", "true", vietQrPayload.Contains("0123456789").ToString().ToLowerInvariant());
+
+            // Kiểm thử vCard Payload
+            string vcardPayload = CoolWord.Modules.QRCode.QRCodeService.GenerateVCardPayload("Nguyễn Văn An", "0987654321", "an.nguyen@coolword.vn", "Giám đốc", "CoolWord", "https://coolword.vn");
+            AssertEqual("vCard Payload StartsWith", "true", vcardPayload.StartsWith("BEGIN:VCARD").ToString().ToLowerInvariant());
+            AssertEqual("vCard Payload EndsWith", "true", vcardPayload.EndsWith("END:VCARD").ToString().ToLowerInvariant());
+            AssertEqual("vCard Payload Contains Name", "true", vcardPayload.Contains("FN:Nguyễn Văn An").ToString().ToLowerInvariant());
+
+            // Kiểm thử AdminDoc Payload
+            string adminDocPayload = CoolWord.Modules.QRCode.QRCodeService.GenerateAdminDocPayload("12/QĐ-UBND", "16/11/2026", "UBND Tỉnh", "Kế hoạch chuyển đổi số", "https://vanban.chinhphu.vn");
+            AssertEqual("AdminDoc Payload Url", "https://vanban.chinhphu.vn", adminDocPayload);
+
+            // Kiểm thử Module Registration
+            IToolModule qrMod = ModuleRegistry.GetById("qr-code");
+            AssertEqual("QRCode Module Registered", "true", (qrMod != null).ToString().ToLowerInvariant());
+            if (qrMod != null)
+            {
+                AssertEqual("QRCode Module Title", "Mã QR Code", qrMod.Title);
+                AssertEqual("QRCode Module Order", "15", qrMod.Order.ToString());
+            }
+
+            // Kiểm thử Null Safety QRCodeService
+            string qrStatus;
+            AssertEqual("QRCode InsertQrCode Null Safe", "false", CoolWord.Modules.QRCode.QRCodeService.InsertQrCode(null, "Test", 120f, true, null, null, null, out qrStatus).ToString().ToLowerInvariant());
+            AssertEqual("QRCode InsertQrFromSelection Null Safe", "false", CoolWord.Modules.QRCode.QRCodeService.InsertQrFromSelection(null, 120f, true, null, out qrStatus).ToString().ToLowerInvariant());
+            AssertEqual("QRCode SaveQrCode Empty Safe", "false", CoolWord.Modules.QRCode.QRCodeService.SaveQrCodeAsImage("", "", 10, null, out qrStatus).ToString().ToLowerInvariant());
+
             Console.WriteLine("--------------------------------------------------------------------");
             Console.WriteLine(string.Format("KẾT QUẢ: Đạt {0} / {1} bài kiểm thử (Thất bại: {2})", _passed, _passed + _failed, _failed));
             return _failed == 0 ? 0 : 1;

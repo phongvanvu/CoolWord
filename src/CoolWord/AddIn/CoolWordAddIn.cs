@@ -1121,6 +1121,9 @@ namespace CoolWord.AddIn
                     case "menuTableOfContents":
                         bmp = RibbonIconFactory.CreateTableOfContentsIcon();
                         break;
+                    case "menuQrCode":
+                        bmp = RibbonIconFactory.CreateQrCodeIcon();
+                        break;
                 }
 
                 if (bmp != null)
@@ -1376,6 +1379,66 @@ namespace CoolWord.AddIn
                 _taskPaneHost.WpfControl.SelectModule("table-of-contents");
             }
             if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+        }
+
+        #endregion
+
+        #region Callbacks Nhóm Mã QR Code
+
+        public void OnInsertQrFromSelectionClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+            string status;
+            bool ok = _wordService.InsertQrCodeFromSelection(out status);
+            NotifyStatus(status);
+        }
+
+        public void OnInsertVietQrQuickClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null) _customTaskPane.Visible = true;
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("qr-code");
+            }
+            if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+            NotifyStatus("Đã mở bảng điều khiển tạo mã VietQR thanh toán ngân hàng.");
+        }
+
+        public void OnInsertVCardQrClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null) _customTaskPane.Visible = true;
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("qr-code");
+            }
+            if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+            NotifyStatus("Đã mở bảng điều khiển tạo mã QR Danh thiếp vCard.");
+        }
+
+        public void OnInsertAdminDocQrClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null) _customTaskPane.Visible = true;
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("qr-code");
+            }
+            if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+            NotifyStatus("Đã mở bảng điều khiển tạo mã QR Tra cứu văn bản hành chính.");
+        }
+
+        public void OnOpenQrCodePaneClick(Office.IRibbonControl control)
+        {
+            EnsureTaskPaneCreated();
+            if (_customTaskPane != null) _customTaskPane.Visible = true;
+            if (_taskPaneHost != null && _taskPaneHost.WpfControl != null)
+            {
+                _taskPaneHost.WpfControl.SelectModule("qr-code");
+            }
+            if (_ribbon != null) try { _ribbon.InvalidateControl("btnToggleTaskPane"); } catch { }
+            NotifyStatus("Đã mở bảng điều khiển Tạo Mã QR Code.");
         }
 
         #endregion

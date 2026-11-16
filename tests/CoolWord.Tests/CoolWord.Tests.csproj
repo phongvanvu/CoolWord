@@ -55,6 +55,9 @@
       <HintPath>C:\Windows\assembly\GAC\stdole\7.0.3300.0__b03f5f7f11d50a3a\stdole.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="QRCoder">
+      <HintPath>..\..\lib\QRCoder.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\CoolWord\CoolWord.csproj">

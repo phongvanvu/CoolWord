@@ -14,6 +14,7 @@ using CoolWord.Modules.BatchEmail;
 using CoolWord.Modules.ImageTools;
 using CoolWord.Modules.GoogleTranslate;
 using CoolWord.Modules.TableOfContents;
+using CoolWord.Modules.QRCode;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace CoolWord.Core
@@ -1071,6 +1072,34 @@ namespace CoolWord.Core
                 return false;
             }
             return TableOfContentsService.FormatTableOfContentsDecree30(app.ActiveDocument, out statusMessage);
+        }
+
+        #endregion
+
+        #region Tác vụ Mã QR Code
+
+        public bool InsertQrCode(string content, float widthPt, bool center, string caption, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return QRCodeService.InsertQrCode(app, content, widthPt, center, caption, null, null, out statusMessage);
+        }
+
+        public bool InsertQrCodeFromSelection(out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return QRCodeService.InsertQrFromSelection(app, 120f, true, null, out statusMessage);
+        }
+
+        public bool InsertVietQr(string bankBin, string accountNo, string accountName, decimal amount, string description, float widthPt, bool center, string caption, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            string payload = QRCodeService.GenerateVietQrPayload(bankBin, accountNo, accountName, amount, description);
+            if (string.IsNullOrEmpty(payload))
+            {
+                statusMessage = "Thông tin tài khoản hoặc ngân hàng không hợp lệ.";
+                return false;
+            }
+            return QRCodeService.InsertQrCode(app, payload, widthPt, center, caption, null, null, out statusMessage);
         }
 
         #endregion

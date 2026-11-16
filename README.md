@@ -163,6 +163,21 @@
   - Chèn danh mục Bảng biểu & Hình ảnh (Table of Figures) tự động.
   - Gỡ bỏ mục lục an toàn khi cần tái cấu trúc tài liệu.
 
+### 📱 Module 15: Tạo & Chèn Mã QR Code (`QRCodeModule`)
+- **Nút Ribbon `QR Code` với biểu tượng ma trận QR chuẩn HD**:
+  - Tích hợp biểu tượng QR Code độ nét cao (`GetRibbonImage`) hiển thị nhãn 2 dòng `QR` / `Code ˅` trên Ribbon.
+- **Tạo nhanh 1-Click từ vùng chọn**:
+  - Bôi đen đường link URL hoặc đoạn văn bản bất kỳ và nhấn **Tạo QR Code từ vùng chọn** (hỗ trợ cả trên Ribbon và Menu Chuột Phải).
+- **Chuẩn VietQR Ngân hàng (NAPAS 247)**:
+  - Tạo mã QR Code chuẩn EMVCo NAPAS 247 cho tất cả các ngân hàng Việt Nam (*Vietcombank, MBBank, Techcombank, BIDV, VietinBank, ACB, TPBank, VPBank, Agribank, Sacombank...*).
+  - Tích hợp số tiền, tên chủ tài khoản và nội dung chuyển tiền, phục vụ hợp đồng, hóa đơn, giấy đề nghị thanh toán. Quét chuyển khoản tức thì trên mọi ứng dụng ngân hàng.
+- **Danh thiếp điện tử (vCard 3.0)**:
+  - Tạo mã QR chứa thông tin liên hệ (Họ tên, SĐT, Email, Chức vụ, Công ty, Website), quét để lưu ngay vào danh bạ điện thoại thông minh.
+- **Tra cứu Văn bản Hành chính NĐ 30/2020**:
+  - Chèn mã QR vào đầu hoặc chân văn bản để quét tra cứu số hiệu, ngày ban hành và đường dẫn văn bản gốc lưu trữ.
+- **Bảng điều khiển trực quan (Task Pane)**:
+  - Xem trước trực tiếp (Live Preview) hình ảnh mã QR khi nhập liệu, tùy chỉnh kích thước (100 - 220 pt), màu sắc, căn giữa trang, kèm dòng chú thích (Caption), lưu file ảnh PNG hoặc sao chép vào Clipboard.
+
 ---
 
 ## 2. Cấu trúc dự án & Kiến trúc mở rộng
@@ -176,7 +191,7 @@ c:\projects\CoolWord\
 ├── bin\                            # Thư mục chứa file thực thi sau khi build
 │   ├── CoolWord.dll                # Thư viện COM Add-in chính nạp vào MS Word
 │   ├── CoolWord.Studio.exe         # Ứng dụng Desktop quản lý cài đặt & dùng độc lập
-│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (170 test cases)
+│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (187 test cases)
 ├── src\
 │   ├── CoolWord\
 │   │   ├── AddIn\                  # Tích hợp COM (Ribbon XML, RibbonIconFactory, Custom Task Pane, Installer)
@@ -195,7 +210,8 @@ c:\projects\CoolWord\
 │   │   │   ├── BatchEmail\         # Module Gửi Mail Hàng Loạt (Mail Merge, Gửi phiếu lương kèm PDF)
 │   │   │   ├── ImageTools\         # Module Xử Lý Hình Ảnh (Xuất ảnh gốc, Chèn con dấu đỏ tách nền)
 │   │   │   ├── GoogleTranslate\    # Module Google Dịch (Dịch trực tiếp & Thuật ngữ kế toán song ngữ)
-│   │   │   └── TableOfContents\    # Module Tạo Mục Lục (Mục lục tự động, Heading thông minh, BCTC)
+│   │   │   ├── TableOfContents\    # Module Tạo Mục Lục (Mục lục tự động, Heading thông minh, BCTC)
+│   │   │   └── QRCode\             # Module Mã QR Code (Tạo mã QR, VietQR ngân hàng, vCard, Tra cứu NĐ 30)
 │   │   └── UI\                     # Giao diện WPF Fluent Design (ThemeColors, MainTaskPaneControl)
 │   └── CoolWord.Studio\            # Ứng dụng quản lý & chạy thử giao diện độc lập
 └── tests\

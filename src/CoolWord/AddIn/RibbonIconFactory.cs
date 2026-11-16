@@ -17,6 +17,7 @@ namespace CoolWord.AddIn
         private static Bitmap _imageIcon;
         private static Bitmap _translateIcon;
         private static Bitmap _tocIcon;
+        private static Bitmap _qrCodeIcon;
 
         private static readonly object LockObj = new object();
 
@@ -317,6 +318,87 @@ namespace CoolWord.AddIn
 
                 _tocIcon = bmp;
                 return _tocIcon;
+            }
+        }
+
+        public static Bitmap CreateQrCodeIcon()
+        {
+            lock (LockObj)
+            {
+                if (_qrCodeIcon != null) return _qrCodeIcon;
+
+                Bitmap bmp = new Bitmap(32, 32);
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                    g.PixelOffsetMode = PixelOffsetMode.Half;
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+                    g.Clear(Color.Transparent);
+
+                    // 1. Nền thẻ trắng bo tròn
+                    Rectangle cardRect = new Rectangle(2, 2, 28, 28);
+                    using (GraphicsPath path = CreateRoundedRectangle(cardRect, 3))
+                    {
+                        using (SolidBrush bg = new SolidBrush(Color.White))
+                        {
+                            g.FillPath(bg, path);
+                        }
+                        using (Pen borderPen = new Pen(Color.FromArgb(203, 213, 225), 1f))
+                        {
+                            g.DrawPath(borderPen, path);
+                        }
+                    }
+
+                    // 2. Tạo ma trận QR Code nét cao
+                    try
+                    {
+                        using (var gen = new QRCoder.QRCodeGenerator())
+                        using (var data = gen.CreateQrCode("CoolWord", QRCoder.QRCodeGenerator.ECCLevel.M))
+                        using (var qr = new QRCoder.QRCode(data))
+                        using (var qrBmp = qr.GetGraphic(1, Color.FromArgb(15, 23, 42), Color.White, false))
+                        {
+                            g.DrawImage(qrBmp, 4, 4, 24, 24);
+                        }
+                    }
+                    catch
+                    {
+                        DrawFallbackQrCode(g);
+                    }
+                }
+
+                _qrCodeIcon = bmp;
+                return _qrCodeIcon;
+            }
+        }
+
+        private static void DrawFallbackQrCode(Graphics g)
+        {
+            using (SolidBrush blackBrush = new SolidBrush(Color.FromArgb(15, 23, 42)))
+            {
+                // Finder Top-Left
+                g.FillRectangle(blackBrush, 5, 5, 7, 7);
+                g.FillRectangle(Brushes.White, 6, 6, 5, 5);
+                g.FillRectangle(blackBrush, 7, 7, 3, 3);
+
+                // Finder Top-Right
+                g.FillRectangle(blackBrush, 20, 5, 7, 7);
+                g.FillRectangle(Brushes.White, 21, 6, 5, 5);
+                g.FillRectangle(blackBrush, 22, 7, 3, 3);
+
+                // Finder Bottom-Left
+                g.FillRectangle(blackBrush, 5, 20, 7, 7);
+                g.FillRectangle(Brushes.White, 6, 21, 5, 5);
+                g.FillRectangle(blackBrush, 7, 22, 3, 3);
+
+                // Timing & data dots
+                g.FillRectangle(blackBrush, 14, 6, 2, 2);
+                g.FillRectangle(blackBrush, 14, 10, 2, 2);
+                g.FillRectangle(blackBrush, 6, 14, 2, 2);
+                g.FillRectangle(blackBrush, 10, 14, 2, 2);
+                g.FillRectangle(blackBrush, 15, 15, 3, 3);
+                g.FillRectangle(blackBrush, 20, 16, 2, 2);
+                g.FillRectangle(blackBrush, 22, 20, 2, 2);
+                g.FillRectangle(blackBrush, 16, 22, 2, 2);
             }
         }
 

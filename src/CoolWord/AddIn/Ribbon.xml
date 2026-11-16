@@ -714,6 +714,50 @@
                     supertip="Mở giao diện điều khiển trực quan trên thanh Task Pane để tùy chỉnh chi tiết cấu trúc mục lục."
                     onAction="OnOpenTocPaneClick" />
           </menu>
+          <separator id="sepExtQrCode" />
+          <menu id="menuQrCode"
+                label="QR&#10;Code"
+                size="large"
+                getImage="GetRibbonImage"
+                screentip="Tạo &amp; Chèn Mã QR Code vào văn bản"
+                supertip="Tạo mã QR Code chất lượng cao từ liên kết (URL), văn bản đang chọn, số tài khoản ngân hàng (VietQR), thông tin liên hệ và chèn trực tiếp vào tài liệu Word.">
+            <!-- Nhóm Tạo nhanh từ vùng chọn -->
+            <button id="btnInsertQrFromSelection"
+                    label="Tạo QR Code từ đoạn văn bản / Link đang bôi đen (1-Click)"
+                    imageMso="PictureInsert"
+                    screentip="Tạo QR Code từ vùng chọn"
+                    supertip="Tự động đọc nội dung hoặc đường link URL đang được bôi đen trong văn bản và chèn ngay mã QR Code tại vị trí con trỏ."
+                    onAction="OnInsertQrFromSelectionClick" />
+            <menuSeparator id="sepQrBank" />
+            <!-- Nhóm VietQR Kế Toán & Thanh Toán -->
+            <button id="btnInsertVietQrQuick"
+                    label="Tạo mã VietQR Thanh toán Ngân hàng..."
+                    imageMso="AccountingFormat"
+                    screentip="Tạo mã VietQR Ngân hàng"
+                    supertip="Tạo mã QR chuẩn thanh toán ngân hàng (VietQR / Napas247) cho hợp đồng, hóa đơn, giấy đề nghị thanh toán."
+                    onAction="OnInsertVietQrQuickClick" />
+            <!-- Nhóm Danh thiếp vCard & Liên hệ -->
+            <button id="btnInsertVCardQr"
+                    label="Tạo mã QR Danh thiếp (vCard / Thông tin liên hệ)..."
+                    imageMso="ContactCardAddress"
+                    screentip="Tạo QR Danh thiếp vCard"
+                    supertip="Tạo mã QR chứa danh bạ điện thoại, email, họ tên, chức vụ để quét lưu trực tiếp vào danh bạ điện thoại."
+                    onAction="OnInsertVCardQrClick" />
+            <!-- Nhóm Tra cứu Văn bản NĐ 30 -->
+            <button id="btnInsertAdminDocQr"
+                    label="Tạo mã QR Tra cứu Văn bản Hành chính (NĐ 30/2020)..."
+                    imageMso="PageSetupPageDialog"
+                    screentip="Tạo QR Tra cứu văn bản"
+                    supertip="Chèn mã QR ở góc đầu hoặc cuối văn bản để quét tra cứu số hiệu văn bản và bản gốc lưu trữ điện tử."
+                    onAction="OnInsertAdminDocQrClick" />
+            <menuSeparator id="sepQrPane" />
+            <button id="btnOpenQrCodePane"
+                    label="Mở Bảng Điều Khiển Tạo QR Code Chi Tiết..."
+                    imageMso="ApplicationOptionsDialog"
+                    screentip="Mở Bảng Tạo QR Code"
+                    supertip="Mở giao diện điều khiển trực quan trên thanh Task Pane để tùy chỉnh nội dung, kích thước, màu sắc, xem trước trực tiếp và chèn QR Code."
+                    onAction="OnOpenQrCodePaneClick" />
+          </menu>
         </group>
 
         <!-- Nhóm 9: Bảng Điều Khiển CoolWord -->
@@ -772,6 +816,10 @@
                 label="Lưu đoạn chọn làm mẫu nhập liệu..."
                 imageMso="CreateBuildingBlock"
                 onAction="OnSaveSelectionAsSnippetClick" />
+        <button id="ctxText_InsertQr"
+                label="Tạo mã QR Code từ đoạn đang chọn..."
+                imageMso="PictureInsert"
+                onAction="OnInsertQrFromSelectionClick" />
         <button id="ctxText_OpenPane"
                 label="Mở bảng điều khiển CoolWord..."
                 imageMso="ApplicationOptionsDialog"
@@ -819,6 +867,10 @@
                 label="Tách cột Họ và Tên (2 cột)..."
                 imageMso="CompareCompare"
                 onAction="OnSplitNameTable2Click" />
+        <button id="ctxTable_InsertQr"
+                label="Tạo mã QR Code từ ô đang chọn..."
+                imageMso="PictureInsert"
+                onAction="OnInsertQrFromSelectionClick" />
         <button id="ctxTable_OpenPane"
                 label="Mở bảng điều khiển CoolWord..."
                 imageMso="ApplicationOptionsDialog"

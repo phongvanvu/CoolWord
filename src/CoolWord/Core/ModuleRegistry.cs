@@ -15,6 +15,7 @@ using CoolWord.Modules.BatchEmail;
 using CoolWord.Modules.ImageTools;
 using CoolWord.Modules.GoogleTranslate;
 using CoolWord.Modules.TableOfContents;
+using CoolWord.Modules.QRCode;
 
 namespace CoolWord.Core
 {
@@ -42,6 +43,7 @@ namespace CoolWord.Core
             Register(new ImageToolsModule());
             Register(new GoogleTranslateModule());
             Register(new TableOfContentsModule());
+            Register(new QRCodeModule());
         }
 
         public static void Register(IToolModule module)
