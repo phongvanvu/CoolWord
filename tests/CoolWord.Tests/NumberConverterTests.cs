@@ -273,6 +273,56 @@ namespace CoolWord.Tests
             bool w2wSplitPageRes = WordToWordService.SplitDocumentByPages(null, null, out w2wStatus);
             AssertEqual("WordToWord SplitPage Null Safe", "false", w2wSplitPageRes.ToString().ToLowerInvariant());
 
+            // Kiểm thử Chuyển đổi thư mục .docm sang .docx & Sao lưu an toàn
+            string docmStatus;
+            bool docmNullRes = WordToWordService.ConvertDocmFolderToDocx(null, null, false, true, out docmStatus);
+            AssertEqual("WordToWord Docm Null Safe", "false", docmNullRes.ToString().ToLowerInvariant());
+
+            bool docmNonExistRes = WordToWordService.ConvertDocmFolderToDocx(null, @"C:\NonExistent_CoolWord_Folder_12345", false, true, out docmStatus);
+            AssertEqual("WordToWord Docm NonExistent Safe", "false", docmNonExistRes.ToString().ToLowerInvariant());
+
+            string backupDir;
+            string backupMsg;
+            bool backupNullRes = WordToWordService.CreateSafeBackup(null, null, out backupDir, out backupMsg);
+            AssertEqual("WordToWord Backup Null Safe", "false", backupNullRes.ToString().ToLowerInvariant());
+
+            // Kiểm thử thực tế Tạo bản sao lưu an toàn với cấu trúc thư mục con
+            string tempTestDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "CoolWord_Docm_Test_" + System.Guid.NewGuid().ToString("N"));
+            try
+            {
+                System.IO.Directory.CreateDirectory(tempTestDir);
+                string subDir = System.IO.Path.Combine(tempTestDir, "NhanSu");
+                System.IO.Directory.CreateDirectory(subDir);
+
+                string file1 = System.IO.Path.Combine(tempTestDir, "BaoCao_2026.docm");
+                string file2 = System.IO.Path.Combine(subDir, "BangLuong.docm");
+                System.IO.File.WriteAllText(file1, "Fake docm content 1");
+                System.IO.File.WriteAllText(file2, "Fake docm content 2");
+
+                string[] filesToBackup = new string[] { file1, file2 };
+                string testBackupDir;
+                string testBackupMsg;
+                bool testBackupOk = WordToWordService.CreateSafeBackup(tempTestDir, filesToBackup, out testBackupDir, out testBackupMsg);
+                AssertEqual("WordToWord CreateSafeBackup Success", "true", testBackupOk.ToString().ToLowerInvariant());
+                AssertEqual("WordToWord BackupDir Exists", "true", System.IO.Directory.Exists(testBackupDir).ToString().ToLowerInvariant());
+
+                string backedUpFile1 = System.IO.Path.Combine(testBackupDir, "BaoCao_2026.docm");
+                string backedUpFile2 = System.IO.Path.Combine(testBackupDir, "NhanSu", "BangLuong.docm");
+                AssertEqual("WordToWord Backup File 1 Exists", "true", System.IO.File.Exists(backedUpFile1).ToString().ToLowerInvariant());
+                AssertEqual("WordToWord Backup File 2 Exists (Subdir Preserved)", "true", System.IO.File.Exists(backedUpFile2).ToString().ToLowerInvariant());
+            }
+            finally
+            {
+                try
+                {
+                    if (System.IO.Directory.Exists(tempTestDir))
+                    {
+                        System.IO.Directory.Delete(tempTestDir, true);
+                    }
+                }
+                catch { }
+            }
+
             // 8. Kiểm thử Mô-đun Word ➔ Excel (Dữ liệu, số kế toán, Registry, An toàn null)
             string cleanCell = WordToExcelService.CleanCellText("Doanh thu năm 2026\r\a");
             AssertEqual("CleanCellText", "Doanh thu năm 2026", cleanCell);

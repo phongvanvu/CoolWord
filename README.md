@@ -85,9 +85,10 @@
   - Tự động nhận diện và chuyển đổi bảng mã **VNI-Windows** từ các phông `VNI-Times`, `VNI-Helve`... sang Unicode dựng sẵn.
   - Tự động định dạng lại phông chữ sang **Times New Roman** sau khi chuyển mã.
   - Hoạt động 100% offline, tốc độ cao, hỗ trợ thao tác hoàn tác Undo (`Ctrl+Z`).
-- **Nâng cấp & Chuyển đổi định dạng tệp Word (.doc ↔ .docx)**:
+- **Nâng cấp & Chuyển đổi định dạng tệp Word (.doc ↔ .docx, Thư mục .docm ➔ .docx)**:
   - 1-Click nâng cấp tệp tài liệu cũ `*.doc` (Word 97-2003) sang chuẩn OpenXML `*.docx` hiện đại, giảm dung lượng và tối ưu hóa hiển thị.
   - Lưu bản sao tương thích `*.doc` khi cần nộp hồ sơ, gửi cho hệ thống phần mềm cũ chỉ hỗ trợ chuẩn Word 97-2003.
+  - **Chuyển cả thư mục file .docm sang .docx (Sao lưu an toàn)**: Quét và chuyển đổi hàng loạt toàn bộ file Word Macro (`*.docm`) trong thư mục (kèm tùy chọn quét thư mục con) sang chuẩn OpenXML `*.docx` không chứa macro, tự động tạo bản sao lưu an toàn (`_Backup_DOCM_yyyyMMdd_HHmmss`) bảo toàn toàn bộ file gốc trước khi xử lý.
 - **Gộp & Tách tệp Word tự động (Merge & Split)**:
   - **Gộp nhiều tệp Word**: Chọn nhiều tệp `*.docx`, `*.doc` và tự động ghép nối vào tài liệu đang mở, chèn ngắt trang tự động và giữ nguyên cấu trúc.
   - **Tách tệp Word theo Section**: Chia nhỏ tài liệu nhiều chương, phụ lục, hợp đồng nhiều phần thành từng tệp Word riêng biệt (`Phan_01.docx`, `Phan_02.docx`...).
@@ -175,7 +176,7 @@ c:\projects\CoolWord\
 ├── bin\                            # Thư mục chứa file thực thi sau khi build
 │   ├── CoolWord.dll                # Thư viện COM Add-in chính nạp vào MS Word
 │   ├── CoolWord.Studio.exe         # Ứng dụng Desktop quản lý cài đặt & dùng độc lập
-│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (163 test cases)
+│   └── CoolWord.Tests.exe          # Bộ kiểm thử tự động (170 test cases)
 ├── src\
 │   ├── CoolWord\
 │   │   ├── AddIn\                  # Tích hợp COM (Ribbon XML, RibbonIconFactory, Custom Task Pane, Installer)

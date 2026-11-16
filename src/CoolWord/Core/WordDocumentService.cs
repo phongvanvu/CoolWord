@@ -851,6 +851,12 @@ namespace CoolWord.Core
             return WordToWordService.SplitDocumentByPages(app, outputDir, out statusMessage);
         }
 
+        public bool ConvertDocmFolderToDocx(string folderPath, bool includeSubdirectories, bool safeBackup, out string statusMessage)
+        {
+            Word.Application app = GetActiveWordApp();
+            return WordToWordService.ConvertDocmFolderToDocx(app, folderPath, includeSubdirectories, safeBackup, out statusMessage);
+        }
+
         #endregion
 
         #region Tác vụ Word ➔ Excel

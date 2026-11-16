@@ -66,6 +66,7 @@ namespace CoolWord.Core
         bool MergeWordDocuments(string[] filePaths, out string statusMessage);
         bool SplitDocumentBySections(string outputDir, out string statusMessage);
         bool SplitDocumentByPages(string outputDir, out string statusMessage);
+        bool ConvertDocmFolderToDocx(string folderPath, bool includeSubdirectories, bool safeBackup, out string statusMessage);
 
         // Các tác vụ Word ➔ Excel (Export tables, Accounting tables, Paragraphs)
         bool ExportAllTablesToExcel(string outputPath, bool openAfterExport, bool separateSheets, out string statusMessage);

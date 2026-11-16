@@ -919,6 +919,28 @@ namespace CoolWord.AddIn
             NotifyStatus(status);
         }
 
+        public void OnConvertDocmFolderToDocxClick(Office.IRibbonControl control)
+        {
+            if (_wordService == null) return;
+
+            string selectedFolder = string.Empty;
+            using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                fbd.Description = "Chọn thư mục chứa các file Word Macro (.docm) cần chuyển đổi sang .docx (Có sao lưu an toàn):";
+                fbd.ShowNewFolderButton = false;
+                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    selectedFolder = fbd.SelectedPath;
+                }
+            }
+
+            if (string.IsNullOrEmpty(selectedFolder)) return;
+
+            string status;
+            _wordService.ConvertDocmFolderToDocx(selectedFolder, false, true, out status);
+            NotifyStatus(status);
+        }
+
         public void OnMergeWordDocsClick(Office.IRibbonControl control)
         {
             if (_wordService == null) return;

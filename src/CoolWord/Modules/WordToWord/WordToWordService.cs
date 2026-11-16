@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using CoolWord.Core;
@@ -388,6 +389,281 @@ namespace CoolWord.Modules.WordToWord
             {
                 statusMessage = "Lỗi khi tách trang Word: " + ex.Message;
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Tạo bản sao lưu an toàn cho danh sách file .docm trước khi thực hiện chuyển đổi.
+        /// Thư mục sao lưu được đặt tên theo định dạng _Backup_DOCM_yyyyMMdd_HHmmss.
+        /// </summary>
+        public static bool CreateSafeBackup(string folderPath, IEnumerable<string> files, out string backupDir, out string backupMessage)
+        {
+            backupDir = string.Empty;
+            backupMessage = string.Empty;
+
+            if (string.IsNullOrEmpty(folderPath) || !Directory.Exists(folderPath))
+            {
+                backupMessage = "Thư mục nguồn không hợp lệ hoặc không tồn tại.";
+                return false;
+            }
+
+            if (files == null)
+            {
+                backupMessage = "Danh sách tệp tin cần sao lưu trống.";
+                return false;
+            }
+
+            try
+            {
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                backupDir = Path.Combine(folderPath, "_Backup_DOCM_" + timestamp);
+                if (!Directory.Exists(backupDir))
+                {
+                    Directory.CreateDirectory(backupDir);
+                }
+
+                int copiedCount = 0;
+                string normalizedBase = Path.GetFullPath(folderPath).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
+
+                foreach (string file in files)
+                {
+                    if (string.IsNullOrEmpty(file) || !File.Exists(file)) continue;
+
+                    string fullPath = Path.GetFullPath(file);
+                    string targetBackupFile;
+
+                    if (fullPath.StartsWith(normalizedBase, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Giữ nguyên cấu trúc thư mục con nếu file nằm trong subfolder
+                        string relative = fullPath.Substring(normalizedBase.Length);
+                        targetBackupFile = Path.Combine(backupDir, relative);
+                        string subDir = Path.GetDirectoryName(targetBackupFile);
+                        if (!string.IsNullOrEmpty(subDir) && !Directory.Exists(subDir))
+                        {
+                            Directory.CreateDirectory(subDir);
+                        }
+                    }
+                    else
+                    {
+                        targetBackupFile = Path.Combine(backupDir, Path.GetFileName(file));
+                    }
+
+                    File.Copy(fullPath, targetBackupFile, true);
+                    copiedCount++;
+                }
+
+                if (copiedCount == 0)
+                {
+                    backupMessage = "Không có tệp tin nào được sao lưu.";
+                    return false;
+                }
+
+                backupMessage = string.Format("Đã sao lưu an toàn {0} tệp tin tại thư mục: {1}", copiedCount, Path.GetFileName(backupDir));
+                return true;
+            }
+            catch (Exception ex)
+            {
+                backupMessage = "Lỗi trong quá trình tạo bản sao lưu an toàn: " + ex.Message;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Chuyển đổi toàn bộ các file Word Macro (.docm) trong một thư mục sang định dạng chuẩn .docx (OpenXML).
+        /// Hỗ trợ tùy chọn sao lưu an toàn toàn bộ file gốc trước khi chuyển đổi.
+        /// </summary>
+        public static bool ConvertDocmFolderToDocx(
+            Word.Application app,
+            string folderPath,
+            bool includeSubdirectories,
+            bool safeBackup,
+            out string statusMessage)
+        {
+            statusMessage = string.Empty;
+
+            if (string.IsNullOrEmpty(folderPath))
+            {
+                statusMessage = "Chưa chọn thư mục cần chuyển đổi.";
+                return false;
+            }
+
+            if (!Directory.Exists(folderPath))
+            {
+                statusMessage = "Thư mục không tồn tại: " + folderPath;
+                return false;
+            }
+
+            string targetFolder = folderPath;
+
+            // Quét danh sách file .docm
+            SearchOption searchOption = includeSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            string[] rawFiles;
+            try
+            {
+                rawFiles = Directory.GetFiles(targetFolder, "*.docm", searchOption);
+            }
+            catch (Exception ex)
+            {
+                statusMessage = "Lỗi khi quét thư mục: " + ex.Message;
+                return false;
+            }
+
+            List<string> docmFiles = new List<string>();
+            foreach (string file in rawFiles)
+            {
+                string name = Path.GetFileName(file);
+                // Bỏ qua các file tạm/khóa do Word tự tạo khi mở (bắt đầu bằng ~$)
+                if (name.StartsWith("~$", StringComparison.OrdinalIgnoreCase)) continue;
+                docmFiles.Add(file);
+            }
+
+            if (docmFiles.Count == 0)
+            {
+                statusMessage = "Không tìm thấy file .docm nào trong thư mục: " + Path.GetFileName(targetFolder);
+                return false;
+            }
+
+            // Thực hiện sao lưu an toàn nếu được yêu cầu
+            string backupDir = string.Empty;
+            if (safeBackup)
+            {
+                string backupMsg;
+                bool backedUp = CreateSafeBackup(targetFolder, docmFiles, out backupDir, out backupMsg);
+                if (!backedUp)
+                {
+                    statusMessage = "Dừng chuyển đổi vì không thể tạo bản sao lưu an toàn: " + backupMsg;
+                    return false;
+                }
+            }
+
+            bool tempAppCreated = false;
+            Word.Application wordApp = app;
+
+            try
+            {
+                if (wordApp == null)
+                {
+                    try
+                    {
+                        wordApp = new Word.Application();
+                        wordApp.Visible = false;
+                        wordApp.DisplayAlerts = Word.WdAlertLevel.wdAlertsNone;
+                        tempAppCreated = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        statusMessage = "Không thể khởi động Microsoft Word để chuyển đổi: " + ex.Message;
+                        return false;
+                    }
+                }
+
+                // Tắt cảnh báo khi mở file có macro
+                Word.WdAlertLevel originalAlerts = Word.WdAlertLevel.wdAlertsNone;
+                try
+                {
+                    originalAlerts = wordApp.DisplayAlerts;
+                    wordApp.DisplayAlerts = Word.WdAlertLevel.wdAlertsNone;
+                }
+                catch { }
+
+                int convertedCount = 0;
+                List<string> errorList = new List<string>();
+
+                foreach (string file in docmFiles)
+                {
+                    Word.Document doc = null;
+                    try
+                    {
+                        object fileName = file;
+                        object confirmConversions = false;
+                        object readOnly = true;
+                        object isVisible = false;
+                        object addToRecentFiles = false;
+
+                        doc = wordApp.Documents.Open(
+                            ref fileName,
+                            ref confirmConversions,
+                            ref readOnly,
+                            ref addToRecentFiles,
+                            ref Missing, ref Missing, ref Missing, ref Missing,
+                            ref Missing, ref Missing, ref Missing,
+                            ref isVisible,
+                            ref Missing, ref Missing, ref Missing, ref Missing);
+
+                        if (doc == null)
+                        {
+                            errorList.Add(Path.GetFileName(file) + " (Không thể mở)");
+                            continue;
+                        }
+
+                        string targetDocxPath = Path.ChangeExtension(file, ".docx");
+                        object targetPath = targetDocxPath;
+                        object format = Word.WdSaveFormat.wdFormatXMLDocument; // 12: wdFormatXMLDocument (.docx tiêu chuẩn, không macro)
+
+                        doc.SaveAs2(ref targetPath, ref format);
+                        convertedCount++;
+                    }
+                    catch (Exception ex)
+                    {
+                        errorList.Add(Path.GetFileName(file) + " (" + ex.Message + ")");
+                    }
+                    finally
+                    {
+                        if (doc != null)
+                        {
+                            try
+                            {
+                                object saveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
+                                ((Word._Document)doc).Close(ref saveChanges);
+                                System.Runtime.InteropServices.Marshal.ReleaseComObject(doc);
+                            }
+                            catch { }
+                            doc = null;
+                        }
+                    }
+                }
+
+                try
+                {
+                    wordApp.DisplayAlerts = originalAlerts;
+                }
+                catch { }
+
+                string backupInfo = safeBackup && !string.IsNullOrEmpty(backupDir)
+                    ? string.Format(" Đã sao lưu an toàn tại thư mục '{0}'.", Path.GetFileName(backupDir))
+                    : string.Empty;
+
+                if (convertedCount == docmFiles.Count)
+                {
+                    statusMessage = string.Format("Đã chuyển đổi thành công toàn bộ {0}/{1} file .docm sang .docx.{2}",
+                        convertedCount, docmFiles.Count, backupInfo);
+                    return true;
+                }
+                else if (convertedCount > 0)
+                {
+                    statusMessage = string.Format("Đã chuyển đổi thành công {0}/{1} file .docm sang .docx (Lỗi {2} file: {3}).{4}",
+                        convertedCount, docmFiles.Count, errorList.Count, string.Join(", ", errorList.ToArray()), backupInfo);
+                    return true;
+                }
+                else
+                {
+                    statusMessage = string.Format("Không thể chuyển đổi file nào ({0} lỗi): {1}.{2}",
+                        errorList.Count, string.Join("; ", errorList.ToArray()), backupInfo);
+                    return false;
+                }
+            }
+            finally
+            {
+                if (tempAppCreated && wordApp != null)
+                {
+                    try
+                    {
+                        object saveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
+                        ((Word._Application)wordApp).Quit(ref saveChanges);
+                        System.Runtime.InteropServices.Marshal.ReleaseComObject(wordApp);
+                    }
+                    catch { }
+                }
             }
         }
 

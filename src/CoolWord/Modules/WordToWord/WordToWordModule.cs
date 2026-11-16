@@ -8,7 +8,7 @@ namespace CoolWord.Modules.WordToWord
     {
         public string Id { get { return "word-to-word"; } }
         public string Title { get { return "Word ➔ Word"; } }
-        public string Subtitle { get { return "Chuyển đổi TCVN3/VNI sang Unicode, đổi .doc ↔ .docx, gộp/tách file Word"; } }
+        public string Subtitle { get { return "Chuyển mã TCVN3/VNI, đổi .doc/.docm ➔ .docx, gộp/tách file Word"; } }
         public string IconText { get { return "W➔W"; } }
         public string Category { get { return "Chuyển đổi & Tệp tin"; } }
         public int Order { get { return 8; } }

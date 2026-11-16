@@ -371,6 +371,12 @@
                     screentip="Lưu bản sao .doc"
                     supertip="Lưu một bản sao tài liệu dưới định dạng Word 97-2003 (.doc) để tương thích với các hệ thống phần mềm cũ."
                     onAction="OnSaveAsDoc97Click" />
+            <button id="btnConvertDocmFolderToDocx"
+                    label="Chuyển cả thư mục file .docm sang .docx (Sao lưu an toàn)..."
+                    imageMso="DocumentCleanUp"
+                    screentip="Chuyển cả thư mục file .docm sang .docx"
+                    supertip="Quét và chuyển đổi hàng loạt toàn bộ file .docm (Word Macro) trong thư mục sang chuẩn .docx (OpenXML), tự động tạo bản sao lưu an toàn toàn bộ file gốc trước khi chuyển đổi."
+                    onAction="OnConvertDocmFolderToDocxClick" />
             <menuSeparator id="sepW2WMergeSplit" />
             <!-- Nhóm Gộp & Tách File Word -->
             <button id="btnMergeWordDocs"
