@@ -99,6 +99,17 @@ namespace CoolWord.Modules.QRCode
             float widthPt,
             bool center,
             string caption,
+            out string statusMessage)
+        {
+            return InsertQrCode(app, content, widthPt, center, caption, null, null, out statusMessage);
+        }
+
+        public static bool InsertQrCode(
+            Word.Application app,
+            string content,
+            float widthPt,
+            bool center,
+            string caption,
             Color? darkColor,
             Color? lightColor,
             out string statusMessage)
