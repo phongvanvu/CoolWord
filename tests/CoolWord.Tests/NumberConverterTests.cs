@@ -1,5 +1,6 @@
 using System;
 using CoolWord.Core;
+using CoolWord.UI;
 using CoolWord.Modules.AdminFormat;
 using CoolWord.Modules.NameSplit;
 using CoolWord.Modules.NumberToText;
@@ -22,6 +23,7 @@ namespace CoolWord.Tests
         private static int _passed;
         private static int _failed;
 
+        [STAThread]
         public static int Main()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -578,6 +580,31 @@ namespace CoolWord.Tests
             AssertEqual("QRCode InsertQrCode Null Safe", "false", CoolWord.Modules.QRCode.QRCodeService.InsertQrCode(null, "Test", 120f, true, null, null, null, out qrStatus).ToString().ToLowerInvariant());
             AssertEqual("QRCode InsertQrFromSelection Null Safe", "false", CoolWord.Modules.QRCode.QRCodeService.InsertQrFromSelection(null, 120f, true, null, out qrStatus).ToString().ToLowerInvariant());
             AssertEqual("QRCode SaveQrCode Empty Safe", "false", CoolWord.Modules.QRCode.QRCodeService.SaveQrCodeAsImage("", "", 10, null, out qrStatus).ToString().ToLowerInvariant());
+
+            // Kiểm thử TaskPane UI: Category Groups & MainTaskPaneControl Navigation
+            AssertEqual("Category Group SoanThao Decree30", MainTaskPaneControl.CategorySoanThao, MainTaskPaneControl.GetPrimaryGroup("admin-decree30"));
+            AssertEqual("Category Group SoanThao TOC", MainTaskPaneControl.CategorySoanThao, MainTaskPaneControl.GetPrimaryGroup("table-of-contents"));
+            AssertEqual("Category Group KeToan NumberToText", MainTaskPaneControl.CategoryKeToan, MainTaskPaneControl.GetPrimaryGroup("number-to-text"));
+            AssertEqual("Category Group ChuyenDoi WordToExcel", MainTaskPaneControl.CategoryChuyenDoi, MainTaskPaneControl.GetPrimaryGroup("word-to-excel"));
+            AssertEqual("Category Group TienIch QRCode", MainTaskPaneControl.CategoryTienIch, MainTaskPaneControl.GetPrimaryGroup("qr-code"));
+            AssertEqual("Category Group TienIch BatchEmail", MainTaskPaneControl.CategoryTienIch, MainTaskPaneControl.GetPrimaryGroup("batch-email"));
+
+            MainTaskPaneControl taskPane = new MainTaskPaneControl(new WordDocumentService());
+            AssertEqual("TaskPane Default Active Module", "number-to-text", taskPane.ActiveModuleId);
+            AssertEqual("TaskPane Initially In Module View", "false", taskPane.IsInCatalogView.ToString().ToLowerInvariant());
+
+            taskPane.SelectModule("table-of-contents");
+            AssertEqual("TaskPane Switch To TOC ActiveModule", "table-of-contents", taskPane.ActiveModuleId);
+
+            taskPane.SelectModule("qr-code");
+            AssertEqual("TaskPane Switch To QRCode ActiveModule", "qr-code", taskPane.ActiveModuleId);
+
+            taskPane.ShowCatalog();
+            AssertEqual("TaskPane ShowCatalog IsInCatalogView", "true", taskPane.IsInCatalogView.ToString().ToLowerInvariant());
+
+            taskPane.SelectModule("word-to-word");
+            AssertEqual("TaskPane Select From Catalog Returns To Module", "word-to-word", taskPane.ActiveModuleId);
+            AssertEqual("TaskPane Not In Catalog View After Select", "false", taskPane.IsInCatalogView.ToString().ToLowerInvariant());
 
             Console.WriteLine("--------------------------------------------------------------------");
             Console.WriteLine(string.Format("KẾT QUẢ: Đạt {0} / {1} bài kiểm thử (Thất bại: {2})", _passed, _passed + _failed, _failed));

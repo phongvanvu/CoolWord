@@ -26,6 +26,23 @@ namespace CoolWord.UI
         public static readonly SolidColorBrush SuccessBg = BrushFromHex("#ECFDF5");
         public static readonly SolidColorBrush SuccessBorder = BrushFromHex("#A7F3D0");
 
+        // Category Palette (Fluent 365)
+        public static readonly SolidColorBrush CategoryDoc = BrushFromHex("#0284C7");
+        public static readonly SolidColorBrush CategoryDocLight = BrushFromHex("#E0F2FE");
+        public static readonly SolidColorBrush CategoryDocBorder = BrushFromHex("#BAE6FD");
+
+        public static readonly SolidColorBrush CategoryFinance = BrushFromHex("#059669");
+        public static readonly SolidColorBrush CategoryFinanceLight = BrushFromHex("#ECFDF5");
+        public static readonly SolidColorBrush CategoryFinanceBorder = BrushFromHex("#A7F3D0");
+
+        public static readonly SolidColorBrush CategoryConvert = BrushFromHex("#D97706");
+        public static readonly SolidColorBrush CategoryConvertLight = BrushFromHex("#FEF3C7");
+        public static readonly SolidColorBrush CategoryConvertBorder = BrushFromHex("#FDE68A");
+
+        public static readonly SolidColorBrush CategoryUtility = BrushFromHex("#7C3AED");
+        public static readonly SolidColorBrush CategoryUtilityLight = BrushFromHex("#F3E8FF");
+        public static readonly SolidColorBrush CategoryUtilityBorder = BrushFromHex("#DDD6FE");
+
         public static readonly FontFamily MainFont = new FontFamily("Segoe UI");
 
         public static SolidColorBrush BrushFromHex(string hex)
@@ -141,6 +158,53 @@ namespace CoolWord.UI
 
             btn.Template = template;
             return btn;
+        }
+
+        public static void GetCategoryBrushes(
+            string category,
+            out SolidColorBrush fg,
+            out SolidColorBrush bg,
+            out SolidColorBrush border)
+        {
+            if (string.IsNullOrEmpty(category))
+            {
+                fg = WordBlue;
+                bg = WordBlueLight;
+                border = WordBlueBorder;
+                return;
+            }
+
+            if (category.IndexOf("Soạn thảo", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                category.IndexOf("Văn bản", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                category.IndexOf("Văn thư", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                category.IndexOf("Thể thức", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                fg = CategoryDoc;
+                bg = CategoryDocLight;
+                border = CategoryDocBorder;
+            }
+            else if (category.IndexOf("Kế toán", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                     category.IndexOf("Tài chính", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                     category.IndexOf("Số", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                fg = CategoryFinance;
+                bg = CategoryFinanceLight;
+                border = CategoryFinanceBorder;
+            }
+            else if (category.IndexOf("Chuyển đổi", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                     category.IndexOf("Xuất bản", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                     category.IndexOf("In ấn", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                fg = CategoryConvert;
+                bg = CategoryConvertLight;
+                border = CategoryConvertBorder;
+            }
+            else
+            {
+                fg = CategoryUtility;
+                bg = CategoryUtilityLight;
+                border = CategoryUtilityBorder;
+            }
         }
     }
 }
